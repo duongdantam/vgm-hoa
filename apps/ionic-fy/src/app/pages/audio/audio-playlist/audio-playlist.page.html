@@ -1,0 +1,59 @@
+<ion-content *ngIf="topicCategory">
+  <ion-grid class="ion-margin ion-margin-top" style="padding-bottom: 150px">
+    <ion-list>
+      <!-- <ion-row
+        style="width: 100%; padding-bottom: 20px; justify-content: center"
+      >
+        <ion-img
+          style="max-height: 135px; object-fit: cover"
+          src="assets/hinh_audio/10.jpg"
+        >
+        </ion-img>
+      </ion-row> -->
+      <ion-select
+        #selectMenu
+        placeholder="{{ 'msg.appendix' | translate }}"
+        interface="popover"
+        [interfaceOptions]="{cssClass: 'secondaryMenu'}"
+        (ionChange)="routerNavigation(selectMenu.value)"
+      >
+        <ion-select-option
+          *ngFor="let item of topicList; index as i"
+          value="{{item.href}}"
+          >{{item.value}}
+        </ion-select-option>
+      </ion-select>
+    </ion-list>
+
+    <fy-audio-thumb-card
+      [title]="topicCategory.name"
+      [subtitle]="topicCategory.children.length +  ' ' +('msg.chapter' | translate) "
+      [avatar]="topicCategory.avatar"
+      [isHighlight]="true"
+    ></fy-audio-thumb-card>
+    <div
+      *ngIf="topicCategory.description"
+      style="
+        padding-bottom: 10px;
+        border-bottom: 1px solid var(--ion-color-light-tint);
+      "
+    >
+      <ion-label color="primary">{{topicCategory.description}}</ion-label>
+    </div>
+    <div style="padding-top: 10px">
+      <!-- <ion-label># TIÊU ĐỀ </ion-label>
+      <ion-label style="float: right">Thời gian </ion-label> -->
+    </div>
+
+    <fy-audio-play-list
+      [list]="topicCategory.children"
+      parent="audio"
+      (onItemPressed)="selectItem($event)"
+    ></fy-audio-play-list>
+  </ion-grid>
+</ion-content>
+<ion-content *ngIf="!topicCategory">
+  <div class="loading">
+    <ion-spinner name="dots"></ion-spinner>
+  </div>
+</ion-content>

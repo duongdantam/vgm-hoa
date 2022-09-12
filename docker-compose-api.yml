@@ -1,0 +1,18 @@
+version: '3.7'
+
+services:
+  fy-redis:
+    build:
+      context: .
+      dockerfile: apps/api/Dockerfile
+    image: ghcr.io/kennytat/fy-redis-cache:1.0.0
+    container_name: fy_redis_cache
+    ports:
+      - 3333:3333
+    # environment:
+    # - REDIS_URL=redis://:password@localhost:6379
+    # - IPFS_GATEWAY=http://localhost:8888
+    # - REDIS_CACHE_EXPIRE_TIME=300
+    #   - REDIS_URL="redis://:<PASSWORD>@<IP>:<REDIS_PORT>"
+    #   - IPFS_GATEWAY="<YOUR_IPFS_HTTP_GATEWAY>"
+    #   - REDIS_CACHE_EXPIRE_TIME=<YOUR_CACHE_EXPIRE_TIME>

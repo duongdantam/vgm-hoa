@@ -1,0 +1,21 @@
+<ion-row>
+  <h4>
+    <ion-text color="dark">{{ name }}</ion-text>
+  </h4>
+</ion-row>
+<ion-row class="ion-align-items-start ion-justify-content-start">
+  <ion-col
+    *ngFor="let item of itemList"
+    size-md="3"
+    size-sm="6"
+    size-xs="12"
+    mode="ios"
+  >
+    <fy-thumb-card
+      [title]="item.name"
+      [subtitle]="item.duration"
+      [img]="item.thumb"
+      [href]="item.href"
+    ></fy-thumb-card>
+  </ion-col>
+</ion-row>

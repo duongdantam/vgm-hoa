@@ -1,0 +1,89 @@
+import { Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
+import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
+import { BaseComponent, DataFetchService } from '@fy/xplat/core';
+
+
+import { IonSlides } from '@ionic/angular';
+import { PlayerService } from 'libs/xplat/core/src/lib/services/player.service';
+
+export interface TopMenuItem {
+  key: string;
+  value: string;
+  href: string;
+}
+
+@Component({
+  selector: 'fy-top-menu',
+  templateUrl: 'top-menu.component.html',
+  styleUrls: ['./top-menu.component.scss'],
+})
+
+export class TopMenuComponent extends BaseComponent implements OnChanges {
+  @ViewChild(IonSlides) slides: IonSlides
+  @Input() home: 'video' | 'audio' = 'video';
+  @Input() activeId: string;
+
+  public menuList: TopMenuItem[] = [];
+  public audioList: TopMenuItem[] = [];
+  public videoList: TopMenuItem[] = [];
+  // topMenuActive = true;
+  constructor(
+    private router: Router,
+    private dataFetchService: DataFetchService,
+    private playerService: PlayerService
+  ) {
+    super();
+    // this.router.events.subscribe(event => {
+    //   if (event instanceof NavigationEnd) {
+    //     if (event.url.includes('/search?param=')) {
+    //       this.topMenuActive = false
+    //     } else {
+    //       this.topMenuActive = true
+    //     }
+    //   }
+    // })
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if ('activeId' in changes) {
+      const tabIndex = this.menuList.findIndex(list => list.key === this.activeId);
+      if (this.activeId && this.menuList && this.slides) {
+        this.slides.getSwiper().then(swiper => {
+          swiper.slideTo(tabIndex)
+        })
+      }
+    }
+  }
+
+  async ngOnInit() {
+    const videoList = await this.dataFetchService.fetchRoot('video');
+    this.videoList = await videoList.map((item) => ({
+      key: item.id,
+      value: item.name.replace(/[0-9]+\-/g, ''),
+      href: item.url,
+    }));
+
+    const audioList = await this.dataFetchService.fetchRoot('audio');
+    this.audioList = await audioList.map((item) => ({
+      key: item.id,
+      value: item.name.replace(/[0-9]+\-/g, ''),
+      href: item.url,
+    }));
+
+    if (this.home === 'video') {
+      this.menuList = this.videoList;
+      this.activeId = this.menuList[0].key;
+    } else {
+      this.menuList = this.audioList;
+      this.activeId = this.menuList[0].key;
+    }
+
+  }
+
+  itemClick() {
+    if (this.home === 'video' && this.playerService.videoWidgetLocation === 0) {
+      this.playerService.videoWidgetLocation$.next(1);
+    }
+  }
+
+}

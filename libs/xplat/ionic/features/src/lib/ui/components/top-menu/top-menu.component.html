@@ -1,0 +1,27 @@
+<!-- <ion-toolbar class="ion-hide-lg-up"> -->
+<ion-slides
+  [options]="{
+    slidesPerView: 'auto',
+    zoom: false,
+    grabCursor: true,
+    autoHeight: true
+  }"
+  class="top-menu ion-hide-lg-up"
+>
+  <ion-slide
+    *ngFor="let item of menuList; index as i"
+    class="top-menu-list"
+    [ngClass]="activeId === item.key ? 'top-menu-active' : ''"
+  >
+    <div
+      [routerLink]="['/tabs', home, 'catalog']"
+      [queryParams]="{ topicUrl: item.href }"
+      routerLinkActivate="activated"
+      class="top-menu-item"
+      (click)="itemClick()"
+    >
+      {{ item.value }}
+    </div>
+  </ion-slide>
+</ion-slides>
+<!-- </ion-toolbar> -->

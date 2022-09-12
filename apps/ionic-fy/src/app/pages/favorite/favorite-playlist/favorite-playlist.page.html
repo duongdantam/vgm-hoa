@@ -1,0 +1,136 @@
+<super-tabs
+  #superTabs
+  [config]="{ 
+    lazyLoad: true, 
+    unloadWhenInvisible: true,  
+    debug: true, 
+    nativeSmoothScroll: platform.is('mobile') ? true : false, 
+    transitionDuration: 2}"
+  (tabChange)="onTabChange($event)"
+>
+  <super-tabs-toolbar slot="top">
+    <super-tab-button id="favorite-tab0">
+      <ion-label> {{ 'tabs.video'| translate }} </ion-label>
+    </super-tab-button>
+    <super-tab-button id="favorite-tab1">
+      <ion-label> {{ 'tabs.audio'| translate }} </ion-label>
+    </super-tab-button>
+  </super-tabs-toolbar>
+
+  <super-tabs-container>
+    <super-tab>
+      <ion-content *ngIf="favoriteVideoList[0]; else videoPanel">
+        <ion-refresher
+          slot="fixed"
+          pullFactor="0.5"
+          pullMin="50"
+          pullMax="100"
+          (ionRefresh)="videoRefresh($event)"
+        >
+          <ion-refresher-content pullingIcon="" refreshingSpinner="bubbles">
+          </ion-refresher-content>
+        </ion-refresher>
+
+        <ion-grid class="ion-margin ion-margin-top">
+          <!-- <ion-row>
+            <ion-col>
+              <ion-list style="padding-bottom: 10px">
+                <ion-select
+                  #selectMenu
+                  placeholder="{{ itemCategory.name | uppercase }}"
+                  interface="popover"
+                  [interfaceOptions]="{ cssClass: 'secondaryMenu' }"
+                  (ionChange)="routerNavigation(selectMenu.value)"
+                >
+                  <ion-select-option
+                    *ngFor="let item of topicList; index as i"
+                    value="{{ item.href }}"
+                    [routerLink]="item.href"
+                    >{{ item.value }}
+                  </ion-select-option>
+                </ion-select>
+              </ion-list>
+            </ion-col>
+          </ion-row> -->
+          <ion-row>
+            <ion-col
+              size="12"
+              size-lg="4"
+              *ngFor="let item of favoriteVideoList | slice: 0: videoItemLength"
+              (click)="selectVideoItem(item)"
+            >
+              <fy-thumb-card
+                [title]="item.name"
+                [isPlaylist]="true"
+                [subtitle]="item.duration"
+                [img]="item.thumb"
+                [isLeaf]="item.isLeaf"
+              ></fy-thumb-card>
+            </ion-col>
+            <ion-infinite-scroll
+              threshold="100px"
+              (ionInfinite)="loadMoreVideoData($event)"
+            >
+              <ion-infinite-scroll-content loadingSpinner="bubbles">
+              </ion-infinite-scroll-content>
+            </ion-infinite-scroll>
+          </ion-row>
+          <!-- <fy-mobile-audio-category
+            *ngFor="let category of topicCategory.children"
+            [name]="category.name"
+            [childCount]="category.count !== 0 ? category.count + ('msg.chapter' | translate): ''"
+            [href]="category.href"
+            [avatar]="category.avatar"
+          >
+          </fy-mobile-audio-category> -->
+        </ion-grid>
+      </ion-content>
+      <ng-template #videoPanel>
+        <ion-content style="text-align: center; --padding-top: 15px">
+          <ion-label style="color: var(--ion-color-primary)">
+            {{ 'msg.video.download-unfound'| translate }}
+          </ion-label>
+        </ion-content>
+      </ng-template>
+    </super-tab>
+
+    <super-tab>
+      <ion-content *ngIf="favoriteAudioList[0]; else audioPanel">
+        <ion-refresher
+          slot="fixed"
+          pullFactor="0.5"
+          pullMin="50"
+          pullMax="100"
+          (ionRefresh)="audioRefresh($event)"
+        >
+          <ion-refresher-content pullingIcon="" refreshingSpinner="bubbles">
+          </ion-refresher-content>
+        </ion-refresher>
+
+        <ion-grid class="ion-margin ion-margin-top">
+          <fy-audio-play-list
+            [list]="favoriteAudioList"
+            parent="favorite"
+            (onItemPressed)="selectAudioItem($event)"
+          >
+          </fy-audio-play-list>
+        </ion-grid>
+
+        <ion-infinite-scroll
+          threshold="100px"
+          (ionInfinite)="loadMoreAudioData($event)"
+          loadingSpinner="bubbles"
+        >
+        </ion-infinite-scroll>
+      </ion-content>
+
+      <ng-template #audioPanel>
+        <ion-content style="text-align: center; --padding-top: 15px">
+          <ion-label style="color: var(--ion-color-primary)">
+            {{ 'msg.audio.favorite-unfound'| translate }}
+          </ion-label>
+        </ion-content>
+      </ng-template>
+    </super-tab>
+  </super-tabs-container>
+</super-tabs>

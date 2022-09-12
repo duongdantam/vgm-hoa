@@ -1,0 +1,75 @@
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { IonicModule } from '@ionic/angular';
+
+import { UIModule as UIWebModule } from '@fy/xplat/web/features';
+import {
+  AudioPlayerWidgetComponent,
+  AudioThumbCardComponent,
+  DesktopPageHeaderComponent,
+  HeaderComponent,
+  MobileAudioCategoryComponent,
+  MobilePageHeaderComponent,
+  MobileVideoCategoryComponent,
+  VideoPlayerWidgetComponent,
+  SearchBarComponent,
+  SideMenuComponent,
+  ThumbCardComponent,
+  TopMenuComponent,
+  VideoCategoryComponent,
+  SocialShareModalComponent
+} from './components';
+import { AudioPlayListComponent } from './components/audio-play-list/audio-play-list.component';
+import { ImgFallbackDirective } from './directives';
+import { RangeDirective } from './directives';
+
+@NgModule({
+  imports: [UIWebModule, IonicModule],
+  declarations: [
+    // Components
+    HeaderComponent,
+    SideMenuComponent,
+    TopMenuComponent,
+    SearchBarComponent,
+    ThumbCardComponent,
+    VideoCategoryComponent,
+    DesktopPageHeaderComponent,
+    MobilePageHeaderComponent,
+    MobileVideoCategoryComponent,
+    VideoPlayerWidgetComponent,
+    // Audio
+    AudioThumbCardComponent,
+    AudioPlayListComponent,
+    MobileAudioCategoryComponent,
+    AudioPlayerWidgetComponent,
+    // Directives
+    SocialShareModalComponent,
+    ImgFallbackDirective,
+    RangeDirective
+  ],
+  exports: [
+    // Component
+    UIWebModule,
+    IonicModule,
+    HeaderComponent,
+    SideMenuComponent,
+    TopMenuComponent,
+    SearchBarComponent,
+    ThumbCardComponent,
+    VideoCategoryComponent,
+    DesktopPageHeaderComponent,
+    MobilePageHeaderComponent,
+    MobileVideoCategoryComponent,
+    VideoPlayerWidgetComponent,
+    // Audio
+    AudioThumbCardComponent,
+    AudioPlayListComponent,
+    MobileAudioCategoryComponent,
+    AudioPlayerWidgetComponent,
+    // Directives
+    SocialShareModalComponent,
+    ImgFallbackDirective,
+    RangeDirective
+  ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+})
+export class UIModule { }

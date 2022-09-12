@@ -1,0 +1,19 @@
+{
+  "appId": "com.fuyin.media",
+  "appName": "福音灵粮",
+  "bundledWebRuntime": false,
+  "linuxAndroidStudioPath": "/snap/android-studio/current/android-studio/bin/studio.sh",
+  "webDir": "www",
+  "ios": {
+    "limitsNavigationsToAppBoundDomains": true
+  },
+  "plugins": {
+    "SplashScreen": {
+      "launchAutoHide": false,
+      "launchShowDuration": 0,
+      "androidScaleType": "CENTER_CROP",
+      "splashImmersive": "false",
+      "splashFullScreen": "true"
+    }
+  }
+}

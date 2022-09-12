@@ -1,0 +1,145 @@
+<ion-toolbar class="ion-hide-lg-up">
+  <ion-buttons slot="start">
+    <ion-icon
+      style="font-size: 30px; margin: 15px 5px 5px 15px"
+      name="fy-logo"
+    ></ion-icon>
+    <ion-label
+      style="
+        font-size: 20px;
+        color: var(--ion-color-tertiary);
+        font-weight: bold;
+        margin: 15px 5px 5px 0px;
+      "
+    >
+      {{ 'intro.title' | translate }}
+    </ion-label>
+    <ion-button color="primary" *ngIf="dataFetchService.downloading">
+      <ion-icon class="downloading" name="fy-downloading"></ion-icon>
+    </ion-button>
+    <!-- <ion-button color="primary" (click)="homeNavigation()">
+      <ion-icon name="library-outline"></ion-icon>
+    </ion-button> -->
+    <!-- <ion-button>
+      <ion-back-button
+        color="primary"
+        text=""
+        icon="fy-arrow-back-outline"
+        defaultHref="{{home !== 'favorite/playlist' ? 'tabs/{{ home }}/catalog' : 'tabs/{{
+          home
+        }}'}}"
+      >
+      </ion-back-button>
+    </ion-button> -->
+  </ion-buttons>
+  <!-- <ion-title class="ion-text-center">
+    <ion-img class="brand-logo" src="./assets/imgs/logo-fy.svg"></ion-img>
+  </ion-title> -->
+
+  <ion-buttons
+    slot="end"
+    *ngIf="!home.includes('favorite') && !home.includes('document')"
+  >
+    <ion-button
+      shape="round"
+      fill="solid"
+      color="primary"
+      size="small"
+      class="app-install-btn"
+      (click)="handleApp()"
+      *ngIf="
+        false && platform.is('mobileweb') && !dataFetchService.appInstalled
+      "
+    >
+      {{ 'app.open' | translate }}
+      <!-- {{ dataFetchService.appInstalled ? 'Mở App' : 'Tải App' }} -->
+    </ion-button>
+
+    <ion-button color="primary" (click)="setFocus(true)">
+      <ion-icon name="fy-search"></ion-icon>
+    </ion-button>
+    <!-- <ion-button color="primary">
+      <ion-icon name="fy-notification"></ion-icon>
+      <ion-icon name="fy-notification-badge"></ion-icon>
+    </ion-button> -->
+  </ion-buttons>
+</ion-toolbar>
+<ion-content class="search-bar" *ngIf="searchOnFocus">
+  <ion-searchbar
+    #searchbar
+    id="mobile-search-bar"
+    enterkeyhint="search"
+    searchIcon="fy-logo"
+    [placeholder]="'input.search' | translate"
+    inputmode="search"
+    debounce="0"
+    (keypress)="searchKeyPress($event)"
+    (ionChange)="searchChange($event)"
+    (ionFocus)="searchOnFocus = true"
+    (ionBlur)="setFocus(false)"
+  >
+    <ion-button color="primary" fill="clear" (click)="setFocus(false)">
+      <ion-icon name="chevron-back-outline"></ion-icon>
+    </ion-button>
+  </ion-searchbar>
+  <ion-list *ngIf="searchResult.query && searchOnFocus">
+    <ion-item
+      button
+      (click)="selectItem(item)"
+      *ngFor="let item of searchResult.hits"
+    >
+      <ion-row style="width: 100%">
+        <ion-col
+          [ngStyle]="{
+            width: home === 'video' ? '50%' : '65px',
+            'max-width': home === 'audio' ? '65px' : ''
+          }"
+        >
+          <fy-thumb-card
+            *ngIf="home === 'video'; else audioThumb"
+            title=""
+            [subtitle]="item.duration"
+            [img]="item.thumb"
+            [href]="item.href"
+            [isLeaf]="item.isLeaf"
+            [isPlaylist]="true"
+            (mouseover)="preloadData(item)"
+          ></fy-thumb-card>
+          <ng-template #audioThumb>
+            <ion-thumbnail>
+              <ion-img src="assets/imgs/fy-play-logo-red.svg"> </ion-img>
+            </ion-thumbnail>
+          </ng-template>
+        </ion-col>
+        <ion-col style="overflow: hidden">
+          <div>
+            <ion-label style="font-weight: bold"> {{ item.value }} </ion-label>
+          </div>
+          <div>
+            <ion-label> {{ item.pName }} </ion-label>
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-item>
+    <div
+      class="see-more"
+      style="justify-content: center; text-align: center"
+      *ngIf="!searchResult.hits[0]"
+    >
+      <ion-label color="primary">{{
+        'msg.search.notfound' | transtlate
+      }}</ion-label>
+    </div>
+    <div class="see-more" style="text-align: end" *ngIf="searchResult.hits[0]">
+      <ion-button
+        fill="clear"
+        color="primary"
+        size="small"
+        (click)="searchMore(searchQuery)"
+        class="hide-when-sm"
+        >{{ 'component.seeAll' | translate
+        }}<ion-icon name="arrow-forward-outline"></ion-icon>
+      </ion-button>
+    </div>
+  </ion-list>
+</ion-content>

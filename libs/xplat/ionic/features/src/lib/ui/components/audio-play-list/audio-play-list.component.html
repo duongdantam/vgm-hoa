@@ -1,0 +1,118 @@
+<div class="list" *ngIf="list.length > 0">
+  <div
+    *ngFor="let item of list | slice: 0:itemLength; index as i"
+    [ngClass]="
+      item.url === currentPlayingState.playingUrl ? 'item item-active' : 'item'
+    "
+  >
+    <div class="sides left">
+      <div>
+        <ion-icon
+          *ngIf="
+            item.url === currentPlayingState.playingUrl &&
+              currentPlayingState.isPlaying === true &&
+              currentPlayingState.playingType === 1;
+            else itemIndex
+          "
+          slot="icon-only"
+          [name]="'fy-volume-up'"
+          style="font-size: 25px"
+        ></ion-icon>
+        <ng-template #itemIndex
+          ><span style="color: var(--ion-color-primary)">{{
+            i + 1
+          }}</span></ng-template
+        >
+      </div>
+      <!-- <div>
+        <ion-button fill="clear" (click)="addToFavorite(item)">
+          <ion-icon
+            name="{{ isFavorite(item.id) >= 0 ? 'heart' : 'fy-heart' }}"
+            slot="icon-only"
+            style="font-size: 20px"
+          ></ion-icon>
+        </ion-button>
+      </div> -->
+    </div>
+    <span class="title text" (click)="itemPressed(item)">
+      {{ formatName(item.name) }}
+    </span>
+
+    <div class="sides right">
+      <div class="duration-text">
+        {{ item.duration | abbreviateTime }}
+      </div>
+      <ion-buttons>
+        <ion-button
+          fill="clear"
+          id="fabBtn{{ i }}"
+          style="transition: opacity 0.2s ease-in-out"
+        >
+          <ion-icon
+            name="fy-more-square"
+            style="font-size: 20px; color: (var --ion-color-tertiary-tint)"
+          >
+          </ion-icon>
+        </ion-button>
+        <ion-fab vertical="center" #fab>
+          <ion-fab-button
+            fill="clear"
+            class="fab-btn-main"
+            (click)="toogleFabBtn($event, fab, i)"
+            (ionBlur)="toogleFabBtn($event, fab, i)"
+          >
+            <!-- <ion-icon name="fy-more-square" style="font-size: 20px">
+            </ion-icon> -->
+          </ion-fab-button>
+
+          <ion-fab-list side="start">
+            <ion-fab-button (click)="onShare(item)">
+              <ion-icon name="fy-share-outline"></ion-icon
+            ></ion-fab-button>
+
+            <ion-fab-button
+              (click)="onDownload(item)"
+              color="{{ downloadedList.indexOf(item.id) >= 0 ? '' : '' }}"
+              ><ion-icon
+                [ngStyle]="{
+                  filter:
+                    downloadedList.indexOf(item.id) >= 0 ? 'invert(1)' : ''
+                }"
+                name="{{
+                  downloadedList.indexOf(item.id) >= 0
+                    ? 'fy-download-solid'
+                    : 'fy-download-outline'
+                }}"
+                color="{{
+                  downloadedList.indexOf(item.id) >= 0 ? 'light' : ''
+                }}"
+              ></ion-icon>
+              <div
+                class="download-progress"
+                *ngIf="downloadingList.indexOf(item.id) >= 0"
+              ></div>
+            </ion-fab-button>
+
+            <ion-fab-button (click)="addToFavorite(item)">
+              <ion-icon
+                name="{{
+                  isFavorite(item.id) >= 0
+                    ? 'fy-heart-solid'
+                    : 'fy-heart-outline'
+                }}"
+              ></ion-icon>
+            </ion-fab-button>
+          </ion-fab-list>
+        </ion-fab>
+      </ion-buttons>
+    </div>
+  </div>
+  <ion-infinite-scroll
+    threshold="200px"
+    (ionInfinite)="loadMoreData($event)"
+    *ngIf="parent === 'audio'"
+  >
+    <ion-infinite-scroll-content loadingSpinner="bubbles">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+</div>

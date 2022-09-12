@@ -1,0 +1,31 @@
+<ion-content *ngIf="itemList">
+  <ion-grid class="ion-margin ion-margin-top">
+    <ion-row>
+      <div class="loading">
+        <!-- <ion-spinner name="dots"></ion-spinner> -->
+        <ion-label color="primary"
+          >Kết quả tìm kiếm cho từ khóa
+          <span style="font-weight: bold">"{{searchKeyWord}}"</span></ion-label
+        >
+      </div>
+    </ion-row>
+    <div style="padding-top: 10px">
+      <ion-label># TIÊU ĐỀ </ion-label>
+      <ion-label style="float: right">Thời gian </ion-label>
+    </div>
+
+    <fy-audio-play-list
+      [list]="itemList"
+      (onItemPressed)="selectItem($event)"
+    ></fy-audio-play-list>
+  </ion-grid>
+</ion-content>
+<ion-content *ngIf="!itemList">
+  <div class="loading">
+    <!-- <ion-spinner name="dots"></ion-spinner> -->
+    <ion-label color="primary"
+      >{{ 'msg.search.notfound' | translate}}
+      <span style="font-weight: bold">"{{searchKeyWord}}"</span></ion-label
+    >
+  </div>
+</ion-content>

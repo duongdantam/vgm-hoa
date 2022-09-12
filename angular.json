@@ -1,0 +1,864 @@
+{
+  "version": 1,
+  "cli": {
+    "defaultCollection": "@nstudio/xplat",
+    "analytics": false
+  },
+  "defaultProject": "ionic-fy",
+  "schematics": {
+    "@nrwl/workspace": {
+      "library": {
+        "linter": "tslint"
+      }
+    },
+    "@nrwl/cypress": {
+      "cypress-project": {
+        "linter": "tslint"
+      }
+    },
+    "@nrwl/node": {
+      "application": {
+        "linter": "tslint"
+      },
+      "library": {
+        "linter": "tslint"
+      }
+    },
+    "@nrwl/nest": {
+      "application": {
+        "linter": "tslint"
+      },
+      "library": {
+        "linter": "tslint"
+      }
+    },
+    "@nrwl/express": {
+      "application": {
+        "linter": "tslint"
+      },
+      "library": {
+        "linter": "tslint"
+      }
+    },
+    "@nrwl/angular:application": {
+      "style": "scss",
+      "linter": "tslint",
+      "unitTestRunner": "jest",
+      "e2eTestRunner": "cypress"
+    },
+    "@nrwl/angular:library": {
+      "style": "scss",
+      "linter": "tslint",
+      "unitTestRunner": "jest"
+    },
+    "@nrwl/angular:component": {
+      "style": "scss"
+    },
+    "@ionic/angular-toolkit:component": {
+      "styleext": "scss"
+    },
+    "@ionic/angular-toolkit:page": {
+      "styleext": "scss"
+    }
+  },
+  "projects": {
+    "ionic-fy-e2e": {
+      "root": "apps/ionic-fy-e2e",
+      "sourceRoot": "apps/ionic-fy-e2e/src",
+      "projectType": "application",
+      "architect": {
+        "e2e": {
+          "builder": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "apps/ionic-fy-e2e/cypress.json",
+            "tsConfig": "apps/ionic-fy-e2e/tsconfig.e2e.json",
+            "devServerTarget": "ionic-fy:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "ionic-fy:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "apps/ionic-fy-e2e/tsconfig.e2e.json"
+            ],
+            "exclude": [
+              "**/node_modules/**",
+              "!apps/ionic-fy-e2e/**/*"
+            ]
+          }
+        }
+      }
+    },
+    "api": {
+      "root": "apps/api",
+      "sourceRoot": "apps/api/src",
+      "projectType": "application",
+      "prefix": "api",
+      "architect": {
+        "build": {
+          "builder": "@nrwl/node:build",
+          "outputs": [
+            "{options.outputPath}"
+          ],
+          "options": {
+            "outputPath": "dist/apps/api",
+            "main": "apps/api/src/main.ts",
+            "tsConfig": "apps/api/tsconfig.app.json",
+            "assets": [
+              "apps/api/src/assets"
+            ]
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "extractLicenses": true,
+              "inspect": false,
+              "fileReplacements": [
+                {
+                  "replace": "apps/api/src/environments/environment.ts",
+                  "with": "apps/api/src/environments/environment.prod.ts"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@nrwl/node:execute",
+          "options": {
+            "buildTarget": "api:build"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "apps/api/tsconfig.app.json",
+              "apps/api/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**",
+              "!apps/api/**/*"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": [
+            "coverage/apps/api"
+          ],
+          "options": {
+            "jestConfig": "apps/api/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "api-interfaces": {
+      "root": "libs/api-interfaces",
+      "sourceRoot": "libs/api-interfaces/src",
+      "projectType": "library",
+      "architect": {
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/api-interfaces/tsconfig.lib.json"
+            ],
+            "exclude": [
+              "**/node_modules/**",
+              "!libs/api-interfaces/**/*"
+            ]
+          }
+        }
+      }
+    },
+    "xplat-core": {
+      "root": "libs/xplat/core",
+      "sourceRoot": "libs/xplat/core/src",
+      "projectType": "library",
+      "architect": {
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/xplat/core/tsconfig.lib.json",
+              "libs/xplat/core/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**",
+              "!libs/xplat/core/**/*"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": [
+            "coverage/libs/xplat/core"
+          ],
+          "options": {
+            "jestConfig": "libs/xplat/core/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "xplat-features": {
+      "root": "libs/xplat/features",
+      "sourceRoot": "libs/xplat/features/src",
+      "projectType": "library",
+      "architect": {
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/xplat/features/tsconfig.lib.json",
+              "libs/xplat/features/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**",
+              "!libs/xplat/features/**/*"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": [
+            "coverage/libs/xplat/features"
+          ],
+          "options": {
+            "jestConfig": "libs/xplat/features/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "xplat-scss": {
+      "root": "libs/xplat/scss",
+      "sourceRoot": "libs/xplat/scss/src",
+      "projectType": "library",
+      "architect": {
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/xplat/scss/tsconfig.lib.json",
+              "libs/xplat/scss/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**",
+              "!libs/xplat/scss/**/*"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": [
+            "coverage/libs/xplat/scss"
+          ],
+          "options": {
+            "jestConfig": "libs/xplat/scss/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "xplat-utils": {
+      "root": "libs/xplat/utils",
+      "sourceRoot": "libs/xplat/utils/src",
+      "projectType": "library",
+      "architect": {
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/xplat/utils/tsconfig.lib.json",
+              "libs/xplat/utils/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**",
+              "!libs/xplat/utils/**/*"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": [
+            "coverage/libs/xplat/utils"
+          ],
+          "options": {
+            "jestConfig": "libs/xplat/utils/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "xplat-ionic-core": {
+      "root": "libs/xplat/ionic/core",
+      "sourceRoot": "libs/xplat/ionic/core/src",
+      "projectType": "library",
+      "architect": {
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/xplat/ionic/core/tsconfig.lib.json",
+              "libs/xplat/ionic/core/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**",
+              "!libs/xplat/ionic/core/**/*"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": [
+            "coverage/libs/xplat/ionic/core"
+          ],
+          "options": {
+            "jestConfig": "libs/xplat/ionic/core/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "xplat-ionic-features": {
+      "root": "libs/xplat/ionic/features",
+      "sourceRoot": "libs/xplat/ionic/features/src",
+      "projectType": "library",
+      "architect": {
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/xplat/ionic/features/tsconfig.lib.json",
+              "libs/xplat/ionic/features/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**",
+              "!libs/xplat/ionic/features/**/*"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": [
+            "coverage/libs/xplat/ionic/features"
+          ],
+          "options": {
+            "jestConfig": "libs/xplat/ionic/features/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "xplat-ionic-scss": {
+      "root": "libs/xplat/ionic/scss",
+      "sourceRoot": "libs/xplat/ionic/scss/src",
+      "projectType": "library",
+      "architect": {
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/xplat/ionic/scss/tsconfig.lib.json",
+              "libs/xplat/ionic/scss/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**",
+              "!libs/xplat/ionic/scss/**/*"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": [
+            "coverage/libs/xplat/ionic/scss"
+          ],
+          "options": {
+            "jestConfig": "libs/xplat/ionic/scss/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "xplat-web-core": {
+      "root": "libs/xplat/web/core",
+      "sourceRoot": "libs/xplat/web/core/src",
+      "projectType": "library",
+      "architect": {
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/xplat/web/core/tsconfig.lib.json",
+              "libs/xplat/web/core/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**",
+              "!libs/xplat/web/core/**/*"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": [
+            "coverage/libs/xplat/web/core"
+          ],
+          "options": {
+            "jestConfig": "libs/xplat/web/core/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "xplat-web-features": {
+      "root": "libs/xplat/web/features",
+      "sourceRoot": "libs/xplat/web/features/src",
+      "projectType": "library",
+      "architect": {
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/xplat/web/features/tsconfig.lib.json",
+              "libs/xplat/web/features/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**",
+              "!libs/xplat/web/features/**/*"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": [
+            "coverage/libs/xplat/web/features"
+          ],
+          "options": {
+            "jestConfig": "libs/xplat/web/features/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "xplat-web-scss": {
+      "root": "libs/xplat/web/scss",
+      "sourceRoot": "libs/xplat/web/scss/src",
+      "projectType": "library",
+      "architect": {
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/xplat/web/scss/tsconfig.lib.json",
+              "libs/xplat/web/scss/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**",
+              "!libs/xplat/web/scss/**/*"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": [
+            "coverage/libs/xplat/web/scss"
+          ],
+          "options": {
+            "jestConfig": "libs/xplat/web/scss/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "xplat-electron-core": {
+      "root": "libs/xplat/electron/core",
+      "sourceRoot": "libs/xplat/electron/core/src",
+      "projectType": "library",
+      "architect": {
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/xplat/electron/core/tsconfig.lib.json",
+              "libs/xplat/electron/core/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**",
+              "!libs/xplat/electron/core/**/*"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": [
+            "coverage/libs/xplat/electron/core"
+          ],
+          "options": {
+            "jestConfig": "libs/xplat/electron/core/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "ionic-fy": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "styleext": "scss"
+        }
+      },
+      "root": "apps/ionic-fy/",
+      "sourceRoot": "apps/ionic-fy/src",
+      "prefix": "fy",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "allowedCommonJsDependencies": [
+              "axios",
+              "p-any",
+              "p-some",
+              "p-retry",
+              "p-queue",
+              "m3u8-file-parser",
+              "hash.js",
+              "meilisearch",
+              "lodash",
+              "kardia-js-sdk",
+              "hammerjs",
+              "@videojs/xhr",
+              "videojs-vtt.js",
+              "@babel/runtime/helpers/construct",
+              "@babel/runtime/helpers/inherits",
+              "@babel/runtime/helpers/inheritsLoose",
+              "mux.js/lib/tools/ts-inspector.js",
+              "mux.js/lib/mp4/probe",
+              "global/document"
+            ],
+            "outputPath": "apps/ionic-fy/www",
+            "index": "apps/ionic-fy/src/index.html",
+            "main": "apps/ionic-fy/src/main.ts",
+            "polyfills": "apps/ionic-fy/src/polyfills.ts",
+            "tsConfig": "apps/ionic-fy/tsconfig.app.json",
+            "assets": [
+              {
+                "glob": "**/*",
+                "input": "apps/ionic-fy/src/assets",
+                "output": "assets"
+              },
+              {
+                "glob": "**/*.svg",
+                "input": "node_modules/ionicons/dist/ionicons/svg",
+                "output": "./svg"
+              },
+              {
+                "glob": "**/*.svg",
+                "input": "apps/ionic-fy/src/assets/fy-icons",
+                "output": "./svg"
+              },
+              {
+                "glob": "**/*",
+                "ignore": [
+                  "**/*.ts"
+                ],
+                "input": "apps/ionic-fy/src/service-worker",
+                "output": "/"
+              },
+              "apps/ionic-fy/src/manifest.webmanifest"
+            ],
+            "styles": [
+              {
+                "input": "apps/ionic-fy/src/theme/variables.scss"
+              },
+              {
+                "input": "apps/ionic-fy/src/global.scss"
+              }
+            ],
+            "scripts": [],
+            "serviceWorker": true,
+            "ngswConfigPath": "apps/ionic-fy/ngsw-config.json"
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "apps/ionic-fy/src/environments/environment.ts",
+                  "with": "apps/ionic-fy/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                }
+              ]
+            },
+            "ci": {
+              "progress": false
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "ionic-fy:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "ionic-fy:build:production"
+            },
+            "ci": {
+              "progress": false
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "ionic-fy:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "apps/ionic-fy/src/test.ts",
+            "polyfills": "apps/ionic-fy/src/polyfills.ts",
+            "tsConfig": "apps/ionic-fy/tsconfig.spec.json",
+            "karmaConfig": "apps/ionic-fy/karma.conf.js",
+            "styles": [],
+            "scripts": [],
+            "assets": [
+              {
+                "glob": "favicon.ico",
+                "input": "apps/ionic-fy/src/",
+                "output": "/"
+              },
+              {
+                "glob": "**/*",
+                "input": "apps/ionic-fy/src/assets",
+                "output": "/assets"
+              },
+              {
+                "glob": "**/*",
+                "ignore": [
+                  "**/*.ts"
+                ],
+                "input": "apps/ionic-fy/src/service-worker",
+                "output": "/"
+              },
+              "apps/ionic-fy/src/manifest.webmanifest"
+            ]
+          },
+          "configurations": {
+            "ci": {
+              "progress": false,
+              "watch": false
+            }
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "apps/ionic-fy/tsconfig.app.json",
+              "apps/ionic-fy/tsconfig.spec.json",
+              "apps/ionic-fy/e2e/tsconfig.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        },
+        "ionic-cordova-build": {
+          "builder": "@ionic/angular-toolkit:cordova-build",
+          "options": {
+            "browserTarget": "ionic-fy:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "ionic-fy:build:production"
+            }
+          }
+        },
+        "ionic-cordova-serve": {
+          "builder": "@ionic/angular-toolkit:cordova-serve",
+          "options": {
+            "cordovaBuildTarget": "ionic-fy:ionic-cordova-build",
+            "devServerTarget": "ionic-fy:serve"
+          },
+          "configurations": {
+            "production": {
+              "cordovaBuildTarget": "ionic-fy:ionic-cordova-build:production",
+              "devServerTarget": "ionic-fy:serve:production"
+            }
+          }
+        }
+      }
+    },
+    "electron-fy": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "styleext": "scss"
+        }
+      },
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "allowedCommonJsDependencies": [
+              "axios",
+              "p-any",
+              "p-some",
+              "p-retry",
+              "p-queue",
+              "m3u8-file-parser",
+              "hash.js",
+              "meilisearch",
+              "lodash",
+              "kardia-js-sdk",
+              "hammerjs",
+              "@videojs/xhr",
+              "videojs-vtt.js",
+              "@babel/runtime/helpers/construct",
+              "@babel/runtime/helpers/inherits",
+              "@babel/runtime/helpers/inheritsLoose",
+              "mux.js/lib/tools/ts-inspector.js",
+              "mux.js/lib/mp4/probe",
+              "global/document"
+            ],
+            "outputPath": "dist/apps/electron-fy",
+            "index": "apps/ionic-fy/src/index.html",
+            "main": "apps/ionic-fy/src/main.electron.ts",
+            "polyfills": "apps/ionic-fy/src/polyfills.ts",
+            "tsConfig": "apps/ionic-fy/tsconfig.electron.json",
+            "assets": [
+              {
+                "glob": "**/*",
+                "input": "apps/ionic-fy/src/assets",
+                "ignore": [
+                  "fy-icons/*"
+                ],
+                "output": "assets"
+              },
+              {
+                "glob": "**/*.svg",
+                "input": "apps/ionic-fy/src/assets/fy-icons",
+                "output": "./svg"
+              },
+              {
+                "glob": "**/*.svg",
+                "input": "node_modules/ionicons/dist/ionicons/svg",
+                "output": "./svg"
+              },
+              {
+                "glob": "**/*",
+                "input": "apps/electron-fy/src/",
+                "ignore": [
+                  "**/*.ts"
+                ],
+                "output": ""
+              }
+            ],
+            "styles": [
+              {
+                "input": "apps/ionic-fy/src/theme/variables.scss"
+              },
+              {
+                "input": "apps/ionic-fy/src/global.scss"
+              }
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "apps/ionic-fy/src/environments/environment.ts",
+                  "with": "apps/ionic-fy/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                }
+              ]
+            },
+            "ci": {
+              "progress": false
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "electron-fy:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "electron-fy:build:production"
+            },
+            "ci": {
+              "progress": false
+            }
+          }
+        },
+        "ionic-cordova-build": {
+          "builder": "@ionic/angular-toolkit:cordova-build",
+          "options": {
+            "browserTarget": "ionic-fy:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "ionic-fy:build:production"
+            }
+          }
+        },
+        "ionic-cordova-serve": {
+          "builder": "@ionic/angular-toolkit:cordova-serve",
+          "options": {
+            "cordovaBuildTarget": "ionic-fy:ionic-cordova-build",
+            "devServerTarget": "ionic-fy:serve"
+          },
+          "configurations": {
+            "production": {
+              "cordovaBuildTarget": "ionic-fy:ionic-cordova-build:production",
+              "devServerTarget": "ionic-fy:serve:production"
+            }
+          }
+        }
+      },
+      "root": "apps/ionic-fy/",
+      "sourceRoot": "apps/ionic-fy/src",
+      "prefix": "fy"
+    }
+  }
+}

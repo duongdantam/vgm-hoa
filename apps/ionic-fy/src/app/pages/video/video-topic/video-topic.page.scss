@@ -1,0 +1,37 @@
+ion-content {
+  // margin-top:
+  // --background: var(--ion-color-light-shade);
+  --offset-top: -20px !important;
+  // --background: #e5e5e5;
+  // --padding-top: 58px; // Mobile only
+  .loading {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    justify-content: center;
+    align-content: center;
+  }
+  ion-grid {
+    padding: calc(80px + var(--sat)) 0px 60px 0px;
+    // padding-left: 10px;
+  }
+}
+
+@media screen and (min-width: 992px) {
+  ion-grid {
+    padding-bottom: 0px;
+    // padding-left: 10px;
+  }
+  ion-content {
+    --padding-start: 20px;
+    --padding-end: 20px;
+    // ion-grid {
+    //   padding: 0 5px 0 5px;
+    //   // padding-left: 10px;
+    // }
+  }
+}
+
+ion-refresher {
+  z-index: 99;
+}

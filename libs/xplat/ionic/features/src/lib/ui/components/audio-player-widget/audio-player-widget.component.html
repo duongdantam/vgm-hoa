@@ -1,0 +1,171 @@
+<div
+  class="wrapper collapsible"
+  id="audio-widget"
+  [ngStyle]="{ display: isHidden ? 'none' : '' }"
+  (touchstart)="onTouchStart($event)"
+  (touchmove)="onTouchMove($event)"
+  (touchend)="onTouchEnd($event)"
+  tabindex="0"
+>
+  <div class="duration-div hide-lg-up">
+    <ion-text class="duration" color="dark" size="small">{{
+      currentTime | readableTime
+    }}</ion-text>
+    <ion-text class="duration" color="dark" size="small">
+      {{ duration | readableTime }}</ion-text
+    >
+  </div>
+
+  <ion-range
+    color="light"
+    min="0"
+    [max]="duration"
+    [(ngModel)]="currentTime"
+    (ionStart)="beginSeek($event)"
+    (ionEnd)="endSeek($event)"
+    class="time-slider"
+  ></ion-range>
+  <div class="playback">
+    <ion-button
+      fill="clear"
+      class="collapse-btn hide-sm hide-md"
+      (click)="collapsePlayer()"
+      ><ion-icon name="chevron-down-outline"></ion-icon>
+      <ion-ripple-effect type="unbounded"></ion-ripple-effect
+    ></ion-button>
+
+    <div class="playback-info">
+      <ion-button
+        class="hide-lg-up hide-md"
+        fill="clear"
+        size="small"
+        (click)="handleTogglePlayMode(playbackMode)"
+      >
+        <ion-icon
+          slot="icon-only"
+          [name]="
+            playbackMode === 2
+              ? 'fy-shuffle'
+              : playbackMode === 0
+              ? 'fy-repeat'
+              : 'fy-repeat-all'
+          "
+        ></ion-icon>
+      </ion-button>
+
+      <marquee
+        direction=""
+        scrollamount="4"
+        class="title"
+        onmouseover="this.stop()"
+        onmouseout="this.start()"
+      >
+        {{ title || '...' }}
+      </marquee>
+
+      <!-- <div style="display: flex">
+        <ion-text class="hide-lg-up duration" color="secondary" size="small"
+          >{{ currentTime | readableTime }} /
+          {{ duration | readableTime }}</ion-text
+        >
+      </div> -->
+      <ion-button
+        class="playback-rate hide-lg-up hide-md"
+        size="small"
+        fill="clear"
+        (click)="handlePlaybackRateToggle()"
+        style="color: var(--ion-color-primary-contrast)"
+      >
+        {{ playbackRate }}x
+      </ion-button>
+    </div>
+
+    <div class="controls">
+      <div class="side-panel"></div>
+      <div class="main-panel">
+        <ion-button
+          class="hide-sm"
+          fill="clear"
+          size="small"
+          (click)="handleTogglePlayMode(playbackMode)"
+        >
+          <ion-icon
+            slot="icon-only"
+            [name]="
+              playbackMode === 2
+                ? 'fy-shuffle'
+                : playbackMode === 0
+                ? 'fy-repeat'
+                : 'fy-repeat-all'
+            "
+          ></ion-icon>
+        </ion-button>
+
+        <ion-button
+          fill="clear"
+          size="default"
+          (click)="handleRewindForward(-10)"
+        >
+          <ion-icon slot="icon-only" name="fy-rewind-10s"></ion-icon>
+        </ion-button>
+        <ion-button fill="clear" size="default" (click)="handleBackNForth(-1)">
+          <ion-icon slot="icon-only" name="fy-backward"></ion-icon>
+        </ion-button>
+        <ion-button fill="clear" size="large" (click)="handleTogglePlayPause()">
+          <ion-icon
+            style="font-size: 55px"
+            slot="icon-only"
+            [name]="isPlaying ? 'fy-pause' : 'fy-play'"
+          ></ion-icon>
+        </ion-button>
+        <ion-button fill="clear" size="default" (click)="handleBackNForth(1)">
+          <ion-icon slot="icon-only" name="fy-forward"></ion-icon>
+        </ion-button>
+        <ion-button
+          fill="clear"
+          size="default"
+          (click)="handleRewindForward(10)"
+        >
+          <ion-icon slot="icon-only" name="fy-forward-10s"></ion-icon>
+        </ion-button>
+
+        <ion-button
+          class="playback-rate hide-sm"
+          fill="clear"
+          (click)="handlePlaybackRateToggle()"
+        >
+          {{ playbackRate }}x
+        </ion-button>
+      </div>
+      <ion-range
+        [(ngModel)]="volumeLevel"
+        (ngModelChange)="onVolumeChange($event)"
+        min="0"
+        max="1"
+        step="0.01"
+        class="volume-panel side-panel"
+        style="width: 100px"
+      >
+        <ion-icon slot="end" name="fy-volume-up"></ion-icon>
+      </ion-range>
+    </div>
+    <div class="playback-info-lg">
+      <ion-text class="duration-lg" color="primary" size="small"
+        >{{ currentTime | readableTime }}
+      </ion-text>
+      <ion-text class="duration-lg" color="primary" size="small">
+        {{ duration | readableTime }}</ion-text
+      >
+    </div>
+
+    <video
+      #audio
+      id="audio-player"
+      class="hls-audio"
+      controls
+      playsinline
+      muted="{{ isMuted }}"
+      preload="none"
+    ></video>
+  </div>
+</div>

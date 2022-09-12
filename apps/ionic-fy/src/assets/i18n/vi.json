@@ -1,0 +1,45 @@
+{
+  "intro": {
+    "title": "CHƯƠNG TRÌNH HỌC BIẾT PHÚC ÂM<br/> ĐA PHƯƠNG TIỆN CHO NGƯỜI VIỆT NAM",
+    "subtitle": "VGM là chương trình rao truyền Phúc Âm và lẽ thật của Thánh Kinh cho mọi người, không phân biệt tôn giáo, hệ phái, trình độ, lứa tuổi, người có niềm tin hay không có niềm tin. Mọi người đều được tự do tiếp cận, chọn lựa và tìm hiểu vấn đề mình mong muốn. ",
+    "connect": "ĐANG THIẾT LẬP KẾT NỐI...",
+    "loading": "ĐANG TẢI DỮ LIỆU",
+    "continue": "TIẾP TỤC VÀO VGM"
+  },
+  "tabs": {
+    "video": "Video",
+    "audio": "Audio",
+    "favorite": "Yêu thích",
+    "document": "Ngoại tuyến"
+  },
+  "document": {
+    "document": "DANH SÁCH",
+    "play": "PHÁT",
+    "favorite": "YÊU THÍCH",
+    "search": "TÌM KIẾM",
+    "download": "TẢI VỀ"
+  },
+  "component": {
+    "seeAll": "Xem tất cả"
+  },
+  "msg": {
+    "notfound": "404 - TRANG KHÔNG TỒN TẠI",
+    "share": "Chia sẽ",
+    "copylink": "Liên kết đã được sao chép",
+    "video": {
+      "add": "Đã lưu 1 video vào dách sách yêu thích",
+      "remove": "Đã xóa 1 video khỏi dách sách yêu thích",
+      "download": "Đã tải về  1 video",
+      "delete": "Đã xóa 1 video khỏi danh sách tải về"
+    },
+    "audio": {
+      "add": "Đã lưu 1 audio vào dách sách yêu thích",
+      "remove": "Đã xóa 1 audio khỏi dách sách yêu thích",
+      "download": "Đã tải về  1 audio",
+      "delete": "Đã xóa 1 audio khỏi danh sách tải về"
+    }
+  },
+  "input": {
+    "search": "Tìm nhanh"
+  }
+}

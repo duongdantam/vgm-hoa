@@ -1,0 +1,16 @@
+<ion-header mode="ios"></ion-header>
+<ion-content>
+  <ion-list mode="ios" lines="inset" inset>
+    <ion-item
+      color="_activatedAt === i ? 'primary' : 'light'"
+      *ngFor="let item of list; index as i"
+      [routerLink]="['/tabs', 'video', item.href]"
+      >{{ item.value }}</ion-item
+    >
+  </ion-list>
+</ion-content>
+
+<!-- routerLinkActive="activated"
+          [ngClass]="{ activated: _activatedAt === item.href }" -->
+
+<!-- routerLinkDirection="root" -->

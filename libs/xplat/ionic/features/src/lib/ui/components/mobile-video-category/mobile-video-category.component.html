@@ -1,0 +1,52 @@
+<ion-grid>
+  <ion-row class="ion-justify-content-between ion-align-items-center">
+    <ion-col style="text-align: left">
+      <h6 style="margin-top: 5px">
+        <ion-text
+          color="primary"
+          (click)="routerNavigation(listUrl)"
+          class="title"
+        >
+          {{ name | uppercase }}</ion-text
+        >
+      </h6>
+    </ion-col>
+    <ion-col size="auto" class="ion-justify-content-end ion-align-items-end">
+      <ion-button
+        fill="clear"
+        color="primary"
+        size="small"
+        (click)="routerNavigation(listUrl)"
+        class="hide-when-sm"
+        >{{ 'component.seeAll' | translate
+        }}<ion-icon name="arrow-forward-outline"></ion-icon>
+      </ion-button>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-slides
+      [options]="{
+        slidesPerView: 'auto',
+        zoom: false,
+        grabCursor: true,
+        mousewheel: true
+      }"
+      (ionSlideTouchStart)="slideTouch(true)"
+      (ionSlideTouchEnd)="slideTouch(false)"
+    >
+      <ion-slide *ngFor="let item of itemList | slice: 0:10">
+        <fy-thumb-card
+          style="width: 100%"
+          (click)="selectItem(item)"
+          [title]="item.value"
+          [subtitle]="item.duration"
+          [img]="item.thumb"
+          [href]="item.href"
+          [isLeaf]="item.isLeaf"
+          [listCount]="item.count"
+          (mouseover)="preloadData(item)"
+        ></fy-thumb-card>
+      </ion-slide>
+    </ion-slides>
+  </ion-row>
+</ion-grid>

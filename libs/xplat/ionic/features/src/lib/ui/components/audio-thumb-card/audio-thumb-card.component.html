@@ -1,0 +1,35 @@
+<div class="wrapper" [routerLink]="href">
+  <ion-icon
+    name="fy-bible"
+    *ngIf="avatar === null"
+    class="symbol {{ isHighlight ? 'isHighlight' : '' }}"
+  ></ion-icon>
+  <!-- <ion-avatar class="avatar" *ngIf="avatar !== null">
+    <img style="position: absolute; left: 4px; top: 3px" [src]="avatar" />
+    <div class="avatar-wrapper">
+      <svg
+        width="10"
+        height="10"
+        viewBox="0 0 39 39"
+        xmlns="http://www.w3.org/2000/svg"
+        style="width: calc(100% - 18px); height: calc(100% - 18px)"
+      >
+        <path
+          fill-rule="evenodd"
+          clip-rule="evenodd"
+          d="M19.5 1C11.8339 1 5.168 5.74599 1.90845 12.7115L1 12.2885C4.40345 5.01551 11.3974 0 19.5 0C27.6026 0 34.5966 5.01551 38 12.2885L37.0915 12.7115C33.832 5.74599 27.1661 1 19.5 1ZM1.90845 26.2885C5.168 33.254 11.8339 38 19.5 38C27.1661 38 33.832 33.254 37.0915 26.2885L38 26.7115C34.5966 33.9845 27.6026 39 19.5 39C11.3974 39 4.40345 33.9845 1 26.7115L1.90845 26.2885Z"
+        ></path>
+      </svg>
+    </div>
+  </ion-avatar> -->
+  <div class="background {{ isHighlight === true ? 'isHighlight' : '' }}">
+    <div class="content {{ isHighlight ? 'isHighlight' : '' }}">
+      <ion-text class="title {{ isHighlight ? 'isHighlight' : '' }}">{{
+        title
+      }}</ion-text>
+      <ion-text class="subtitle {{ isHighlight ? 'isHighlight' : '' }}">
+        {{ subtitle }}
+      </ion-text>
+    </div>
+  </div>
+</div>

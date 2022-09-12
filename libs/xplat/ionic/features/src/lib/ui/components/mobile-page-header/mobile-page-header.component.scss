@@ -1,0 +1,86 @@
+ion-toolbar {
+  height: calc(48px + var(--sat));
+  --background: white;
+}
+
+.brand-logo {
+  margin: auto;
+  width: 36px;
+  height: 36px;
+}
+
+.app-install-btn {
+  font-size: 13px;
+  --padding-start: 10px;
+  --padding-end: 10px;
+}
+
+@media all and (display-mode: standalone) {
+  .app-install-btn {
+    display: none;
+  }
+}
+
+// @media screen and (min-width: 990px) {
+//   ion-toolbar {
+//     display: none;
+//   }
+// }
+
+.search-bar {
+  position: absolute;
+  z-index: 1001;
+  height: 100vh;
+  --padding-bottom: 200px;
+  top: var(--sat);
+  left: var(--sal);
+  ion-searchbar {
+    z-index: 1;
+    position: fixed;
+    background-color: white;
+  }
+
+  ion-button {
+    --padding-start: 0;
+    --padding-end: 10px;
+    // --padding-start: 0;
+    // --padding-start: 0;
+  }
+  ion-list {
+    position: inherit;
+    margin-top: 60px;
+    top: 50px;
+  }
+}
+
+.downloading {
+  opacity: 0.8;
+}
+
+.downloading::after {
+  content: '';
+  background-color: white;
+  opacity: 0.8;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  // height: 20%;
+  animation: download 2s infinite;
+  animation-direction: reverse;
+}
+
+@keyframes download {
+  from {
+    height: 50%;
+  }
+  to {
+    height: 100%;
+  }
+}
+
+:host ::ng-deep fy-thumb-card {
+  ion-img {
+    min-height: 80px;
+  }
+}

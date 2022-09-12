@@ -1,0 +1,36 @@
+<ion-header>
+  <fy-desktop-page-header
+    home="audio"
+    class="desktop-header"
+  ></fy-desktop-page-header>
+  <fy-mobile-page-header home="audio"></fy-mobile-page-header>
+  <fy-top-menu
+    home="audio"
+    [activeId]="dataFetchService.audioTabActiveIndex"
+  ></fy-top-menu>
+</ion-header>
+
+<ion-split-pane contentId="audio-main">
+  <ion-menu side="start" menuId="audio-menu" contentId="main">
+    <ion-content>
+      <ion-list mode="ios" lines="inset" inset>
+        <ion-item
+          *ngFor="let item of audioList; index as i"
+          id="{{item.href}}-btn"
+          [routerLink]="['/tabs', 'audio', 'catalog']"
+          [queryParams]="{topicUrl:item.href}"
+          [queryParamsHandling]="merge"
+          routerLinkActivate="activated"
+          [ngClass]="
+        activeHref.includes(item.href)
+          ? 'ion-item-active'
+          : ''
+      "
+        >
+          <ion-label> {{ item.value }} </ion-label>
+        </ion-item>
+      </ion-list>
+    </ion-content>
+  </ion-menu>
+  <ion-router-outlet mode="ios" id="audio-main"></ion-router-outlet>
+</ion-split-pane>

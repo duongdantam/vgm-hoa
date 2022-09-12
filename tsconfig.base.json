@@ -1,0 +1,38 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "rootDir": ".",
+    "sourceMap": true,
+    "declaration": false,
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "allowSyntheticDefaultImports": true,
+    "target": "es2015",
+    "module": "esnext",
+    "lib": ["es2017", "dom"],
+    "skipLibCheck": true,
+    "skipDefaultLibCheck": true,
+    "baseUrl": ".",
+    "paths": {
+      "@fy/api-interfaces": ["libs/api-interfaces/src/index.ts"],
+      "@fy/xplat/core": ["libs/xplat/core/src/index.ts"],
+      "@fy/xplat/features": ["libs/xplat/features/src/index.ts"],
+      "@fy/xplat/utils": ["libs/xplat/utils/src/index.ts"],
+      "@fy/xplat/ionic/core": ["libs/xplat/ionic/core/src/index.ts"],
+      "@fy/xplat/ionic/features": ["libs/xplat/ionic/features/src/index.ts"],
+      "@fy/xplat/environments": [
+        "libs/xplat/core/src/lib/environments/base/index.ts"
+      ],
+      "@fy/xplat/web/core": ["libs/xplat/web/core/src/index.ts"],
+      "@fy/xplat/web/features": ["libs/xplat/web/features/src/index.ts"],
+      "@fy/xplat/electron/core": ["libs/xplat/electron/core/src/index.ts"],
+      "rxjs": ["node_modules/rxjs"],
+      "rxjs/*": ["node_modules/rxjs/*"]
+    }
+  },
+  "exclude": ["node_modules", "tmp"],
+  "esModuleInterop": true,
+  "allowSyntheticDefaultImports": true
+}

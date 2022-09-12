@@ -1,0 +1,66 @@
+<ion-tabs (ionTabsWillChange)="onTabsWillChange($event)">
+  <fy-audio-player-widget
+    [title]="(playerService.audioPlayState$ | async).playingTitle || ''"
+    [isHidden]="playerService.audioIsHidden"
+    [isVideoControl]="playerService.isOnVideoControl"
+    [options]="{ autoplay: true, controls: false, sources: [{ src: audioPlayUrl, type: type }]}"
+    [playbackRate]="playerService.playbackRate$ | async"
+    [playingSource]="(playerService.audioPlayState$ | async).playingSource"
+    [isPlaying]="(playerService.audioPlayState$ | async).isPlaying"
+    [playingType]="(playerService.audioPlayState$ | async).playingType"
+    [playingItem]="(playerService.audioPlayState$ | async).item"
+    [playbackMode]="(playerService.playbackMode$ | async)"
+    (onPlayerEvent)="handleAudioPlayerEvent($event)"
+  ></fy-audio-player-widget>
+
+  <fy-video-player-widget
+    [isHidden]="playerService.videoIsHidden"
+    [isVideoControl]="playerService.isOnVideoControl"
+    [widgetLocation]="playerService.videoWidgetLocation"
+    [isPlaying]="(playerService.videoPlayState$ | async).isPlaying"
+    [audioIsPlaying]="(playerService.audioPlayState$ | async).isPlaying"
+    [playingItem]="(playerService.videoPlayState$ | async).item"
+    [playingSource]="(playerService.videoPlayState$ | async).playingSource"
+    [options]="{autoplay: true, controls: true, sources: [{ src: videoPlayUrl, type: type}]}"
+    (onPlayerEvent)="handleVideoPlayerEvent($event)"
+  >
+  </fy-video-player-widget>
+
+  <ion-tab-bar mode="ios" slot="bottom">
+    <ion-tab-button class="hide-when-sm" tab="schedule">
+      <ion-img src="assets/imgs/fy-play-logo-red.svg"></ion-img>
+    </ion-tab-button>
+
+    <ion-tab-button tab="video" (click)="menuTab('video')">
+      <div
+        class="icon-svg colorBase"
+        style="-webkit-mask-image: url(assets/icons/IconL/Light/camera.svg)"
+      ></div>
+      <ion-label>{{'tabs.video' | translate}}</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button tab="audio" (click)="menuTab('audio')">
+      <div
+        class="icon-svg colorBase"
+        style="-webkit-mask-image: url(assets/icons/IconL/Light/audio.svg)"
+      ></div>
+      <ion-label>{{'tabs.audio' | translate}}</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button tab="favorite" (click)="menuTab('favorite')">
+      <div
+        class="icon-svg colorBase"
+        style="-webkit-mask-image: url(assets/icons/IconL/Light/star.svg)"
+      ></div>
+      <ion-label>{{'tabs.favorite' | translate}}</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button tab="document" (click)="menuTab('document')">
+      <div
+        class="icon-svg colorBase"
+        style="-webkit-mask-image: url(assets/icons/IconL/Light/download.svg)"
+      ></div>
+      <ion-label>{{'tabs.document' | translate}}</ion-label>
+    </ion-tab-button>
+  </ion-tab-bar>
+</ion-tabs>

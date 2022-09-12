@@ -1,0 +1,336 @@
+// http://ionicframework.com/docs/theming/
+// App Global Sass
+// ----------------------------------------------------------------------------
+// Put style rules here that you want to apply globally. These styles are for
+// the entire app and not just one component. Additionally, this file can be
+// also used as an entry point to import other Sass files to be included in the
+// output CSS.
+//
+// Shared Sass variables, which can be used to adjust Ionic's default Sass
+// variables, belong in "theme/variables.scss".
+//
+// To declare rules for a specific mode, create a child rule for the .md, .ios,
+// or .wp mode classes. The mode class is automatically applied to the <body>
+// element in the app.
+@import '~@fy/xplat-ionic-scss/index';
+
+@font-face {
+  font-display: swap;
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 300;
+  src: url('assets/fonts/Montserrat-Light.eot');
+  src: url('assets/fonts/Montserrat-Light.eot?#iefix')
+      format('embedded-opentype'),
+    url('assets/fonts/Montserrat-Light.woff') format('woff'),
+    url('assets/fonts/Montserrat-Light.ttf') format('truetype'),
+    url('assets/fonts/Montserrat-Light.svg#Montserrat-Light') format('svg');
+}
+
+@font-face {
+  font-display: swap;
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 500;
+  src: url('assets/fonts/Montserrat-Medium.eot');
+  src: url('assets/fonts/Montserrat-Medium.eot?#iefix')
+      format('embedded-opentype'),
+    url('assets/fonts/Montserrat-Medium.woff') format('woff'),
+    url('assets/fonts/Montserrat-Medium.ttf') format('truetype'),
+    url('assets/fonts/Montserrat-Medium.svg#Montserrat-Medium') format('svg');
+}
+
+@font-face {
+  font-display: swap;
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: normal;
+  src: url('assets/fonts/Montserrat-Regular.eot');
+  src: url('assets/fonts/Montserrat-Regular.eot?#iefix')
+      format('embedded-opentype'),
+    url('assets/fonts/Montserrat-Regular.woff') format('woff'),
+    url('assets/fonts/Montserrat-Regular.ttf') format('truetype'),
+    url('assets/fonts/Montserrat-Regular.svg#Montserrat-Regular') format('svg');
+}
+
+@font-face {
+  font-display: swap;
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: bold;
+  src: url('assets/fonts/Montserrat-Bold.eot');
+  src: url('assets/fonts/Montserrat-Bold.eot?#iefix')
+      format('embedded-opentype'),
+    url('assets/fonts/Montserrat-Bold.woff') format('woff'),
+    url('assets/fonts/Montserrat-Bold.ttf') format('truetype'),
+    url('assets/fonts/Montserrat-Bold.svg#Montserrat-Bold') format('svg');
+}
+@font-face {
+  font-display: swap;
+  font-family: 'Raleway';
+  font-style: normal;
+  font-weight: 500;
+  src: url('assets/fonts/Raleway-Medium.eot');
+  src: url('assets/fonts/Raleway-Medium.eot?#iefix') format('embedded-opentype'),
+    url('assets/fonts/Raleway-Medium.woff') format('woff'),
+    url('assets/fonts/Raleway-Medium.ttf') format('truetype'),
+    url('assets/fonts/Raleway-Medium.svg#Raleway-Medium') format('svg');
+}
+
+@font-face {
+  font-display: swap;
+  font-family: 'Raleway';
+  font-style: normal;
+  font-weight: normal;
+  src: url('assets/fonts/Raleway-Regular.eot');
+  src: url('assets/fonts/Raleway-Regular.eot?#iefix')
+      format('embedded-opentype'),
+    url('assets/fonts/Raleway-Regular.woff') format('woff'),
+    url('assets/fonts/Raleway-Regular.ttf') format('truetype'),
+    url('assets/fonts/Raleway-Regular.svg#Raleway-Regular') format('svg');
+}
+
+@font-face {
+  font-display: swap;
+  font-family: 'Raleway';
+  font-style: normal;
+  font-weight: 300;
+  src: url('assets/fonts/Raleway-Light.eot');
+  src: url('assets/fonts/Raleway-Light.eot?#iefix') format('embedded-opentype'),
+    url('assets/fonts/Raleway-Light.woff') format('woff'),
+    url('assets/fonts/Raleway-Light.ttf') format('truetype'),
+    url('assets/fonts/Raleway-Light.svg#Raleway-Light') format('svg');
+}
+
+@font-face {
+  font-display: swap;
+  font-family: 'Raleway';
+  font-style: normal;
+  font-weight: bold;
+  src: url('assets/fonts/Raleway-Bold.eot');
+  src: url('assets/fonts/Raleway-Bold.eot?#iefix') format('embedded-opentype'),
+    url('assets/fonts/Raleway-Bold.woff') format('woff'),
+    url('assets/fonts/Raleway-Bold.ttf') format('truetype'),
+    url('assets/fonts/Raleway-Bold.svg#Raleway-Bold') format('svg');
+}
+
+@font-face {
+  font-display: swap;
+  font-family: 'Raleway';
+  font-style: normal;
+  font-weight: 900;
+  src: url('assets/fonts/Raleway-Black.eot');
+  src: url('assets/fonts/Raleway-Black.eot?#iefix') format('embedded-opentype'),
+    url('assets/fonts/Raleway-Black.woff') format('woff'),
+    url('assets/fonts/Raleway-Black.ttf') format('truetype'),
+    url('assets/fonts/Raleway-Black.svg#Raleway-Black') format('svg');
+}
+
+@font-face {
+  font-display: swap;
+  font-family: 'Raleway';
+  font-style: normal;
+  font-weight: 600;
+  src: url('assets/fonts/Raleway-SemiBold.eot');
+  src: url('assets/fonts/Raleway-SemiBold.eot?#iefix')
+      format('embedded-opentype'),
+    url('assets/fonts/Raleway-SemiBold.woff') format('woff'),
+    url('assets/fonts/Raleway-SemiBold.ttf') format('truetype'),
+    url('assets/fonts/Raleway-SemiBold.svg#Raleway-SemiBold') format('svg');
+}
+
+@font-face {
+  font-display: swap;
+  font-family: 'Raleway';
+  font-style: normal;
+  font-weight: 800;
+  src: url('assets/fonts/Raleway-ExtraBold.eot');
+  src: url('assets/fonts/Raleway-ExtraBold.eot?#iefix')
+      format('embedded-opentype'),
+    url('assets/fonts/Raleway-ExtraBold.woff') format('woff'),
+    url('assets/fonts/Raleway-ExtraBold.ttf') format('truetype'),
+    url('assets/fonts/Raleway-ExtraBold.svg#Raleway-ExtraBold') format('svg');
+}
+
+/** TODO: Make available offline **/
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;0,800;1,300;1,400;1,600;1,700;1,800&display=swap');
+
+$browser-context: 16;
+@function em($pixels, $context: $browser-context) {
+  @if (unitless($pixels)) {
+    $pixels: $pixels * 1px;
+  }
+
+  @if (unitless($context)) {
+    $context: $context * 1px;
+  }
+
+  @return $pixels / $context * 1em;
+}
+
+.colorBase {
+  background-color: var(--ion-color-primary);
+  &.isShow,
+  &.isActive {
+    background-color: var(--ion-color-primary);
+  }
+}
+
+.icon-svg {
+  display: inline-block;
+  vertical-align: middle;
+  cursor: pointer;
+  mask-repeat: no-repeat;
+  mask-position: 50% 50%;
+  mask-size: 80%;
+  width: 1.5em;
+  height: 38px;
+}
+
+// body {
+//   padding: env(safe-area-inset-top, 0px) env(safe-area-inset-right, 0px)
+//     env(safe-area-inset-bottom, 0px) env(safe-area-inset-left, 0px);
+// }
+
+:root {
+  .secondaryMenu .popover-content {
+    left: 15px !important;
+    margin: auto;
+    width: calc(100% - 45px);
+    max-height: 400px;
+    overflow: scroll;
+    &::-webkit-scrollbar {
+      display: none;
+    }
+    .select-interface-option {
+      --background: var(--ion-color-light);
+      --padding-end: 20px;
+    }
+    .select-interface-option:hover {
+      --background: var(--ion-color-light-tint);
+    }
+  }
+  .toast-info {
+    text-align: center !important;
+    color: var(--ion-color-primary);
+  }
+  .open-app-toast {
+    --border-radius: 0;
+    --start: 0;
+    --end: 0;
+    --width: 100%;
+    --min-height: 75px;
+    --white-space: 0;
+    --bottom: -10px;
+    --max-width: none;
+    --background: rgb(243, 243, 243);
+  }
+
+  .alert-confirm {
+    .alert-message {
+      color: var(--ion-color-primary);
+    }
+  }
+
+  .share-modal {
+    --width: 340px;
+    --height: 195px;
+    ion-content {
+      --padding-start: 10px;
+      --padding-top: 10px;
+      --padding-bottom: 10px;
+      --padding-end: 10px;
+      ion-grid {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        ion-list {
+          justify-content: center;
+          ion-button {
+            --padding-start: 5px;
+            --padding-top: 5px;
+            --padding-bottom: 5px;
+            --padding-end: 5px;
+            height: 55px;
+            width: 55px;
+            background-color: var(--ion-color-light);
+            margin: 10px;
+            font-size: 25px;
+            /* border-radius */
+            -webkit-border-radius: 50%;
+            -moz-border-radius: 50%;
+            border-radius: 50%;
+            /* box-shadow */
+            -webkit-box-shadow: rgb(0 0 0 / 50%) 1px 3px 3px;
+            -moz-box-shadow: rgb(0 0 0 / 50%) 1px 3px 3px;
+            box-shadow: rgb(0 0 0 / 50%) 1px 3px 3px;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (min-width: 992px) and (max-width: 1089px) {
+  :root {
+    .secondaryMenu .popover-content {
+      left: 290px !important;
+      width: calc(100% - 320px);
+    }
+  }
+}
+
+@media screen and (min-width: 1090px) {
+  :root {
+    .secondaryMenu .popover-content {
+      left: 390px !important;
+      width: calc(100% - 420px);
+    }
+  }
+
+  .tabs-inner {
+    margin-left: 100px;
+  }
+}
+
+// Hide border line when in desktop mode
+// @media screen and (min-width: 992px) {
+.header-ios ion-toolbar:last-of-type {
+  --border-width: 0;
+}
+// }
+
+/** VIET DESIGN **/
+ion-label {
+  font-family: Montserrat;
+}
+
+// Move searchbar icon to the right
+// ion-searchbar {
+//   &.sc-ion-searchbar-ios-h {
+//     --border-radius: 4px;
+//   }
+
+//   ion-icon {
+//     right: 16px !important;
+//     left: auto !important;
+//   }
+// }
+
+$back-button-icon: url(assets/icons/IconL/Light/ArrowLeft.svg);
+
+ion-icon {
+  &[class*='fy-icon'] {
+    mask-size: contain;
+    mask-position: 50% 50%;
+    mask-repeat: no-repeat;
+    background: transparent;
+    --ion-color-base: transparent !important;
+  }
+
+  &[class*='fy-icon-back'] {
+    mask-image: $back-button-icon;
+  }
+}

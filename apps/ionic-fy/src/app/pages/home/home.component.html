@@ -1,0 +1,104 @@
+<ion-content padding>
+  <div
+    style="
+      height: 100%;
+      display: flex;
+      background-color: var(--ion-color-primary);
+    "
+    class="ion-align-items-center"
+  >
+    <ion-grid style="margin-bottom: 140px">
+      <ion-row class="ion-justify-content-center">
+        <ion-col size="auto">
+          <ion-img
+            class="responsive-logo"
+            src="./assets/imgs/fy-play-logo-white.svg"
+          ></ion-img>
+        </ion-col>
+      </ion-row>
+
+      <ion-row class="ion-justify-content-center">
+        <ion-col class="">
+          <ion-text color="light">
+            <h5
+              class="ion-text-center"
+              style="
+                font-family: 'Montserrat';
+                font-weight: bold;
+                font-size: 24px;
+              "
+              [innerHTML]="'intro.title' | translate"
+            ></h5>
+          </ion-text>
+          <ion-text color="light">
+            <h5
+              class="ion-text-center"
+              style="
+                font-family: 'Montserrat';
+                font-weight: 500;
+                font-size: 16px;
+              "
+              [innerHTML]="'intro.subtitle' | translate"
+            ></h5>
+          </ion-text>
+        </ion-col>
+      </ion-row>
+
+      <!-- <ion-row
+        class="ion-justify-content-center ion-margin-horizontal ion-margin-top"
+      >
+        <ion-col size-md="6">
+          <ion-text color="medium">
+            <p
+              class="ion-text-center"
+              style="font-family: 'Open Sans'; font-size: 14px"
+              [innerHTML]="'intro.subtitle' | translate"
+            ></p>
+          </ion-text>
+        </ion-col>
+      </ion-row> -->
+
+      <!-- <ion-row
+        class="ion-justify-content-center ion-margin-horizontal ion-margin-top"
+      >
+        <ion-col size="auto" style="padding: 0">
+          <ion-button
+            [ngStyle]="{
+              'background-color':
+                (dataFetchService.whenInitialized$ | async) &&
+                timer >= 3 &&
+                dataReady
+                  ? 'var(--ion-color-primary)'
+                  : 'transparent'
+            }"
+            fill="clear"
+            color="light"
+            mode="ios"
+            (click)="handleEnter()"
+            [disabled]="
+              !(dataFetchService.whenInitialized$ | async) || timer < 3
+            "
+            >{{
+              !dataReady
+                ? !(dataFetchService.whenInitialized$ | async) || timer < 3
+                  ? ('intro.connect' | translate)
+                  : ('intro.loading' | translate)
+                : ('intro.continue' | translate)
+            }}
+          </ion-button>
+
+          <ion-progress-bar color="primary" value="{{ timer / 3 }}">
+          </ion-progress-bar>
+          <div
+            class="download-progress"
+            *ngIf="
+              (dataFetchService.whenInitialized$ | async) &&
+              timer >= 3 &&
+              !dataReady
+            "
+          ></div>
+        </ion-col>
+      </ion-row> -->
+    </ion-grid>
+  </div>
+</ion-content>

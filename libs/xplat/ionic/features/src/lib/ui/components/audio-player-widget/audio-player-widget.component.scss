@@ -1,0 +1,208 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  position: absolute;
+  bottom: calc(55px + var(--sab));
+  left: 0;
+  height: 145px;
+  width: 100%;
+  overflow: hidden;
+  outline: none;
+  transition: transform 0.25s ease-out; // note that we're transitioning transform, not height!
+  transform: translateY(220px); // implicit, but good to specify explicitly
+  transform-origin: bottom; // keep the top of the element in the same place. this is optional.
+
+  .time-slider {
+    z-index: 999;
+    position: absolute;
+    left: 0;
+    padding: 40px 5px 10px 5px;
+    // margin: 12px 0px 0 0;
+    width: 100%;
+    height: 0;
+    --knob-size: 12px;
+    --bar-height: 4px;
+    --knob-background: var(--ion-color-primary-contrast);
+  }
+  .duration-div {
+    font-size: 13px;
+    display: flex;
+    z-index: 1;
+    padding: 15px 10px 10px 10px;
+    width: 100%;
+    justify-content: space-between;
+    ion-text {
+      color: var(--ion-color-primary-contrast);
+    }
+  }
+  .volume-panel {
+    position: relative;
+    z-index: 999;
+    // left: 0;
+    // top: -25px;
+    padding: 0 16px 0 0;
+    width: 100%;
+    --knob-size: 12px;
+    --knob-background: var(--ion-color-primary-contrast);
+  }
+  .playback {
+    width: 100%;
+    position: absolute;
+    top: 10px;
+    background-image: linear-gradient(to left, #e66a6a, #f29b9b);
+    padding: 40px 0 15px 0;
+    box-shadow: 0px 0px 4px 4px rgba(var(--ion-color-dark-rgb), 0.1);
+    .playback-info {
+      display: flex;
+      // flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      // padding: 0 50px;
+      height: 25px;
+      ion-button {
+        font-size: 17px;
+        ion-icon {
+          font-size: 20px;
+        }
+      }
+      .title {
+        display: inline;
+        padding: 5px 0;
+        font-size: 15px;
+        overflow: hidden;
+        white-space: nowrap;
+        color: var(--ion-color-primary-contrast);
+        width: 100%;
+        -webkit-touch-callout: none; /* iOS Safari */
+        -webkit-user-select: none; /* Safari */
+        -khtml-user-select: none; /* Konqueror HTML */
+        -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+        user-select: none;
+      }
+      .duration {
+        line-height: 27px;
+        padding: 0 30px;
+        white-space: nowrap;
+      }
+      .secondary-title {
+        height: 19px;
+      }
+      @media screen and (min-width: 992px) {
+        .title {
+          width: auto;
+        }
+      }
+    }
+    .playback-info-lg {
+      display: none;
+    }
+    .controls {
+      display: flex;
+      width: 100%;
+      height: 65px;
+      .side-panel {
+        width: 20%;
+      }
+      .main-panel {
+        width: 60%;
+        ion-button {
+          --padding-start: 6px;
+          --padding-end: 6px;
+        }
+        .playback-rate {
+          min-width: 40px;
+          --padding-start: 0px;
+          --padding-end: 0px;
+        }
+        @media screen and (min-width: 992px) {
+          .playback-rate {
+            min-width: 45px;
+          }
+        }
+      }
+      div {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+    }
+    .collapse-btn {
+      position: absolute;
+      top: 0;
+      right: 0;
+      z-index: 200;
+    }
+  }
+}
+
+:host {
+  --height: 0;
+}
+
+@media screen and (min-width: 1090px) {
+  .wrapper {
+    bottom: calc(0px + var(--sab));
+    left: 385px;
+    width: calc(100% - 400px);
+    box-shadow: 0px 12px 5px 5px rgba(var(--ion-color-dark-rgb), 0.1);
+    .time-slider {
+      top: 110px;
+      padding: 0 20px;
+    }
+    .playback {
+      height: 140px;
+      .playback-info {
+        position: absolute;
+        top: 5px;
+      }
+      .controls {
+        position: absolute;
+        top: 30px;
+      }
+      .playback-info-lg {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        padding: 0 20px;
+        position: absolute;
+        top: 110px;
+        .duration-lg {
+          font-size: 12px;
+        }
+      }
+    }
+  }
+  .hide-lg-up {
+    display: none !important;
+  }
+}
+@media screen and (max-width: 991px) {
+  .side-panel {
+    display: none;
+  }
+  .hide-sm {
+    display: none !important;
+  }
+}
+
+@media screen and (min-width: 992px) and (max-width: 1090px) {
+  .hide-md {
+    display: none !important;
+  }
+}
+
+.timing {
+  padding: 8px 0;
+}
+
+.hls-audio {
+  position: absolute;
+  width: 0;
+  height: 0;
+  left: -1000px;
+}

@@ -1,0 +1,37 @@
+<ion-header>
+  <fy-desktop-page-header
+    home="video"
+    class="desktop-header"
+  ></fy-desktop-page-header>
+  <fy-mobile-page-header home="video"></fy-mobile-page-header>
+  <fy-top-menu
+    home="video"
+    [activeId]="dataFetchService.videoTabActiveIndex"
+  ></fy-top-menu>
+</ion-header>
+
+<ion-split-pane contentId="video-main">
+  <ion-menu side="start" menuId="video-menu" contentId="main">
+    <ion-content>
+      <ion-list mode="ios" lines="inset" inset>
+        <ion-item
+          (click)="itemClick()"
+          *ngFor="let item of videoList; index as i"
+          id="{{item.href}}-btn"
+          [routerLink]="['/tabs', 'video', 'catalog']"
+          [queryParams]="{topicUrl:item.href}"
+          [queryParamsHandling]="merge"
+          routerLinkActivate="activated"
+          [ngClass]="
+        activeHref.includes(item.href)
+          ? 'ion-item-active'
+          : ''
+      "
+        >
+          <ion-label> {{ item.value }} </ion-label>
+        </ion-item>
+      </ion-list>
+    </ion-content>
+  </ion-menu>
+  <ion-router-outlet mode="ios" id="video-main"> </ion-router-outlet>
+</ion-split-pane>

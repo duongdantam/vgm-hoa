@@ -1,0 +1,53 @@
+{
+  "name": "fuyin",
+  "version": "0.1.4",
+  "description": "Fuyin Media",
+  "main": "index.js",
+  "author": {
+    "name": "Fuyin Developer",
+    "email": "fuyintv@gmail.com"
+  },
+  "homepage": "https://fuyin.tv",
+  "repository": {
+    "url": "https://github.com/nstudio/xplat"
+  },
+  "license": "MIT",
+  "build": {
+    "appId": "com.electron.fy",
+    "productName": "FY",
+    "copyright": "Copyright © 2022-2030 Fuyin Media",
+    "asar": true,
+    "npmRebuild": false,
+    "directories": {
+      "buildResources": "./assets/build",
+      "output": "../electronfy-packages"
+    },
+    "mac": {
+      "target": "dmg",
+      "category": "public.app-category.developer-tools",
+      "icon": "logo-fy.icns",
+      "artifactName": "${productName}-${os}-v${version}.${ext}"
+    },
+    "win": {
+      "target": "nsis",
+      "icon": "logo-fy.ico"
+    },
+    "nsis": {
+      "createDesktopShortcut": "always",
+      "installerIcon": "logo-fy.ico",
+      "artifactName": "${productName}-win-v${version}.${ext}"
+    },
+    "linux": {
+      "icon": "logo-fy.png",
+      "target": [
+        "AppImage"
+      ],
+      "publish": [
+        "github"
+      ],
+      "synopsis": "FY",
+      "category": "Development",
+      "artifactName": "${productName}-${os}-v${version}.${ext}"
+    }
+  }
+}

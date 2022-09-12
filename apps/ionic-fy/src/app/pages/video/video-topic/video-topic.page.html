@@ -1,0 +1,29 @@
+<ion-content *ngIf="topicCategory; else waiting">
+  <ion-grid>
+    <ion-refresher
+      slot="fixed"
+      pullFactor="0.5"
+      pullMin="50"
+      pullMax="100"
+      (ionRefresh)="videoRefresh($event)"
+    >
+      <ion-refresher-content pullingIcon="" refreshingSpinner="bubbles">
+      </ion-refresher-content>
+    </ion-refresher>
+    <fy-mobile-video-category
+      *ngFor="let category of topicCategory.children"
+      [name]="category.name"
+      [itemList]="category.children"
+      [listUrl]="category.url"
+      [isLeaf]="category.isLeaf"
+    >
+    </fy-mobile-video-category>
+  </ion-grid>
+</ion-content>
+<ng-template #waiting>
+  <ion-content>
+    <div class="loading">
+      <ion-spinner name="dots"></ion-spinner>
+    </div>
+  </ion-content>
+</ng-template>

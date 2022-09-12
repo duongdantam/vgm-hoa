@@ -1,0 +1,99 @@
+<!-- <super-tabs
+  #superTabs
+  (tabChange)="onTabChange($event)"
+  [config]="{ 
+    lazyLoad: true, 
+    unloadWhenInvisible: true,  
+    debug: true, 
+    nativeSmoothScroll: platform.is('mobile') ? true : false, 
+    transitionDuration: 2}"
+  *ngIf="tabData"
+>
+  <super-tabs-toolbar slot="top" scrollable="false">
+    <super-tab-button *ngFor="let t of tabs; index as i" id="{{t.id}}">
+      <ion-label> {{ t.value }} </ion-label>
+    </super-tab-button>
+  </super-tabs-toolbar>
+
+  <super-tabs-container swipeEnabled="{{tabSwipeable}}">
+    <super-tab *ngFor="let topicCategory of tabData">
+      <ion-content *ngIf="topicCategory.children[0].children; else waiting">
+        <ion-refresher
+          slot="fixed"
+          pullFactor="0.5"
+          pullMin="50"
+          pullMax="100"
+          (ionRefresh)="videoRefresh($event)"
+        >
+          <ion-refresher-content pullingIcon="" refreshingSpinner="bubbles">
+          </ion-refresher-content>
+        </ion-refresher>
+        <ion-grid>
+          <fy-mobile-video-category
+            (onSlideTouch)="slideTouch($event)"
+            *ngFor="let category of topicCategory.children"
+            [name]="category.name"
+            [itemList]="category.children"
+            [listUrl]="category.url"
+            [isLeaf]="category.isLeaf"
+          >
+          </fy-mobile-video-category>
+        </ion-grid>
+      </ion-content>
+      <ng-template #waiting>
+        <ion-content>
+          <div class="loading">
+            <ion-spinner name="dots"></ion-spinner>
+          </div>
+        </ion-content>
+      </ng-template>
+    </super-tab>
+  </super-tabs-container>
+</super-tabs> -->
+
+<ion-content style="height: 100%">
+  <ion-slides
+    #videoSlides
+    [options]="{
+    initialSlide: 1,
+    speed: platform.is('mobile') ? 400 : 0
+  }"
+    style="height: 100%"
+    (ionSlideDidChange)="onSlideChange()"
+  >
+    <ion-slide
+      *ngFor="let topicCategory of tabData"
+      style="align-items: start; justify-content: start"
+    >
+      <ion-content *ngIf="topicCategory.children[0].children; else waiting">
+        <ion-refresher
+          slot="fixed"
+          pullFactor="0.5"
+          pullMin="50"
+          pullMax="100"
+          (ionRefresh)="videoRefresh($event)"
+        >
+          <ion-refresher-content pullingIcon="" refreshingSpinner="bubbles">
+          </ion-refresher-content>
+        </ion-refresher>
+        <ion-grid>
+          <fy-mobile-video-category
+            *ngFor="let category of topicCategory.children"
+            [name]="category.name"
+            [itemList]="category.children"
+            [listUrl]="category.url"
+            [isLeaf]="category.isLeaf"
+          >
+          </fy-mobile-video-category>
+        </ion-grid>
+      </ion-content>
+      <ng-template #waiting>
+        <ion-content>
+          <div class="loading">
+            <ion-spinner name="dots"></ion-spinner>
+          </div>
+        </ion-content>
+      </ng-template>
+    </ion-slide>
+  </ion-slides>
+</ion-content>

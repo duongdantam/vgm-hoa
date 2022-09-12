@@ -1,0 +1,31 @@
+<ion-content *ngIf="topicCategory">
+  <ion-refresher
+    slot="fixed"
+    pullFactor="0.5"
+    pullMin="50"
+    pullMax="100"
+    (ionRefresh)="audioRefresh($event)"
+  >
+    <ion-refresher-content pullingIcon="" refreshingSpinner="bubbles">
+    </ion-refresher-content>
+  </ion-refresher>
+
+  <ion-grid class="ion-margin ion-margin-top">
+    <ion-row style="width: 100%">
+      <ion-col size="4" *ngFor="let category of topicCategory.children">
+        <fy-mobile-audio-category
+          [name]="category.name"
+          [childCount]="category.count !== 0 ? category.count + ('msg.chapter' | translate): ''"
+          [href]="category.href"
+          [avatar]="category.avatar"
+        >
+        </fy-mobile-audio-category>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
+<ion-content *ngIf="!topicCategory">
+  <div class="loading">
+    <ion-spinner name="dots"></ion-spinner>
+  </div>
+</ion-content>

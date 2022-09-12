@@ -1,0 +1,33 @@
+// super tabs css
+:host {
+  --st-scrollable-toolbar-padding-left: 0;
+  --st-base-color-inactive: rgba(var(--ion-color-primary-rgb), 0.6);
+  --st-base-color-active: var(--ion-color-primary);
+  --st-label-font-weight: 600;
+  --st-icon-color-active: var(--ion-color-secondary-tint);
+  --st-indicator-color: var(--ion-color-primary);
+  --super-tabs-toolbar-background: white;
+  --st-label-font-size: small;
+  --st-label-text-transform: capitalize;
+  --super-tab-width: 100%;
+}
+
+ion-refresher {
+  z-index: 99;
+}
+ion-content {
+  --background: var(--ion-color-primary-contrast);
+  --padding-top: calc(100px + var(--sat));
+  --offset-top: -20px !important;
+  .loading {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    justify-content: center;
+    align-content: center;
+  }
+  ion-grid {
+    margin: 0 5px;
+    padding: 0 0 140px 0;
+  }
+}

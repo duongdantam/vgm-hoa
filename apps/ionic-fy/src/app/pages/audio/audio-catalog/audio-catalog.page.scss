@@ -1,0 +1,52 @@
+// super tabs css
+:host {
+  --st-scrollable-toolbar-padding-left: 0;
+  --st-base-color-inactive: rgba(var(--ion-color-primary-rgb), 0.6);
+  --st-base-color-active: var(--ion-color-primary);
+  --st-label-font-weight: 600;
+  --st-icon-color-active: var(--ion-color-secondary-tint);
+  --st-indicator-color: var(--ion-color-primary);
+  --super-tabs-toolbar-background: white;
+  --st-label-font-size: small;
+  --st-label-text-transform: capitalize;
+  --super-tab-width: 100%;
+}
+
+ion-refresher {
+  z-index: 99;
+  margin-top: calc(100px + var(--sat));
+}
+ion-content {
+  --background: var(--ion-color-medium-tint);
+  .loading {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    justify-content: center;
+    align-content: center;
+  }
+  ion-grid {
+    margin: 0 5px;
+    padding: calc(110px + var(--sat)) 0 140px 0;
+  }
+}
+// super-tabs {
+//   padding-top: calc(110px + var(--sat));
+//   background-color: white;
+//   super-tabs-toolbar {
+//     display: none;
+//   }
+// }
+@media screen and (max-width: 991px) {
+  // super-tabs {
+  //   padding-top: calc(48px + var(--sat));
+  //   super-tabs-container {
+  //     padding-top: 50px;
+  //   }
+  // }
+  ion-content {
+    ion-grid {
+      padding-top: calc(100px + var(--sat));
+    }
+  }
+}

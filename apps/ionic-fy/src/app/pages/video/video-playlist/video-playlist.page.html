@@ -1,0 +1,59 @@
+<ion-content *ngIf="itemCategory" [fullscreen]="true">
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <ion-list style="padding-bottom: 10px">
+          <ion-select
+            #selectMenu
+            placeholder="{{ itemCategory.name | uppercase }}"
+            interface="popover"
+            [interfaceOptions]="{ cssClass: 'secondaryMenu' }"
+            (ionChange)="routerNavigation(selectMenu.value)"
+          >
+            <ion-select-option
+              *ngFor="let item of topicList; index as i"
+              value="{{ item.href }}"
+              [routerLink]="item.href"
+              >{{ item.value }}
+            </ion-select-option>
+          </ion-select>
+        </ion-list>
+      </ion-col>
+    </ion-row>
+
+    <div *ngIf="itemCategory.description" style="padding: 0 5px 10px 5px">
+      <ion-text color="primary">{{ itemCategory.description }}</ion-text>
+    </div>
+
+    <ion-row>
+      <ion-col
+        size="12"
+        size-lg="4"
+        *ngFor="let item of itemCategory.children | slice: 0:itemLength"
+      >
+        <fy-thumb-card
+          (click)="selectItem(item)"
+          [title]="item.name"
+          [isPlaylist]="true"
+          [subtitle]="item.duration"
+          [img]="item.thumb"
+          [isLeaf]="item.isLeaf"
+          (mouseover)="preloadData(item)"
+        ></fy-thumb-card>
+      </ion-col>
+      <ion-infinite-scroll
+        threshold="100px"
+        (ionInfinite)="loadMoreData($event)"
+      >
+        <ion-infinite-scroll-content loadingSpinner="bubbles">
+        </ion-infinite-scroll-content>
+      </ion-infinite-scroll>
+    </ion-row>
+  </ion-grid>
+</ion-content>
+
+<ion-content *ngIf="!itemCategory">
+  <div class="loading">
+    <ion-spinner name="dots"></ion-spinner>
+  </div>
+</ion-content>

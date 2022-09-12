@@ -1,0 +1,104 @@
+.wrapper:active,
+.wrapper:focus {
+  outline: 0;
+  border: none;
+  -moz-outline-style: none;
+}
+.wrapper {
+  padding: 10px;
+  text-align: center;
+  display: grid;
+  align-content: center;
+  justify-content: center;
+  position: relative;
+  width: 100%;
+  height: 100px;
+  margin-top: 5px;
+  background-color: var(--ion-color-tertiary-contrast);
+  border-radius: 10px;
+
+  ion-icon {
+    // position: absolute;
+    // z-index: 100;
+    width: 100%;
+    font-size: 22px;
+    // top: calc(50% - 60px / 2);
+  }
+
+  // .avatar {
+  //   position: absolute;
+  //   z-index: 100;
+  //   font-size: 54px;
+  //   top: calc(50% - 60px / 2);
+  // }
+
+  // .avatar-wrapper {
+  //   position: absolute;
+  //   display: flex;
+  //   flex-direction: row;
+  //   height: calc(100% + 25px);
+  //   width: calc(100% + 25px);
+  //   left: calc(50%+2px);
+  //   left: 0px;
+  //   top: 0px;
+  // }
+  .symbol {
+    padding-bottom: 5px;
+    &.isHighlight {
+      font-size: 40px;
+    }
+  }
+
+  .background {
+    // position: absolute;
+    // height: 80px;
+    // left: 26px;
+    // right: 0px;
+    // top: 0%;
+    // bottom: 0%;
+    // background: #f4f8fc;
+    // border-radius: 2.61935px;
+    // &.isHighlight {
+    //   background-color: var(--ion-color-tertiary-shade);
+    // }
+    .content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 0 5px;
+      // height: 80px;
+      &.isHighlight {
+        min-width: 150px;
+        min-height: 50px;
+      }
+      .title {
+        margin: 0;
+        font-family: 'Open Sans';
+        font-style: normal;
+        font-size: 12px;
+        line-height: 20px;
+        color: #200e32;
+        &.isHighlight {
+          color: var(--ion-color-tertiary-shade);
+          font-weight: bold;
+          font-size: 15px;
+          line-height: 25px;
+        }
+      }
+
+      .subtitle {
+        margin: 0;
+        font-family: 'Open Sans';
+        font-style: normal;
+        font-weight: normal;
+        font-size: 13px;
+        line-height: 16px;
+        color: #2e4b77;
+        &.isHighlight {
+          color: var(--ion-color-tertiary-shade);
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,75 @@
+{
+  "intro": {
+    "title": "福音灵粮",
+    "subtitle": "耶稣就是道路、真理、生命 "
+  },
+  "app": {
+    "open": "開啟程式"
+  },
+  "tabs": {
+    "video": "视道",
+    "audio": "听道",
+    "favorite": "收藏",
+    "document": "下载",
+    "download": "下载"
+  },
+  "document": {
+    "play": "播放",
+    "favorite": "收藏",
+    "search": "搜索",
+    "document": "系列",
+    "download": "下载"
+  },
+  "component": {
+    "seeAll": "查看全部"
+  },
+  "msg": {
+    "notfound": "404 - 页面不存在",
+    "share": "分享",
+    "copylink": "链接已复制",
+    "appendix": "更换目录",
+    "chapter": "集",
+    "time": "时长",
+    "video": {
+      "add": "视频已保存到收藏夹",
+      "remove": "视频已删除",
+      "download": "视频已下载",
+      "delete": "视频已刪除",
+      "favorite-unfound": "没有视频收藏结果",
+      "download-unfound": "没有视频下裁结果"
+    },
+    "audio": {
+      "add": "音频已保存到收藏夹",
+      "remove": "音频已删除",
+      "download": "音频已下载",
+      "delete": "音频已刪除",
+      "favorite-unfound": "沒有音频收藏結果",
+      "download-unfound": "沒有音频下载結果"
+    },
+    "search": {
+      "result": "搜索结果",
+      "notfound": "搜索无结果"
+    },
+    "favorite": {
+      "description": "介绍",
+      "note": "笔记",
+      "add": "收藏",
+      "download": "下裁",
+      "downloaded": "已下裁",
+      "share": "分享",
+      "delete": "媒体已删除"
+    },
+    "document": {
+      "description": "介绍",
+      "note": "笔记",
+      "add": "收藏",
+      "download": "下裁",
+      "downloaded": "已下裁",
+      "share": "分享",
+      "delete": "媒体已删除"
+    }
+  },
+  "input": {
+    "search": "快速搜索"
+  }
+}

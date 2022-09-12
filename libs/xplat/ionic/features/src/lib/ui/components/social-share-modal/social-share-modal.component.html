@@ -1,0 +1,71 @@
+<ion-content>
+  <ion-grid>
+    <ion-item
+      lines="none"
+      style="--border-style: none; align-items: flex-start; height: 30px"
+    >
+      <ion-label
+        color="primary"
+        style="font-weight: bold; text-align: center; margin: 0"
+      >
+        {{ 'msg.share' | translate }}
+      </ion-label>
+    </ion-item>
+    <ion-item lines="none" style="width: 100%; --padding-start: 10px">
+      <ion-input
+        style="
+          background-color: rgba(50, 50, 500, 0.05);
+          --padding-start: 10px;
+          --padding-end: 0;
+        "
+        color="dark-shade"
+        readonly
+        [value]="sharedMessage"
+      >
+        <ion-button
+          fill="clear"
+          color="primary"
+          style="order: 1; margin: 0"
+          (click)="onLink()"
+        >
+          <ion-icon name="copy-outline"></ion-icon>
+        </ion-button>
+      </ion-input>
+    </ion-item>
+    <ion-list>
+      <ion-button
+        color="secondary"
+        fill="clear"
+        size="large"
+        target="_blank"
+        [href]="facebookLink"
+        (click)="dismiss()"
+      >
+        <ion-icon name="logo-facebook"></ion-icon>
+      </ion-button>
+      <ion-button
+        color="success"
+        fill="clear"
+        size="large"
+        target="_blank"
+        [href]="whatsappLink"
+        (click)="dismiss()"
+      >
+        <ion-icon name="logo-whatsapp"></ion-icon>
+      </ion-button>
+      <ion-button
+        style="color: #3880ff"
+        fill="clear"
+        size="large"
+        target="_blank"
+        [href]="emailLink"
+        (click)="dismiss()"
+      >
+        <ion-icon name="fy-gmail"></ion-icon>
+      </ion-button>
+      <ion-button color="dark" fill="clear" size="large" (click)="onLink()">
+        <ion-icon name="link-outline"></ion-icon>
+      </ion-button>
+    </ion-list>
+  </ion-grid>
+</ion-content>

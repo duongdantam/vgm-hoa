@@ -1,0 +1,43 @@
+<ion-card [ngClass]="isPlaylist ? 'thumbnail' : ''">
+  <!-- <ion-img src="assets/imgs/default-image.svg" *ngIf="imgLoading"></ion-img> -->
+  <ion-img
+    [src]="img"
+    [ngStyle]="{ 'min-height': isPlaylist ? '80px' : '' }"
+    (ionError)="imgCheck('error')"
+    (ionImgDidLoad)="imgCheck('loaded')"
+  ></ion-img>
+  <ion-card-header>
+    <ion-card-subtitle>{{ subtitle }}</ion-card-subtitle>
+    <ion-card-title>{{ title }}</ion-card-title>
+  </ion-card-header>
+  <div class="card-item-hover" *ngIf="isLeaf === null">
+    <div>
+      <ion-icon
+        slot="icon-only"
+        fill="outline"
+        [name]="'fy-play'"
+        color="primary"
+      ></ion-icon>
+    </div>
+  </div>
+  <div class="card-catalog-hover" *ngIf="isLeaf === true || isLeaf === false">
+    <ion-text color="light">{{ listCount }}</ion-text>
+    <ion-icon
+      slot="icon-only"
+      fill="outline"
+      name="list-circle-outline"
+      color="light"
+      font-size="20px"
+    ></ion-icon>
+  </div>
+</ion-card>
+<div
+  class="loading"
+  [ngStyle]="{ padding: isPlaylist ? '5px' : '' }"
+  *ngIf="imgLoading"
+>
+  <ion-skeleton-text
+    [animated]="false"
+    style="width: calc(100% - 2px)"
+  ></ion-skeleton-text>
+</div>

@@ -1,0 +1,107 @@
+<!-- <super-tabs
+  *ngIf="tabData"
+  (tabChange)="onTabChange($event)"
+  #superTabs
+  [config]="{ 
+    lazyLoad: true, 
+    unloadWhenInvisible: true,  
+    debug: true, 
+    nativeSmoothScroll: platform.is('mobile') ? true : false, 
+    transitionDuration: 2}"
+>
+  <super-tabs-toolbar slot="top" scrollable="false">
+    <super-tab-button *ngFor="let t of tabs; index as i" id="{{t.id}}">
+      <ion-label> {{ t.label }} </ion-label>
+    </super-tab-button>
+  </super-tabs-toolbar>
+
+  <super-tabs-container swipeEnabled="{{tabSwipeable}}">
+    <super-tab *ngFor="let topicCategory of tabData">
+      <ion-content>
+        <ion-refresher
+          slot="fixed"
+          pullFactor="0.5"
+          pullMin="50"
+          pullMax="100"
+          (ionRefresh)="audioRefresh($event)"
+        >
+          <ion-refresher-content pullingIcon="" refreshingSpinner="bubbles">
+          </ion-refresher-content>
+        </ion-refresher>
+        <ion-grid class="ion-margin ion-margin-top">
+          <ion-row style="width: 100%">
+            <ion-col size="4" *ngFor="let category of topicCategory.children">
+              <fy-mobile-audio-category
+                [name]="category.name"
+                [childCount]="category.count !== 0 ? category.count + ('msg.chapter' | translate): ''"
+                [href]="category.href"
+                [avatar]="category.avatar"
+                [isLeaf]="category.isLeaf"
+              >
+              </fy-mobile-audio-category>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-content>
+    </super-tab>
+  </super-tabs-container>
+</super-tabs>
+<ion-content *ngIf="!tabData">
+  <div class="loading">
+    <ion-spinner name="dots"></ion-spinner>
+  </div>
+</ion-content> -->
+
+<ion-content style="height: 100%">
+  <ion-slides
+    #audioSlides
+    [options]="{
+    initialSlide: 1,
+    speed: platform.is('mobile') ? 400 : 0
+  }"
+    style="height: 100%"
+    (ionSlideDidChange)="onSlideChange()"
+  >
+    <ion-slide
+      *ngFor="let topicCategory of tabData"
+      style="align-items: start; justify-content: start"
+    >
+      <ion-content
+        *ngIf="topicCategory.children; else waiting"
+        style="margin-top: 100px"
+      >
+        <ion-refresher
+          slot="fixed"
+          pullFactor="0.5"
+          pullMin="50"
+          pullMax="100"
+          (ionRefresh)="audioRefresh($event)"
+        >
+          <ion-refresher-content pullingIcon="" refreshingSpinner="bubbles">
+          </ion-refresher-content>
+        </ion-refresher>
+        <ion-grid class="ion-margin ion-margin-top">
+          <ion-row style="width: 100%">
+            <ion-col size="4" *ngFor="let category of topicCategory.children">
+              <fy-mobile-audio-category
+                [name]="category.name"
+                [childCount]="category.count !== 0 ? category.count + ('msg.chapter' | translate): ''"
+                [href]="category.href"
+                [avatar]="category.avatar"
+                [isLeaf]="category.isLeaf"
+              >
+              </fy-mobile-audio-category>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-content>
+      <ng-template #waiting>
+        <ion-content>
+          <div class="loading">
+            <ion-spinner name="dots"></ion-spinner>
+          </div>
+        </ion-content>
+      </ng-template>
+    </ion-slide>
+  </ion-slides>
+</ion-content>

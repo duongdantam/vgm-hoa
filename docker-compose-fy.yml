@@ -1,0 +1,11 @@
+version: '3.7'
+
+services:
+  fy:
+    build:
+      context: .
+      dockerfile: /apps/ionic-fy/Dockerfile
+    image: ghcr.io/kennytat/fy-web:0.0.1
+    container_name: fyweb
+    ports:
+      - 8088:80
