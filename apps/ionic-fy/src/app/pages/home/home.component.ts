@@ -1,12 +1,16 @@
 import { Component, OnInit, NgZone } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { BaseComponent, DataFetchService, LocalforageService } from '@fy/xplat/core';
+import {
+  BaseComponent,
+  DataFetchService,
+  LocalforageService,
+} from '@fy/xplat/core';
 
 @Component({
-	selector: 'page-home',
-	templateUrl: 'home.component.html',
-	styles: [
-		`
+  selector: 'page-home',
+  templateUrl: 'home.component.html',
+  styles: [
+    `
       ion-content {
         --background: var(--ion-color-light);
       }
@@ -51,70 +55,67 @@ import { BaseComponent, DataFetchService, LocalforageService } from '@fy/xplat/c
       }
 
     `,
-	],
+  ],
 })
-
-
 export class HomeComponent extends BaseComponent implements OnInit {
-	timer = 0;
-	dataReady = false;
-	videoList = [];
-	constructor(
-		private router: Router,
-		// private activatedRoute: ActivatedRoute,
-		private zone: NgZone,
-		public dataFetchService: DataFetchService,
-		// private localforageService: LocalforageService
-	) {
-		super();
-	}
+  timer = 0;
+  dataReady = false;
+  videoList = [];
+  constructor(
+    private router: Router,
+    // private activatedRoute: ActivatedRoute,
+    private zone: NgZone,
+    public dataFetchService: DataFetchService // private localforageService: LocalforageService
+  ) {
+    super();
+  }
 
-	async ngOnInit() {
+  async ngOnInit() {
+    const countUpTimer = setInterval(() => {
+      // console.log('interval called');
 
-		const countUpTimer = setInterval(() => {
-			// console.log('interval called');
+      this.timer += 0.05;
+      if (this.timer >= 3) this.timer = 3;
+      if (this.dataFetchService.isInitialized && this.dataReady) {
+        this.timer = 3;
+        setTimeout(() => {
+          this.handleEnter();
+          clearInterval(countUpTimer);
+        }, 40);
+      }
+    }, 50);
+    await this.dataFetchService.init();
+    await this.dataFetchService.fetchAPIVersion();
+    await this.dataFetchService.fetchRoot('video').then(async (list) => {
+      if (list) {
+        this.videoList = list;
+        list.forEach(async (category) => {
+          const topicList = await this.dataFetchService.fetchTopicList(
+            category.url
+          );
+          if (topicList) {
+            topicList.children.forEach(async (childTopic) => {
+              await this.dataFetchService.fetchTopicList(childTopic.url);
+            });
+          }
+        });
+      }
+    });
 
-			this.timer += 0.05;
-			if (this.timer >= 3) this.timer = 3;
-			if (this.dataFetchService.isInitialized && this.dataReady) {
-				this.timer = 3;
-				setTimeout(() => {
-					this.handleEnter();
-					clearInterval(countUpTimer);
-				}, 40);
-			}
-		}, 50);
-		await this.dataFetchService.init();
-		await this.dataFetchService.fetchAPIVersion();
-		await this.dataFetchService.fetchRoot('video').then(async (list) => {
-			if (list) {
-				this.videoList = list;
-				list.forEach(async (category) => {
-					const topicList = await this.dataFetchService.fetchTopicList(category.url);
-					if (topicList) {
-						topicList.children.forEach(async (childTopic) => {
-							await this.dataFetchService.fetchTopicList(childTopic.url)
-						});
-					}
-				});
+    await this.dataFetchService.fetchRoot('audio').then(async (list) => {
+      if (list) {
+        list.forEach(async (category) => {
+          await this.dataFetchService.fetchTopicList(category.url);
+        });
+      }
+    });
+    this.dataReady = true;
+  }
 
-			}
-		});
-
-		await this.dataFetchService.fetchRoot('audio').then(async (list) => {
-			if (list) {
-				list.forEach(async (category) => {
-					await this.dataFetchService.fetchTopicList(category.url);
-
-				})
-			}
-		});
-		this.dataReady = true;
-
-	}
-
-	async handleEnter() {
-		// await this.router.navigate(['/tabs']);
-		await this.router.navigate(['/tabs', 'video', 'catalog'], { queryParams: { topicUrl: this.videoList[0].url } });
-	}
+  async handleEnter() {
+    // await this.router.navigate(['/tabs']);
+    await this.router.navigate(['/tabs', 'video', 'catalog'], {
+      queryParams: { topicUrl: this.videoList[0].url },
+    });
+  }
 }

@@ -1,4 +1,7 @@
-<ion-tabs (ionTabsWillChange)="onTabsWillChange($event)">
+<ion-tabs
+  (ionTabsWillChange)="onTabsWillChange($event)"
+  [ngClass]="menuOpen ? 'menuOpen' : 'menuCollapse'"
+>
   <fy-audio-player-widget
     [title]="(playerService.audioPlayState$ | async).playingTitle || ''"
     [isHidden]="playerService.audioIsHidden"
@@ -26,10 +29,14 @@
   >
   </fy-video-player-widget>
 
-  <ion-tab-bar mode="ios" slot="bottom">
-    <ion-tab-button class="hide-when-sm" tab="schedule">
-      <ion-img src="assets/imgs/fy-play-logo-red.svg"></ion-img>
-    </ion-tab-button>
+  <ion-tab-bar
+    mode="ios"
+    slot="bottom"
+    style="--background: var(--ion-color-primary-contrast)"
+  >
+    <ion-button fill="clear" (click)="menuOpen = !menuOpen;">
+      <ion-icon name="menu-outline"></ion-icon>
+    </ion-button>
 
     <ion-tab-button tab="video" (click)="menuTab('video')">
       <div
