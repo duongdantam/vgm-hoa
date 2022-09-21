@@ -1,14 +1,20 @@
 ion-toolbar {
-  --padding-start: 27px;
-  --padding-end: 40px;
-  padding-bottom: 10px;
-  padding-top: 40px !important;
+  // --padding-start: 215px;
+  // --padding-end: 40px;
+  // padding-bottom: 25px;
+  // padding-top: 40px !important;
   border: none;
   width: 100%;
   ion-buttons {
-    width: 100%;
+    // width: 100%;
     --border-radius: 6px;
     font-size: 15px;
+    ion-label {
+      font-size: 20px;
+      color: var(--ion-color-tertiary);
+      font-weight: bold;
+      margin: 10px 5px 5px 5px;
+    }
   }
 }
 ion-back-button {
@@ -19,24 +25,30 @@ ion-back-button {
 
 ion-searchbar {
   --icon-color: --ion-color-primary;
+  justify-content: space-evenly;
   &.sc-ion-searchbar-ios-h {
-    --border-radius: 5px;
-    --background: rgba(var(--ion-color-dark-rgb), 0.1);
-    padding-top: 0;
-    padding-bottom: 0;
-    height: 52px;
+    --border-radius: 0px;
+    --background: rgba(var(--ion-color-dark-contrast), 0.1);
+    padding-top: 25px;
+    // padding-bottom: 40px;
+    // height: 80px;
   }
-  // ::ng-deep {
-  //   .searchbar-input-container {
-  //     .searchbar-input {
-  //        padding-inline-start: 20px;
-  //     }
-  //     ion-icon {
-  //       left: auto;
-  //       right: 5px;
-  //     }
-  //   }
+  // ::ng-deep .searchbar-input-container {
+  //   border: 1px solid red;
+  //   border-radius: 20px;
   // }
+  ::ng-deep {
+    .searchbar-input-container {
+      border: 1px solid var(--ion-color-medium);
+      border-radius: 5px;
+      height: 30px;
+      width: 60%;
+
+      .searchbar-input.sc-ion-searchbar-ios {
+        font-size: 12px;
+      }
+    }
+  }
 }
 
 .search-found {
@@ -111,5 +123,16 @@ ion-searchbar {
   }
   to {
     height: 100%;
+  }
+}
+
+@media screen and (max-width: 989px) {
+  ion-searchbar {
+    ::ng-deep {
+      .searchbar-input-container {
+        border-radius: 20px;
+        width: 100%;
+      }
+    }
   }
 }

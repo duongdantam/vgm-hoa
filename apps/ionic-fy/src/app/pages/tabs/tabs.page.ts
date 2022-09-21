@@ -15,7 +15,7 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./tabs.page.scss'],
 })
 export class TabsPage implements OnInit, OnDestroy {
-  public menuOpen: boolean = false;
+  public menuOpen: boolean = true;
   public audioPlayUrl: string = '';
   public videoPlayUrl: string = '';
   public type: string = 'application/x-mpegURL';

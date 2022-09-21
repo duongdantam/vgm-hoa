@@ -1,9 +1,9 @@
 .desktop-header {
-  position: absolute;
-  right: calc(0px + var(--sar));
+  // position: absolute;
+  // right: calc(0px + var(--sar));
   top: calc(0px + var(--sat));
   background-color: white;
-  width: calc(100% - 270px);
+  width: 100%;
 }
 ion-content {
   --background: var(--ion-color-light);

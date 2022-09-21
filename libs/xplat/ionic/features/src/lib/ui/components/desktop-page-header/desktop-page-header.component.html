@@ -1,42 +1,51 @@
-<ion-button
+<!-- <ion-button
   *ngIf="dataFetchService.downloading"
   color="primary"
   fill="clear"
   class="icon-downloading ion-hide-lg-down"
 >
   <ion-icon class="downloading" name="fy-downloading"></ion-icon>
-</ion-button>
-<ion-toolbar class="ion-hide-lg-down">
+</ion-button> -->
+
+<ion-toolbar>
   <ion-buttons slot="start">
-    <ion-button color="primary" fill="outline" (click)="backNav()">
+    <ion-icon
+      style="font-size: 30px; margin: 15px 5px 5px 15px"
+      name="fy-logo"
+    ></ion-icon>
+    <ion-label class="ion-hide-lg-down">
+      {{ 'intro.title' | translate }}
+    </ion-label>
+    <!-- <ion-button color="primary" fill="outline" (click)="backNav()">
       <ion-icon name="arrow-back-outline"></ion-icon>
     </ion-button>
 
     <ion-button color="primary" fill="outline" (click)="forwardNav()">
       <ion-icon name="arrow-forward-outline"></ion-icon>
-    </ion-button>
-
-    <div style="width: 550px">
-      <ion-searchbar
-        id="desktop-search-bar"
-        [placeholder]="'input.search' | translate"
-        inputmode="search"
-        enterkeyhint="search"
-        debounce="0"
-        (keypress)="searchKeyPress($event)"
-        (ionChange)="searchChange($event)"
-        (ionFocus)="searchOnFocus = true"
-        (ionBlur)="setFocus(false)"
-        [disabled]="home !== 'video' && home !== 'audio'"
-      >
-      </ion-searchbar>
-    </div>
+    </ion-button> -->
   </ion-buttons>
-  <!-- <ion-buttons slot="end">
+  <!-- <ion-title>Solid Buttons</ion-title> -->
+  <div>
+    <ion-searchbar
+      id="desktop-search-bar"
+      [placeholder]="'input.search' | translate"
+      inputmode="search"
+      enterkeyhint="search"
+      debounce="0"
+      (keypress)="searchKeyPress($event)"
+      (ionChange)="searchChange($event)"
+      (ionFocus)="searchOnFocus = true"
+      (ionBlur)="setFocus(false)"
+      [disabled]="home !== 'video' && home !== 'audio'"
+    >
+    </ion-searchbar>
+  </div>
+
+  <ion-buttons slot="end" style="margin: 10px 10px 0px 0px">
     <ion-button color="primary">
       <ion-icon name="notifications-outline"></ion-icon>
     </ion-button>
-  </ion-buttons> -->
+  </ion-buttons>
 </ion-toolbar>
 <ion-list class="search-found" *ngIf="searchResult.query && searchOnFocus">
   <ion-item
