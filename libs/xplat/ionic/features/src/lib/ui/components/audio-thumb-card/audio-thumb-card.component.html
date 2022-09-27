@@ -1,9 +1,9 @@
-<div class="wrapper" [routerLink]="href">
-  <ion-icon
+<ion-col size="12" class="wrapper" [routerLink]="href">
+  <!-- <ion-icon
     name="fy-bible"
     *ngIf="avatar === null"
     class="symbol {{ isHighlight ? 'isHighlight' : '' }}"
-  ></ion-icon>
+  ></ion-icon> -->
   <!-- <ion-avatar class="avatar" *ngIf="avatar !== null">
     <img style="position: absolute; left: 4px; top: 3px" [src]="avatar" />
     <div class="avatar-wrapper">
@@ -22,7 +22,13 @@
       </svg>
     </div>
   </ion-avatar> -->
-  <div class="background {{ isHighlight === true ? 'isHighlight' : '' }}">
+
+  <ion-row size="12" class="thumb-card-img"> </ion-row>
+
+  <ion-row
+    size="12"
+    class="background {{ isHighlight === true ? 'isHighlight' : '' }}"
+  >
     <div class="content {{ isHighlight ? 'isHighlight' : '' }}">
       <ion-text class="title {{ isHighlight ? 'isHighlight' : '' }}">{{
         title
@@ -31,5 +37,5 @@
         {{ subtitle }}
       </ion-text>
     </div>
-  </div>
-</div>
+  </ion-row>
+</ion-col>

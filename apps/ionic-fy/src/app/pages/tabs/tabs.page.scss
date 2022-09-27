@@ -18,6 +18,7 @@ ion-tab-bar {
   width: 100%;
   ion-button {
     display: none;
+    max-height: 43px;
   }
   ion-label {
     font-size: 12px;
@@ -53,7 +54,7 @@ ion-tab-bar {
   display: none;
 }
 
-@media screen and (min-width: 1090px) {
+@media screen and (min-width: 992px) {
   .hide-when-sm {
     display: block;
   }

@@ -13,7 +13,7 @@
 }
 
 ion-content {
-  --background: white;
+  --background: var(--ion-color-light);
   // --background: #e5e5e5;
   // --padding-top: 58px; // Mobile only
   ion-grid {

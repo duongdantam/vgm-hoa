@@ -23,6 +23,11 @@
   "component": {
     "seeAll": "查看全部"
   },
+  "audio": {
+    "favorite": "收藏",
+    "share": "分享",
+    "download": "下裁"
+  },
   "msg": {
     "notfound": "404 - 页面不存在",
     "share": "分享",
@@ -39,9 +44,12 @@
       "download-unfound": "没有视频下裁结果"
     },
     "audio": {
+      "favorite": "收藏",
+      "share": "分享",
+      "download": "下裁",
       "add": "音频已保存到收藏夹",
       "remove": "音频已删除",
-      "download": "音频已下载",
+      "downloaded": "音频已下载",
       "delete": "音频已刪除",
       "favorite-unfound": "沒有音频收藏結果",
       "download-unfound": "沒有音频下载結果"
