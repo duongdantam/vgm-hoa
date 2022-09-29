@@ -188,9 +188,9 @@ export class AudioPlayListComponent
 
   async toogleFabBtn(e, fab, index) {
     if (e.type === 'ionBlur') {
-      // setTimeout(() => {
-      //   fab.close();
-      // }, 100);
+      setTimeout(() => {
+        fab.close();
+      }, 100);
 
       document.getElementById(`fabBtn${index}`).style.opacity = '100%';
     } else {

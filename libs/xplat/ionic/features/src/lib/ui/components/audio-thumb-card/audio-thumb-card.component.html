@@ -2,7 +2,7 @@
   <!-- <ion-icon
     name="fy-bible"
     *ngIf="avatar === null"
-    class="symbol {{ isHighlight ? 'isHighlight' : '' }}"
+    class="symbol {{ isPlaylist ? 'isPlaylist' : '' }}"
   ></ion-icon> -->
   <!-- <ion-avatar class="avatar" *ngIf="avatar !== null">
     <img style="position: absolute; left: 4px; top: 3px" [src]="avatar" />
@@ -23,17 +23,21 @@
     </div>
   </ion-avatar> -->
 
-  <ion-row size="12" class="thumb-card-img"> </ion-row>
+  <ion-row
+    size="12"
+    class="thumb-card-img {{ isPlaylist === true ? 'isPlaylist' : '' }}"
+  >
+  </ion-row>
 
   <ion-row
     size="12"
-    class="background {{ isHighlight === true ? 'isHighlight' : '' }}"
+    class="background {{ isPlaylist === true ? 'isPlaylist' : '' }}"
   >
-    <div class="content {{ isHighlight ? 'isHighlight' : '' }}">
-      <ion-text class="title {{ isHighlight ? 'isHighlight' : '' }}">{{
+    <div class="content {{ isPlaylist ? 'isPlaylist' : '' }}">
+      <ion-text class="title {{ isPlaylist ? 'isPlaylist' : '' }}">{{
         title
       }}</ion-text>
-      <ion-text class="subtitle {{ isHighlight ? 'isHighlight' : '' }}">
+      <ion-text class="subtitle {{ isPlaylist ? 'isPlaylist' : '' }}">
         {{ subtitle }}
       </ion-text>
     </div>

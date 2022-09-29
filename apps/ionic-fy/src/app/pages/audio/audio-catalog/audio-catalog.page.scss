@@ -28,6 +28,9 @@ ion-content {
   ion-grid {
     margin: 0 5px;
     padding: calc(110px + var(--sat)) 0 140px 0;
+    ion-col {
+      padding-right: 10px;
+    }
   }
 }
 // super-tabs {

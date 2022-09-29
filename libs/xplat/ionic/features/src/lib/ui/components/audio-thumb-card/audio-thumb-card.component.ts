@@ -11,7 +11,7 @@ export class AudioThumbCardComponent extends BaseComponent {
   @Input() title: string;
   @Input() subtitle: string;
   @Input() href: string;
-  @Input() isHighlight: boolean = false;
+  @Input() isPlaylist: boolean = false;
   @Input() avatar: string = null;
   constructor() {
     super();
