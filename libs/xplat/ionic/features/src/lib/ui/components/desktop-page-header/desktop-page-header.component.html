@@ -61,7 +61,7 @@
           'max-width': home === 'video' ? '25%' : '65px'
         }"
       >
-        <fy-thumb-card
+        <fy-video-thumb-card
           *ngIf="home === 'video'; else audioThumb"
           title=""
           [subtitle]="item.duration"
@@ -70,7 +70,7 @@
           [isLeaf]="item.isLeaf"
           [isPlaylist]="true"
           (mouseover)="preloadData(item)"
-        ></fy-thumb-card>
+        ></fy-video-thumb-card>
         <ng-template #audioThumb>
           <ion-thumbnail>
             <ion-img src="assets/imgs/logo-fy.svg"> </ion-img>

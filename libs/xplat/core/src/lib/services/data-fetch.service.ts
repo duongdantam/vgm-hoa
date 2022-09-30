@@ -14,13 +14,13 @@ import { MeiliSearch } from 'meilisearch';
 export type DataFetchRootType = 'video' | 'audio';
 
 const firebaseConfig = {
-  apiKey: 'AIzaSyBtzpfG9tl6LxKWkderYgPSBDzLYg4_o6c',
-  authDomain: 'vgmtv-38b90.firebaseapp.com',
-  projectId: 'vgmtv-38b90',
-  storageBucket: 'vgmtv-38b90.appspot.com',
-  messagingSenderId: '807684393730',
-  appId: '1:807684393730:android:1a830ddc4809279c4e101b',
-  measurementId: 'G-FG1Z70K8SM',
+  apiKey: 'AIzaSyANVhfTduFstiFSvNxPkBHmcVwayiT2wEs',
+  authDomain: 'vgm-hoa.firebaseapp.com',
+  projectId: 'vgm-hoa',
+  storageBucket: 'vgm-hoa.appspot.com',
+  messagingSenderId: '313228428790',
+  appId: '1:313228428790:web:7a9598323a3a3cd466f3d7',
+  measurementId: 'G-80KNLP8Q9R',
 };
 
 @Injectable({
@@ -31,9 +31,11 @@ export class DataFetchService {
   public streamGateway: string;
   public downloadGateway: string;
   public cloudGateway: string;
+  public iosCloudGateway: string;
   public searchGateway: string;
   public webDomain: string;
   public apiGateway: string;
+  public searchAPIKey: string;
   public searchClient;
   // blockchain config
   private vgmCore: any;
@@ -71,14 +73,15 @@ export class DataFetchService {
         this.downloadGateway =
           getValue(remoteConfig, 'IPFS_DOWNLOAD_GATEWAY').asString() || '';
         this.cloudGateway =
-          'https://cdn.vgm.tv/encrypted' ||
-          getValue(remoteConfig, 'CLOUD_GATEWAY').asString();
+          getValue(remoteConfig, 'CLOUD_GATEWAY').asString() || ''; // decrypted: "CLOUD_GATEWAY_IOS" encrypted: "CLOUD_GATEWAY"
+        this.iosCloudGateway =
+          getValue(remoteConfig, 'CLOUD_GATEWAY_IOS').asString() || '';
         this.webDomain = getValue(remoteConfig, 'WEB_DOMAIN').asString() || '';
         this.searchGateway =
           getValue(remoteConfig, 'SEARCH_GATEWAY').asString() || '';
-        this.apiGateway =
-          'https://cdn.vgm.tv/encrypted/API' ||
-          getValue(remoteConfig, 'API_GATEWAY').asString();
+        this.apiGateway = 'https://cdn.vgm.tv/encrypted/API'; // getValue(remoteConfig, "API_GATEWAY").asString() || '';
+        this.searchAPIKey =
+          getValue(remoteConfig, 'SEARCH_API').asString() || '';
         console.log(`got config from firebase:
             ${this.streamGateway}, 
             ${this.downloadGateway},
@@ -90,7 +93,9 @@ export class DataFetchService {
       .then(() => {
         this.searchClient = new MeiliSearch({
           host: this.searchGateway,
-          apiKey: 'KYV2oMHSE5G2p9ZXwUGH3CfWpaXB1CF5',
+          headers: {
+            Authorization: `Bearer ${this.searchAPIKey}`,
+          },
         });
       })
       .catch((err) => {
@@ -150,59 +155,75 @@ export class DataFetchService {
     if (!this._isInitialized) {
       await this.init();
     }
-    const storageKey = `home.${rootKey}`;
-    let list: any[] = [];
-    const cacheList: any = await this.localforageService.get(storageKey);
-    if (!cacheList) {
-      list = await this.vgmCore.navigator.fetchHomeList(rootKey);
-      const expiredTime = 43200; // 432000 second
-      await this.localforageService.set(storageKey, list, expiredTime);
-      console.log(`Saved ${list.length} root item to local storage`);
-    } else {
-      console.log(`Load ${cacheList.length} root item from local storage`);
-      list = cacheList;
+    try {
+      const storageKey = `home.${rootKey}`;
+      let list: any[] = [];
+      const cacheList: any = await this.localforageService.get(storageKey);
+      if (!cacheList) {
+        list = await this.vgmCore.navigator.fetchHomeList(rootKey);
+        const expiredTime = 43200; // 432000 second
+        await this.localforageService.set(storageKey, list, expiredTime);
+        console.log(`Saved ${list.length} root item to local storage`);
+      } else {
+        console.log(`Load ${cacheList.length} root item from local storage`);
+        list = cacheList;
+      }
+      return list;
+    } catch (error) {
+      console.log(error);
     }
-    return list;
   }
 
   async fetchAPIVersion() {
     if (!this._isInitialized) {
       await this.init();
     }
-    const storageKey = `apiVersion`;
-    const cacheVersion: any = await this.localforageService.get(storageKey);
-    console.log('cache Version:', cacheVersion);
-    const apiVersion = await this.vgmCore.navigator.fetchAPIVersion(storageKey);
-    console.log('api Version:', apiVersion);
+    try {
+      const storageKey = `apiVersion`;
+      const cacheVersion: any = await this.localforageService.get(storageKey);
+      console.log('cache Version:', cacheVersion);
+      const apiVersion = await this.vgmCore.navigator.fetchAPIVersion(
+        storageKey
+      );
+      console.log('api Version:', apiVersion);
 
-    if (!cacheVersion && apiVersion) {
-      await this.localforageService.set(storageKey, apiVersion);
-    }
+      if (apiVersion && !cacheVersion) {
+        await this.localforageService.set(storageKey, apiVersion);
+      }
 
-    if (
-      cacheVersion &&
-      apiVersion &&
-      cacheVersion.version !== apiVersion.version
-    ) {
-      await this.localforageService.clearKeys();
-      await this.localforageService.set(storageKey, apiVersion);
+      if (
+        cacheVersion &&
+        apiVersion &&
+        cacheVersion.version !== apiVersion.version
+      ) {
+        await this.localforageService.clearKeys();
+        await this.localforageService.set(storageKey, apiVersion);
+      }
+      return apiVersion;
+    } catch (error) {
+      console.log(error);
     }
-    return apiVersion;
   }
 
   async fetchFavorite(rootKey: DataFetchRootType) {
-    const storageKey = `favorite.${rootKey}`;
-    let list: any[] = [];
-    const cacheList: any = await this.localforageService.get(storageKey);
-    if (cacheList) {
-      console.log(`Load ${cacheList.length} favorite item from local storage`);
-      list = cacheList;
-    } else {
-      // list = await this.vgmCore.navigator.fetchHomeList(rootKey);
-      // await this.localforageService.set(storageKey, list);
-      console.log(`cacheList for favorite item empty`);
+    try {
+      const storageKey = `favorite.${rootKey}`;
+      let list: any[] = [];
+      const cacheList: any = await this.localforageService.get(storageKey);
+      if (cacheList) {
+        console.log(
+          `Load ${cacheList.length} favorite item from local storage`
+        );
+        list = cacheList;
+      } else {
+        // list = await this.vgmCore.navigator.fetchHomeList(rootKey);
+        // await this.localforageService.set(storageKey, list);
+        console.log(`cacheList for favorite item empty`);
+      }
+      return list;
+    } catch (error) {
+      console.log(error);
     }
-    return list;
   }
 
   private getNonLeaf(item: any) {
@@ -267,26 +288,32 @@ export class DataFetchService {
     if (!this._isInitialized) {
       await this.init();
     }
-    let list: any;
-    let expiredTime = 43200; // 432000 second
-    const cacheList: any = await this.localforageService.get(topicUrl);
-    if (!cacheList) {
-      list = await this.vgmCore.navigator.fetchItemList(topicUrl);
-      if (
-        /^(01-bai-giang\.hoc-theo-sach-trong-kinh-thanh).+/.test(list.url) ||
-        /^(phat-thanh-nguon-song\.nam\-\d+\.thang).+/.test(list.url)
-      )
-        expiredTime = 43200; // 86400
-      list.children.sort(function (a, b) {
-        return parseInt(a.name.match(/^\d+/)) - parseInt(b.name.match(/^\d+/));
-      });
-      await this.localforageService.set(topicUrl, list, expiredTime);
-      console.log(`Saved 1 item list to local storage`);
-    } else {
-      console.log(`Load 1 item list from local storage`);
-      list = cacheList;
+    try {
+      let list: any;
+      let expiredTime = 43200; // 432000 second
+      const cacheList: any = await this.localforageService.get(topicUrl);
+      if (!cacheList) {
+        list = await this.vgmCore.navigator.fetchItemList(topicUrl);
+        if (
+          /^(01-bai-giang\.hoc-theo-sach-trong-kinh-thanh).+/.test(list.url) ||
+          /^(phat-thanh-nguon-song\.nam\-\d+\.thang).+/.test(list.url)
+        )
+          expiredTime = 43200; // 86400
+        list.children.sort(function (a, b) {
+          return (
+            parseInt(a.name.match(/^\d+/)) - parseInt(b.name.match(/^\d+/))
+          );
+        });
+        await this.localforageService.set(topicUrl, list, expiredTime);
+        console.log(`Saved 1 item list to local storage`);
+      } else {
+        console.log(`Load 1 item list from local storage`);
+        list = cacheList;
+      }
+      return list;
+    } catch (error) {
+      console.log(error);
     }
-    return list;
   }
 
   async fetchSingleTopic(topicUrl: string) {
@@ -302,6 +329,23 @@ export class DataFetchService {
     }
     return this.vgmCore.navigator.fetchSingleItem(itemUrl);
   }
+
+  // async fetchSearch(apiUrl: string) {
+  //   if (!this._isInitialized) {
+  //     await this.init();
+  //   }
+  //   let list: any;
+  //   const cacheList: any = await this.localforageService.get(apiUrl);
+  //   if (!cacheList) {
+  //     list = await this.vgmCore.navigator.fetchSearch(apiUrl);
+  //     await this.localforageService.set(apiUrl, list);
+  //     console.log(`Saved 1 item list to local storage`);
+  //   } else {
+  //     console.log(`Load 1 item list from local storage`);
+  //     list = false;
+  //   }
+  //   return list;
+  // }
 
   async fetchPlayingItem() {
     const storageKey = `onPlayingItem`;
@@ -330,6 +374,6 @@ export class DataFetchService {
       this.cloudGateway,
       item,
       isVideo
-    );
+    ); // change this.iosCloudGateway to this.cloudGateway
   }
 }

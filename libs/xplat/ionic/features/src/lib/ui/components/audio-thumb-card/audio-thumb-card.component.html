@@ -23,16 +23,15 @@
     </div>
   </ion-avatar> -->
 
-  <ion-row
-    size="12"
+  <ion-img
+    [src]="img"
     class="thumb-card-img {{ isPlaylist === true ? 'isPlaylist' : '' }}"
+    (ionError)="imgCheck('error')"
+    (ionImgDidLoad)="imgCheck('loaded')"
   >
-  </ion-row>
+  </ion-img>
 
-  <ion-row
-    size="12"
-    class="background {{ isPlaylist === true ? 'isPlaylist' : '' }}"
-  >
+  <ion-row class="background {{ isPlaylist === true ? 'isPlaylist' : '' }}">
     <div class="content {{ isPlaylist ? 'isPlaylist' : '' }}">
       <ion-text class="title {{ isPlaylist ? 'isPlaylist' : '' }}">{{
         title

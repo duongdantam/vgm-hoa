@@ -4,7 +4,7 @@ import { SearchBarComponent } from './search-bar/search-bar.component';
 
 import { SocialShareModalComponent } from './social-share-modal/social-share-modal.component';
 
-import { ThumbCardComponent } from './thumb-card/thumb-card.component';
+import { VideoThumbCardComponent } from './video-thumb-card/video-thumb-card.component';
 
 import { VideoCategoryComponent } from './video-category/video-category.component';
 
@@ -32,7 +32,7 @@ export * from './header/header.component';
 export * from './side-menu/side-menu.component';
 export * from './search-bar/search-bar.component';
 export * from './social-share-modal/social-share-modal.component';
-export * from './thumb-card/thumb-card.component';
+export * from './video-thumb-card/video-thumb-card.component';
 export * from './video-category/video-category.component';
 export * from './desktop-page-header/desktop-page-header.component';
 export * from './mobile-page-header/mobile-page-header.component';

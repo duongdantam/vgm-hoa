@@ -12,7 +12,11 @@
 
   <ion-grid class="ion-margin ion-margin-top">
     <ion-row style="width: 100%">
-      <ion-col size="4" *ngFor="let category of topicCategory.children">
+      <ion-col
+        size="4"
+        size-xl="3"
+        *ngFor="let category of topicCategory.children"
+      >
         <fy-mobile-audio-category
           [name]="category.name"
           [childCount]="category.count !== 0 ? category.count + ('msg.chapter' | translate): ''"
@@ -26,6 +30,9 @@
 </ion-content>
 <ion-content *ngIf="!topicCategory">
   <div class="loading">
-    <ion-spinner name="dots"></ion-spinner>
+    <ion-spinner
+      name="dots"
+      style="color: var(--ion-color-primary-shade)"
+    ></ion-spinner>
   </div>
 </ion-content>

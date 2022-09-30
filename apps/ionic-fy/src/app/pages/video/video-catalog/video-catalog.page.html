@@ -43,7 +43,7 @@
       <ng-template #waiting>
         <ion-content>
           <div class="loading">
-            <ion-spinner name="dots"></ion-spinner>
+            <ion-spinner name="dots" style="color: var(--ion-color-primary-shade)"></ion-spinner>
           </div>
         </ion-content>
       </ng-template>
@@ -56,7 +56,9 @@
     #videoSlides
     [options]="{
     initialSlide: 1,
-    speed: platform.is('mobile') ? 400 : 0
+    speed: platform.is('mobile') ? 400 : 0,
+        observer: true,
+    observeParents: true
   }"
     style="height: 100%"
     (ionSlideDidChange)="onSlideChange()"
@@ -87,10 +89,14 @@
           </fy-mobile-video-category>
         </ion-grid>
       </ion-content>
+
       <ng-template #waiting>
         <ion-content>
           <div class="loading">
-            <ion-spinner name="dots"></ion-spinner>
+            <ion-spinner
+              name="dots"
+              style="color: var(--ion-color-primary-shade)"
+            ></ion-spinner>
           </div>
         </ion-content>
       </ng-template>

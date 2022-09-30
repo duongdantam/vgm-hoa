@@ -8,35 +8,41 @@ ion-content {
     align-content: center;
   }
   ion-grid {
-    margin: 0px 10px;
     padding: 0 0 60px 0;
-    ion-list {
-      margin-top: calc(90px + var(--sat));
-    }
-    ion-label {
-      font-size: small;
-      font-weight: 500;
-      padding: 0 20px 0 20px;
-    }
-    ion-select {
-      border: 1px solid var(--ion-color-light-shade);
-      border-radius: 5px;
-      padding: 10px;
-      --placeholder-opacity: 1;
-      --placeholder-color: var(--ion-color-primary);
-      color: var(--ion-color-primary);
-      font-size: small;
-      font-weight: bold;
-      width: 100%;
-      ion-select-option {
+    ion-col {
+      padding: 0px;
+
+      ion-list {
+        margin-top: calc(90px + var(--sat));
+      }
+      ion-label {
+        font-size: small;
+        font-weight: 500;
+        padding: 0 20px 0 20px;
+      }
+      ion-select {
+        border: 1px solid var(--ion-color-light-shade);
+        border-radius: 5px;
+        padding: 10px;
+        --placeholder-opacity: 1;
+        --placeholder-color: var(--ion-color-primary);
         color: var(--ion-color-primary);
+        font-size: small;
+        font-weight: bold;
         width: 100%;
+        ion-select-option {
+          color: var(--ion-color-primary);
+          width: 100%;
+        }
       }
     }
   }
   @media screen and (min-width: 992px) {
     ion-grid {
       margin: 0 16px;
+      ion-col {
+        padding: 5px;
+      }
     }
   }
 }

@@ -35,7 +35,7 @@
       (ionSlideTouchEnd)="slideTouch(false)"
     >
       <ion-slide *ngFor="let item of itemList | slice: 0:10">
-        <fy-thumb-card
+        <fy-video-thumb-card
           style="width: 100%"
           (click)="selectItem(item)"
           [title]="item.value"
@@ -45,7 +45,7 @@
           [isLeaf]="item.isLeaf"
           [listCount]="item.count"
           (mouseover)="preloadData(item)"
-        ></fy-thumb-card>
+        ></fy-video-thumb-card>
       </ion-slide>
     </ion-slides>
   </ion-row>

@@ -29,5 +29,27 @@ ion-content {
   ion-grid {
     margin: 0 5px;
     padding: 0 0 140px 0;
+    ion-row {
+      padding-top: 10px;
+    }
+    ion-col {
+      padding: 0 7px;
+    }
+  }
+}
+
+@media screen and (max-width: 991px) {
+  // super-tabs {
+  //   padding-top: calc(48px + var(--sat));
+  //   super-tabs-container {
+  //     padding-top: 50px;
+  //   }
+  // }
+  ion-content {
+    ion-grid {
+      ion-col {
+        padding-top: 0px;
+      }
+    }
   }
 }

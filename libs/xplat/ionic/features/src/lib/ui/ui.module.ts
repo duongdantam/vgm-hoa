@@ -13,10 +13,10 @@ import {
   VideoPlayerWidgetComponent,
   SearchBarComponent,
   SideMenuComponent,
-  ThumbCardComponent,
+  VideoThumbCardComponent,
   TopMenuComponent,
   VideoCategoryComponent,
-  SocialShareModalComponent
+  SocialShareModalComponent,
 } from './components';
 import { AudioPlayListComponent } from './components/audio-play-list/audio-play-list.component';
 import { ImgFallbackDirective } from './directives';
@@ -30,7 +30,7 @@ import { RangeDirective } from './directives';
     SideMenuComponent,
     TopMenuComponent,
     SearchBarComponent,
-    ThumbCardComponent,
+    VideoThumbCardComponent,
     VideoCategoryComponent,
     DesktopPageHeaderComponent,
     MobilePageHeaderComponent,
@@ -44,7 +44,7 @@ import { RangeDirective } from './directives';
     // Directives
     SocialShareModalComponent,
     ImgFallbackDirective,
-    RangeDirective
+    RangeDirective,
   ],
   exports: [
     // Component
@@ -54,7 +54,7 @@ import { RangeDirective } from './directives';
     SideMenuComponent,
     TopMenuComponent,
     SearchBarComponent,
-    ThumbCardComponent,
+    VideoThumbCardComponent,
     VideoCategoryComponent,
     DesktopPageHeaderComponent,
     MobilePageHeaderComponent,
@@ -68,8 +68,8 @@ import { RangeDirective } from './directives';
     // Directives
     SocialShareModalComponent,
     ImgFallbackDirective,
-    RangeDirective
+    RangeDirective,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
-export class UIModule { }
+export class UIModule {}

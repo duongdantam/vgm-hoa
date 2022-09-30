@@ -18,12 +18,9 @@
   // border-radius: 10px;
 
   .thumb-card-img {
-    background-image: url('/assets/imgs/image-sample.jpg');
-    padding-top: 56.25%;
+    aspect-ratio: 16/9;
     width: 100%;
-    background-repeat: no-repeat;
-    background-size: cover;
-    // background-color: aqua;
+    object-fit: cover;
   }
 
   ion-icon {
@@ -75,7 +72,7 @@
       display: flex;
       flex-direction: column;
       align-items: flex-start;
-      justify-content: center;
+      justify-content: flex-start;
       padding: 0 5px;
       max-height: 70px;
       // height: 80px;
@@ -90,7 +87,7 @@
         font-size: 20px;
         line-height: 20px;
         color: black;
-        font-weight: bold;
+        font-weight: normal;
         font-size: 18px;
         line-height: 25px;
         text-align: left;

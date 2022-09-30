@@ -2,7 +2,7 @@
   <ion-grid>
     <ion-row>
       <div class="loading">
-        <!-- <ion-spinner name="dots"></ion-spinner> -->
+        <!-- <ion-spinner name="dots" style="color: var(--ion-color-primary-shade)"></ion-spinner> -->
         <ion-label color="primary"
           >{{ 'msg.search.result' | translate}}
           <span style="font-weight: bold">"{{searchKeyWord}}"</span></ion-label
@@ -15,14 +15,14 @@
         size-lg="4"
         *ngFor="let item of itemList | slice: 0:itemLength"
       >
-        <fy-thumb-card
+        <fy-video-thumb-card
           (click)="selectItem(item)"
           [title]="item.name"
           [isPlaylist]="true"
           [subtitle]="item.duration"
           [img]="item.thumb"
           [isLeaf]="item.isLeaf"
-        ></fy-thumb-card>
+        ></fy-video-thumb-card>
       </ion-col>
       <ion-infinite-scroll
         threshold="100px"
@@ -37,7 +37,7 @@
 
 <ion-content *ngIf="!itemList">
   <div class="loading">
-    <!-- <ion-spinner name="dots"></ion-spinner> -->
+    <!-- <ion-spinner name="dots" style="color: var(--ion-color-primary-shade)"></ion-spinner> -->
     <ion-label color="primary"
       >{{ 'msg.search.notfound' | translate}}
       <span style="font-weight: bold">"{{searchKeyWord}}"</span></ion-label

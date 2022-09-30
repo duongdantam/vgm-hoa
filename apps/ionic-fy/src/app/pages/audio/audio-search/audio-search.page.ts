@@ -3,15 +3,8 @@ import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { ItemCategory } from '@fy/api-interfaces';
 import { DataFetchService, Item } from '@fy/xplat/core';
 import { PlayerService } from 'libs/xplat/core/src/lib/services/player.service';
-import { MeiliSearch } from 'meilisearch';
-import { Observable, } from 'rxjs';
+import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-
-const client = new MeiliSearch({
-  host: 'https://search.hjm.bid',
-  apiKey: 'KYV2oMHSE5G2p9ZXwUGH3CfWpaXB1CF5',
-})
-const index = client.index('VGMA')
 
 @Component({
   selector: 'fy-audio-search',
@@ -21,6 +14,7 @@ const index = client.index('VGMA')
 export class AudioSearchPage implements OnInit {
   public topicList: any[] = [];
   public topicCategory: ItemCategory | null = null;
+  index;
   searchKeyWord: string;
   searchResult: any = {};
   itemList: Item[] | null = null;
@@ -32,21 +26,28 @@ export class AudioSearchPage implements OnInit {
     private dataFetchService: DataFetchService,
     private playerService: PlayerService,
     private router: Router
-  ) { }
+  ) {
+    this.index = this.dataFetchService.searchClient.index('VGM');
+  }
 
   async ngOnInit() {
-
     this.topicUrl$ = this.activatedRoute.queryParamMap.pipe(
-      map((params: ParamMap) => params.get('param')),
+      map((params: ParamMap) => params.get('param'))
     );
 
-    await this.topicUrl$.subscribe(async param => {
+    await this.topicUrl$.subscribe(async (param) => {
       try {
         this.searchKeyWord = param;
-        this.searchResult = await index.search(param, { limit: 50 });
+        this.searchResult = await this.index.search(param, {
+          filter: 'isVideo = false',
+          limit: 50,
+        });
         console.log('audio search result', this.searchResult);
 
-        if (this.searchResult && typeof this.searchResult.hits[0] != 'undefined') {
+        if (
+          this.searchResult &&
+          typeof this.searchResult.hits[0] != 'undefined'
+        ) {
           this.itemList = this.searchResult.hits.map((item) => ({
             ...item,
             key: item.id,
@@ -57,10 +58,7 @@ export class AudioSearchPage implements OnInit {
       } catch (error) {
         console.log(error);
       }
-
     });
-
-
   }
 
   public selectItem(item: Item) {

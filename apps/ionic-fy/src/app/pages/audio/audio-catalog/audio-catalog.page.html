@@ -48,7 +48,7 @@
 </super-tabs>
 <ion-content *ngIf="!tabData">
   <div class="loading">
-    <ion-spinner name="dots"></ion-spinner>
+    <ion-spinner name="dots" style="color: var(--ion-color-primary-shade)"></ion-spinner>
   </div>
 </ion-content> -->
 
@@ -57,14 +57,20 @@
     #audioSlides
     [options]="{
     initialSlide: 1,
-    speed: platform.is('mobile') ? 400 : 0
+    speed: platform.is('mobile') ? 400 : 0,
+    observer: true,
+    observeParents: true
   }"
     style="height: 100%"
     (ionSlideDidChange)="onSlideChange()"
   >
     <ion-slide
       *ngFor="let topicCategory of tabData"
-      style="align-items: start; justify-content: start"
+      style="
+        align-items: start;
+        justify-content: start;
+        width: inherit !important;
+      "
     >
       <ion-content
         *ngIf="topicCategory.children; else waiting"
@@ -101,10 +107,14 @@
           </ion-row>
         </ion-grid>
       </ion-content>
+
       <ng-template #waiting>
         <ion-content>
           <div class="loading">
-            <ion-spinner name="dots"></ion-spinner>
+            <ion-spinner
+              name="dots"
+              style="color: var(--ion-color-primary-shade)"
+            ></ion-spinner>
           </div>
         </ion-content>
       </ng-template>

@@ -2,7 +2,7 @@
   <ion-grid class="ion-margin ion-margin-top">
     <ion-row>
       <div class="loading">
-        <!-- <ion-spinner name="dots"></ion-spinner> -->
+        <!-- <ion-spinner name="dots" style="color: var(--ion-color-primary-shade)"></ion-spinner> -->
         <ion-label color="primary"
           >Kết quả tìm kiếm cho từ khóa
           <span style="font-weight: bold">"{{searchKeyWord}}"</span></ion-label
@@ -22,7 +22,7 @@
 </ion-content>
 <ion-content *ngIf="!itemList">
   <div class="loading">
-    <!-- <ion-spinner name="dots"></ion-spinner> -->
+    <!-- <ion-spinner name="dots" style="color: var(--ion-color-primary-shade)"></ion-spinner> -->
     <ion-label color="primary"
       >{{ 'msg.search.notfound' | translate}}
       <span style="font-weight: bold">"{{searchKeyWord}}"</span></ion-label

@@ -1,11 +1,15 @@
 ion-card {
+  padding: 5px 0 10px 0;
+  height: auto;
   position: relative;
   cursor: pointer;
+  box-shadow: none;
   // width: 260px;
   // height: calc(30vw);
   min-height: 100%;
   min-width: 100%;
   margin: 0;
+  border-radius: 0;
   .card-item-hover {
     position: absolute;
     top: 0;
@@ -37,7 +41,7 @@ ion-card {
   }
 
   .card-catalog-hover {
-    position: absolute;
+    // position: absolute;
     top: 0;
     right: 0;
     width: 35%;
@@ -57,22 +61,15 @@ ion-card {
   }
 
   ion-img {
-    height: 100%;
     width: 100%;
     object-fit: cover;
   }
   ion-card-header {
-    position: absolute;
+    // position: absolute;
     width: 100%;
-    bottom: 0;
-    min-height: 50px;
-    padding: 16px 16px 12px;
+    height: 50px;
+    padding: 0 10px;
     text-align: left;
-    background: linear-gradient(
-      360deg,
-      rgba(0, 0, 0, 0.8) 32.81%,
-      rgba(0, 0, 0, 0) 100%
-    );
 
     ion-card-subtitle {
       font-family: 'Open Sans';
@@ -81,7 +78,7 @@ ion-card {
       font-size: 12px;
       line-height: 16px;
 
-      color: var(--ion-color-light-shade);
+      color: var(--ion-color-medium);
     }
 
     ion-card-title {
@@ -91,7 +88,7 @@ ion-card {
       font-size: 14px;
       line-height: 19px;
 
-      color: var(--ion-color-light);
+      color: var(--ion-color-dark-shade);
 
       margin: 4px 0px;
     }
@@ -111,13 +108,7 @@ ion-card {
 }
 
 .thumbnail {
-  height: 0;
-  padding-top: 56.25%;
   ion-img {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
+    aspect-ratio: 16/9;
   }
 }

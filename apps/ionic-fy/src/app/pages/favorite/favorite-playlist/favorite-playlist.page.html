@@ -59,13 +59,13 @@
               *ngFor="let item of favoriteVideoList | slice: 0: videoItemLength"
               (click)="selectVideoItem(item)"
             >
-              <fy-thumb-card
+              <fy-video-thumb-card
                 [title]="item.name"
                 [isPlaylist]="true"
                 [subtitle]="item.duration"
                 [img]="item.thumb"
                 [isLeaf]="item.isLeaf"
-              ></fy-thumb-card>
+              ></fy-video-thumb-card>
             </ion-col>
             <ion-infinite-scroll
               threshold="100px"

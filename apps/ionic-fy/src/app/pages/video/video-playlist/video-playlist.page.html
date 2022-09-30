@@ -29,9 +29,10 @@
       <ion-col
         size="12"
         size-lg="4"
+        size-xl="3"
         *ngFor="let item of itemCategory.children | slice: 0:itemLength"
       >
-        <fy-thumb-card
+        <fy-video-thumb-card
           (click)="selectItem(item)"
           [title]="item.name"
           [isPlaylist]="true"
@@ -39,7 +40,7 @@
           [img]="item.thumb"
           [isLeaf]="item.isLeaf"
           (mouseover)="preloadData(item)"
-        ></fy-thumb-card>
+        ></fy-video-thumb-card>
       </ion-col>
       <ion-infinite-scroll
         threshold="100px"
@@ -54,6 +55,9 @@
 
 <ion-content *ngIf="!itemCategory">
   <div class="loading">
-    <ion-spinner name="dots"></ion-spinner>
+    <ion-spinner
+      name="dots"
+      style="color: var(--ion-color-primary-shade)"
+    ></ion-spinner>
   </div>
 </ion-content>

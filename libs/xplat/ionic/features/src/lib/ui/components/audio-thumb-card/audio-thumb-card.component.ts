@@ -13,7 +13,32 @@ export class AudioThumbCardComponent extends BaseComponent {
   @Input() href: string;
   @Input() isPlaylist: boolean = false;
   @Input() avatar: string = null;
+  @Input() img: string = 'assets/imgs/default-image.svg';
+  imgLoading = true;
   constructor() {
     super();
+  }
+  imgCheck(type: string) {
+    switch (type) {
+      case 'error':
+        // console.log('img error');
+        this.img = 'assets/imgs/default-image.svg';
+        this.imgLoading = false;
+        break;
+      case 'loaded':
+        // console.log('img loaded');
+        this.imgLoading = false;
+        // if (this.isLeaf === null && this.img) {
+        //   const dirUrl = path.dirname(path.dirname(this.img));
+        //   if (dirUrl !== 'assets') {
+        //     this.onPreloadData.next(dirUrl);
+        //   }
+        // }
+
+        break;
+      default:
+        this.imgLoading = false;
+        break;
+    }
   }
 }

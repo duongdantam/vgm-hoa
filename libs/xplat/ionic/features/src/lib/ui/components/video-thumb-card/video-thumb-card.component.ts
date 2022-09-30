@@ -2,11 +2,11 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { BaseComponent } from '@fy/xplat/core';
 import * as path from 'path';
 @Component({
-  selector: 'fy-thumb-card',
-  templateUrl: 'thumb-card.component.html',
-  styleUrls: ['./thumb-card.component.scss'],
+  selector: 'fy-video-thumb-card',
+  templateUrl: 'video-thumb-card.component.html',
+  styleUrls: ['./video-thumb-card.component.scss'],
 })
-export class ThumbCardComponent extends BaseComponent {
+export class VideoThumbCardComponent extends BaseComponent {
   @Input() title: string = 'Title video';
   @Input() subtitle: string = '45:05';
   @Input() img: string;

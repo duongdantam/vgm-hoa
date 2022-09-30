@@ -289,7 +289,10 @@
       </ion-col>
 
       <ion-col size-lg="4" size="12" class="loading" *ngIf="!itemList">
-        <ion-spinner name="dots"></ion-spinner>
+        <ion-spinner
+          name="dots"
+          style="color: var(--ion-color-primary-shade)"
+        ></ion-spinner>
       </ion-col>
     </ion-row>
   </ion-grid>
