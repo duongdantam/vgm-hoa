@@ -17,8 +17,14 @@ ion-content {
   // --background: #e5e5e5;
   // --padding-top: 58px; // Mobile only
   ion-grid {
-    padding: calc(110px + var(--sat)) 5px 60px 5px;
-    // padding-left: 10px;
+    margin: 0 5px;
+    padding: calc(110px + var(--sat)) 0 140px 0;
+    ion-row {
+      padding-top: 5px;
+    }
+    ion-col {
+      padding: 0 7px;
+    }
   }
   .loading {
     width: 100%;
@@ -29,21 +35,21 @@ ion-content {
   }
 }
 
-@media screen and (min-width: 992px) {
-  ion-grid {
-    padding: 0;
-    // padding-left: 10px;
-  }
-  ion-content {
-    --padding-start: 16px;
-    --padding-end: 16px;
-  }
-}
+// @media screen and (min-width: 992px) {
+//   ion-grid {
+//     padding: 0;
+//     // padding-left: 10px;
+//   }
+//   ion-content {
+//     // --padding-start: 16px;
+//     // --padding-end: 16px;
+//   }
+// }
 
-ion-refresher {
-  z-index: 99;
-  margin-top: calc(98px + var(--sat));
-}
+// ion-refresher {
+//   z-index: 99;
+//   margin-top: calc(98px + var(--sat));
+// }
 // ion-grid {
 //   margin: 0 16px 0px 16px;
 //   padding: 0;
@@ -62,9 +68,14 @@ ion-refresher {
   //     padding-top: 50px;
   //   }
   // }
-  ion-content {
-    ion-grid {
-      padding-top: calc(98px + var(--sat));
+
+  ion-grid {
+    margin: 0 !important;
+    ion-row {
+      ion-col {
+        height: auto !important;
+        padding: 0 !important;
+      }
     }
   }
 }

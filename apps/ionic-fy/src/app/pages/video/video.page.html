@@ -23,7 +23,7 @@
           [queryParamsHandling]="merge"
           routerLinkActivate="activated"
           [ngClass]="
-        activeHref.includes(item.href)
+        activeHref.startsWith(item.href)
           ? 'ion-item-active'
           : ''
       "

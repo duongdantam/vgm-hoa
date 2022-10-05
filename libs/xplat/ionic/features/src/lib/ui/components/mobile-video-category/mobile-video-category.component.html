@@ -1,4 +1,4 @@
-<ion-grid>
+<!-- <ion-grid>
   <ion-row class="ion-justify-content-between ion-align-items-center">
     <ion-col style="text-align: left">
       <h6 style="margin-top: 5px">
@@ -49,4 +49,29 @@
       </ion-slide>
     </ion-slides>
   </ion-row>
-</ion-grid>
+</ion-grid> -->
+
+<!-- <fy-video-thumb-card
+          style="width: 100%"
+          class=""
+          (click)="selectItem(item)"
+          [title]="item.value"
+          [subtitle]="item.duration"
+          [img]="item.thumb"
+          [href]="item.href"
+          [isLeaf]="item.isLeaf"
+          [listCount]="item.count"
+          (mouseover)="preloadData(item)"
+        ></fy-video-thumb-card> -->
+
+<fy-video-thumb-card
+  (click)="selectItem(item)"
+  [title]="name"
+  [subtitle]="count"
+  img="http://jhgjhj.com/1.webp"
+  [href]="listUrl"
+  [isLeaf]="isLeaf"
+  (mouseover)="preloadData(item)"
+  [duration]="duration"
+>
+</fy-video-thumb-card>

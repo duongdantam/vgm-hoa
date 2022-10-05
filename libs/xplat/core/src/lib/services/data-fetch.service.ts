@@ -79,7 +79,9 @@ export class DataFetchService {
         this.webDomain = getValue(remoteConfig, 'WEB_DOMAIN').asString() || '';
         this.searchGateway =
           getValue(remoteConfig, 'SEARCH_GATEWAY').asString() || '';
-        this.apiGateway = 'https://cdn.vgm.tv/encrypted/API'; // getValue(remoteConfig, "API_GATEWAY").asString() || '';
+        // this.apiGateway = 'https://cdn.vgm.tv/encrypted/API'; // getValue(remoteConfig, "API_GATEWAY").asString() || '';
+        this.apiGateway =
+          getValue(remoteConfig, 'API_GATEWAY').asString() || '';
         this.searchAPIKey =
           getValue(remoteConfig, 'SEARCH_API').asString() || '';
         console.log(`got config from firebase:

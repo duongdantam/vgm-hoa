@@ -1,4 +1,5 @@
 ion-card {
+  background: none;
   padding: 5px 0 10px 0;
   height: auto;
   position: relative;
@@ -59,38 +60,120 @@ ion-card {
       font-size: 23px;
     }
   }
-
-  ion-img {
+  ion-img.isFile::before {
+    content: '';
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.5);
     width: 100%;
+    aspect-ratio: 16/9;
+    margin: 5px 0;
+    backdrop-filter: blur(8px);
+  }
+
+  ion-img.isFile::after {
+    content: url('/assets/fy-icons/fy-play.svg');
+    display: none;
+    position: absolute;
+    top: calc(50% - 60px);
+    left: calc(50% - 25px);
+  }
+
+  ion-img.isDir::before {
+    content: '';
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    width: calc(100% / 3);
+    aspect-ratio: 16/27;
+    margin: 5px 0;
+  }
+  ion-img.isDir::after {
+    content: url('/assets/fy-icons/fy-playlist.svg');
+    display: none;
+    position: absolute;
+    top: calc(50% - 50px);
+    left: calc(50% - 85px);
+    width: 30px;
+  }
+  @media screen and (min-width: 992px) {
+    ion-img:not(.isLoading):hover::before,
+    ion-img:not(.isLoading):hover::after {
+      display: block;
+    }
+  }
+
+  .card-img {
+    width: 100%;
+    aspect-ratio: 16/9;
     object-fit: cover;
   }
-  ion-card-header {
+  .card-header {
     // position: absolute;
     width: 100%;
-    height: 50px;
-    padding: 0 10px;
+    max-height: 70px;
+    padding: 5px 0 20px 0;
     text-align: left;
-
-    ion-card-subtitle {
-      font-family: 'Open Sans';
-      font-style: 'normal';
-      font-weight: 'normal';
+    .card-duration {
+      position: absolute;
+      right: 2px;
+      top: 0;
+      margin-top: -20px;
+      padding: 2px 5px;
+      background-color: black;
       font-size: 12px;
-      line-height: 16px;
-
-      color: var(--ion-color-medium);
+      color: white;
+      &.isDir {
+        display: none;
+      }
     }
 
-    ion-card-title {
+    .card-subtitle {
+      width: 55px;
+      padding: 0;
       font-family: 'Open Sans';
-      font-style: 'normal';
-      font-weight: 600;
-      font-size: 14px;
-      line-height: 19px;
+      font-style: normal;
+      font-weight: normal;
+      font-size: 15px;
+      line-height: 16px;
+      color: grey;
+      // font-family: 'Open Sans';
+      // font-style: 'normal';
+      // font-weight: 'normal';
+      // font-size: 15px;
+      // line-height: 16px;
+      // width: 55px;
 
-      color: var(--ion-color-dark-shade);
+      // color: var(--ion-color-medium);
+    }
 
-      margin: 4px 0px;
+    .card-title {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      margin: 0;
+      font-family: 'Open Sans';
+      font-style: normal;
+      font-size: 20px;
+      line-height: 20px;
+      color: black;
+      font-weight: normal;
+      font-size: 18px;
+      line-height: 25px;
+      text-align: left;
+
+      // font-family: 'Open Sans';
+      // font-style: 'normal';
+      // font-weight: 600;
+      // font-size: 20px;
+      // line-height: 19px;
+
+      // color: var(--ion-color-dark-shade);
+
+      // margin: 4px 0px;
     }
   }
 }
@@ -106,9 +189,66 @@ ion-card {
   justify-content: center;
   border-radius: 5px;
 }
-
-.thumbnail {
-  ion-img {
-    aspect-ratio: 16/9;
+@media screen and (max-width: 991px) {
+  .card-header {
+    padding: 5px 0 20px 10px !important;
   }
+
+  //   .thumb-card-img {
+  //     border-radius: 10px;
+  //     border: 5px solid burlywood;
+  //     padding-top: 100% !important;
+  //     &.isPlaylist {
+  //       border-radius: 0;
+  //       border: none;
+  //       padding-top: 56.25% !important;
+  //     }
+  //   }
+
+  //   .thumb-card-img::before {
+  //     &.isPlaylist {
+  //       content: '';
+  //       position: absolute;
+  //       top: 0;
+  //       background-color: rgba(0, 0, 0, 0.2);
+  //       height: 100%;
+  //       width: 100%;
+  //     }
+  //   }
+
+  //   .background {
+  //     &.isPlaylist {
+  //       padding: 0 !important;
+  //     }
+  //     // background-color: aqua;
+  //     .content {
+  //       &.isPlaylist {
+  //         align-items: center !important;
+  //         position: absolute;
+  //         top: 30%;
+  //         width: 100%;
+  //         max-height: 85px !important;
+  //       }
+  //       .title {
+  //         font-size: 17px !important;
+  //         &.isPlaylist {
+  //           font-size: 25px !important;
+  //           color: white !important;
+  //           max-width: 80% !important;
+  //           text-align: center !important;
+  //           line-height: 30px !important;
+  //         }
+  //       }
+
+  //       .subtitle {
+  //         font-size: 12px !important;
+  //         padding-top: 2px !important;
+  //         &.isPlaylist {
+  //           font-size: 20px !important;
+  //           margin-top: 10px !important;
+  //           color: white !important;
+  //         }
+  //       }
+  //     }
+  //   }
 }

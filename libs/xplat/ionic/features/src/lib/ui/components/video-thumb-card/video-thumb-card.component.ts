@@ -7,12 +7,13 @@ import * as path from 'path';
   styleUrls: ['./video-thumb-card.component.scss'],
 })
 export class VideoThumbCardComponent extends BaseComponent {
-  @Input() title: string = 'Title video';
-  @Input() subtitle: string = '45:05';
+  @Input() title: string;
+  @Input() subtitle: string;
   @Input() img: string;
   @Input() isPlaylist: boolean = false;
   @Input() isLeaf: boolean = false;
   @Input() listCount: number = 0;
+  @Input() duration: string;
   imgLoading = true;
   // @Output() public onPreloadData: EventEmitter<string> = new EventEmitter();
   constructor() {

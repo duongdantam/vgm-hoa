@@ -1,15 +1,45 @@
-<ion-card [ngClass]="isPlaylist ? 'thumbnail' : ''">
+<ion-card [ngClass]="isPlaylist ? 'isPlaylist' : ''">
   <!-- <ion-img src="assets/imgs/default-image.svg" *ngIf="imgLoading"></ion-img> -->
   <ion-img
+    class="card-img {{ isLeaf === null ? 'isFile' : 'isDir' }} {{
+      imgLoading === true ? 'isLoading' : ''
+    }} "
     [src]="img"
     [ngStyle]="{ 'min-height': isPlaylist ? '80px' : '' }"
     (ionError)="imgCheck('error')"
     (ionImgDidLoad)="imgCheck('loaded')"
-  ></ion-img>
-  <ion-card-header>
-    <ion-card-subtitle>{{ subtitle }}</ion-card-subtitle>
-    <ion-card-title>{{ title }}</ion-card-title>
+  >
+  </ion-img>
+  <ion-skeleton-text
+    *ngIf="imgLoading"
+    class="card-img"
+    [ngStyle]="{ 'min-height': isPlaylist ? '80px' : '' }"
+    style="position: absolute; top: 0"
+  ></ion-skeleton-text>
+
+  <ng-template #waiting>
+    <ion-card-header class="card-header">
+      <ion-skeleton-text class="card-title"></ion-skeleton-text>
+      <ion-skeleton-text class="card-subtitle"></ion-skeleton-text>
+    </ion-card-header>
+  </ng-template>
+  <ion-card-header class="card-header" *ngIf="!imgLoading; else waiting">
+    <div
+      class="card-duration  {{
+        isLeaf === null && duration ? 'isFile' : 'isDir'
+      }} "
+    >
+      {{ duration }}
+    </div>
+    <ion-card-title class="card-title"
+      >{{ isLeaf != null ? ('video.topic' | translate) : '' }}
+      {{ title }}</ion-card-title
+    >
+    <ion-card-subtitle class="card-subtitle">
+      {{ isLeaf != null ? subtitle + ('msg.chapter' | translate) : '' }}
+    </ion-card-subtitle>
   </ion-card-header>
+  <!-- 
   <div class="card-item-hover" *ngIf="isLeaf === null">
     <div>
       <ion-icon
@@ -29,8 +59,10 @@
       color="light"
       font-size="20px"
     ></ion-icon>
-  </div>
+  </div> -->
 </ion-card>
+
+<!-- 
 <div
   class="loading"
   [ngStyle]="{ padding: isPlaylist ? '5px' : '' }"
@@ -40,4 +72,18 @@
     [animated]="false"
     style="width: calc(100% - 2px)"
   ></ion-skeleton-text>
-</div>
+</div> -->
+<!-- 
+<ion-card
+  [ngClass]="isPlaylist ? 'thumbnail' : ''"
+  *ngIf="imgLoading; else waiting"
+>
+  <ion-skeleton-text
+    class="card-img"
+    [ngStyle]="{ 'min-height': isPlaylist ? '80px' : '' }"
+  ></ion-skeleton-text>
+  <ion-card-header class="card-header">
+    <ion-skeleton-text class="card-subtitle"></ion-skeleton-text>
+    <ion-skeleton-text class="card-title"></ion-skeleton-text>
+  </ion-card-header>
+</ion-card> -->

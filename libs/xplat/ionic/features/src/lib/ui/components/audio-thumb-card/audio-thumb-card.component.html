@@ -1,4 +1,4 @@
-<ion-col size="12" class="wrapper" [routerLink]="href">
+<ion-card class="wrapper" [routerLink]="href">
   <!-- <ion-icon
     name="fy-bible"
     *ngIf="avatar === null"
@@ -24,21 +24,42 @@
   </ion-avatar> -->
 
   <ion-img
+    [ngClass]="isLeaf === null ? 'isFile' : 'isDir'"
     [src]="img"
-    class="thumb-card-img {{ isPlaylist === true ? 'isPlaylist' : '' }}"
+    class="card-img {{ isPlaylist === true ? 'isPlaylist' : '' }}"
     (ionError)="imgCheck('error')"
     (ionImgDidLoad)="imgCheck('loaded')"
   >
   </ion-img>
+  <ion-skeleton-text
+    *ngIf="imgLoading"
+    class="card-img  {{ isPlaylist === true ? 'isPlaylist' : '' }}"
+    [ngStyle]="{ 'min-height': isPlaylist ? '80px' : '' }"
+    style="position: absolute; top: 0; margin: 0"
+  ></ion-skeleton-text>
 
-  <ion-row class="background {{ isPlaylist === true ? 'isPlaylist' : '' }}">
-    <div class="content {{ isPlaylist ? 'isPlaylist' : '' }}">
-      <ion-text class="title {{ isPlaylist ? 'isPlaylist' : '' }}">{{
-        title
-      }}</ion-text>
-      <ion-text class="subtitle {{ isPlaylist ? 'isPlaylist' : '' }}">
-        {{ subtitle }}
-      </ion-text>
-    </div>
-  </ion-row>
-</ion-col>
+  <ion-card-header
+    *ngIf="!imgLoading; else waiting"
+    class="card-header {{ isPlaylist === true ? 'isPlaylist' : '' }}"
+  >
+    <!-- <div class="content {{ isPlaylist ? 'isPlaylist' : '' }}"> -->
+    <ion-card-title class="card-title {{ isPlaylist ? 'isPlaylist' : '' }}">
+      {{ isLeaf != null && !isPlaylist ? ('audio.topic' | translate) : '' }}
+      {{ title }}
+    </ion-card-title>
+    <ion-card-subtitle
+      class="card-subtitle {{ isPlaylist ? 'isPlaylist' : '' }}"
+    >
+      {{ subtitle }}
+    </ion-card-subtitle>
+    <!-- </div> -->
+  </ion-card-header>
+  <ng-template #waiting>
+    <ion-card-header class="card-header">
+      <ion-skeleton-text class="card-title">{{ title }}</ion-skeleton-text>
+      <ion-skeleton-text class="card-subtitle">{{
+        subtitle
+      }}</ion-skeleton-text>
+    </ion-card-header>
+  </ng-template>
+</ion-card>

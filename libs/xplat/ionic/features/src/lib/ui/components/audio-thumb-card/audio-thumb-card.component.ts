@@ -12,8 +12,10 @@ export class AudioThumbCardComponent extends BaseComponent {
   @Input() subtitle: string;
   @Input() href: string;
   @Input() isPlaylist: boolean = false;
+  @Input() isLeaf: boolean = false;
   @Input() avatar: string = null;
   @Input() img: string = 'assets/imgs/default-image.svg';
+
   imgLoading = true;
   constructor() {
     super();

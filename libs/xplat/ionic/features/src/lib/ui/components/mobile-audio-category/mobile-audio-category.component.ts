@@ -16,7 +16,4 @@ export class MobileAudioCategoryComponent extends BaseComponent {
   constructor() {
     super();
   }
-
-
-
 }
