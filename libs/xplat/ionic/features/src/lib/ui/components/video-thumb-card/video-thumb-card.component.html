@@ -1,9 +1,11 @@
-<ion-card [ngClass]="isPlaylist ? 'isPlaylist' : ''">
+<ion-card
+  class="  {{ isPlaylist ? 'isPlaylist' : '' }} {{
+    imgLoading === true ? 'isLoading' : ''
+  }}"
+>
   <!-- <ion-img src="assets/imgs/default-image.svg" *ngIf="imgLoading"></ion-img> -->
   <ion-img
-    class="card-img {{ isLeaf === null ? 'isFile' : 'isDir' }} {{
-      imgLoading === true ? 'isLoading' : ''
-    }} "
+    class="card-img {{ isLeaf === null ? 'isFile' : 'isDir' }}"
     [src]="img"
     [ngStyle]="{ 'min-height': isPlaylist ? '80px' : '' }"
     (ionError)="imgCheck('error')"
@@ -30,6 +32,9 @@
       }} "
     >
       {{ duration }}
+    </div>
+    <div class="card-playall  {{ isLeaf === null ? 'isFile' : 'isDir' }} ">
+      <ion-icon name="fy-playall"></ion-icon>
     </div>
     <ion-card-title class="card-title"
       >{{ isLeaf != null ? ('video.topic' | translate) : '' }}

@@ -24,13 +24,13 @@
     "seeAll": "查看全部"
   },
   "audio": {
-    "topic": "[主题] -",
+    "topic": "[主题]",
     "favorite": "收藏",
     "share": "分享",
     "download": "下裁"
   },
   "video": {
-    "topic": "[主题] -"
+    "topic": "[主题]"
   },
   "msg": {
     "notfound": "404 - 页面不存在",

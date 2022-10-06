@@ -51,7 +51,7 @@ export class MobileVideoCategoryComponent
   }
 
   ngOnInit(): void {
-    // console.log('itemList', this.itemList);
+    console.log('item::::', this.item);
     // this.topicList = await this.dataFetchService.fetchTopicList(this.topic.url).then((topic) => {
     //   return topic.children.map((item) => ({
     //     ...item,

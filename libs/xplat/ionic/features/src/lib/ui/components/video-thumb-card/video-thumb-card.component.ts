@@ -18,6 +18,8 @@ export class VideoThumbCardComponent extends BaseComponent {
   // @Output() public onPreloadData: EventEmitter<string> = new EventEmitter();
   constructor() {
     super();
+
+    console.log('thumb:::', this.img);
   }
 
   imgCheck(type: string) {

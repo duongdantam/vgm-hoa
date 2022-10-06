@@ -1,4 +1,9 @@
-<ion-card class="wrapper" [routerLink]="href">
+<ion-card
+  [routerLink]="href"
+  class="wrapper  {{ isPlaylist ? 'isPlaylist' : '' }} {{
+    imgLoading === true ? 'isLoading' : ''
+  }}"
+>
   <!-- <ion-icon
     name="fy-bible"
     *ngIf="avatar === null"
@@ -42,6 +47,13 @@
     *ngIf="!imgLoading; else waiting"
     class="card-header {{ isPlaylist === true ? 'isPlaylist' : '' }}"
   >
+    <div
+      class="card-playall {{ isPlaylist === true ? 'isPlaylist' : '' }} {{
+        isLeaf === null ? 'isFile' : 'isDir'
+      }} "
+    >
+      <ion-icon name="fy-playall"></ion-icon>
+    </div>
     <!-- <div class="content {{ isPlaylist ? 'isPlaylist' : '' }}"> -->
     <ion-card-title class="card-title {{ isPlaylist ? 'isPlaylist' : '' }}">
       {{ isLeaf != null && !isPlaylist ? ('audio.topic' | translate) : '' }}
