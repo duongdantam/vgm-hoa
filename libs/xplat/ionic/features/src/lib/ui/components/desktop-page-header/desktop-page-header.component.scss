@@ -5,18 +5,27 @@ ion-toolbar {
   // padding-top: 40px !important;
   border: none;
   width: 100%;
+  ion-buttons:first-child {
+    width: 140px;
+    font-size: 30px;
+    margin: 5px 5px 5px 10px;
+  }
+  ion-buttons:last-child {
+    width: 40px;
+    margin: 7px 0;
+  }
   ion-buttons {
-    // width: 100%;
     --border-radius: 6px;
     font-size: 15px;
     ion-label {
       font-size: 20px;
       color: var(--ion-color-tertiary);
       font-weight: bold;
-      margin: 10px 5px 5px 5px;
+      padding: 0 0 5px 5px;
     }
   }
 }
+
 ion-back-button {
   box-sizing: border-box;
   width: 24px;
@@ -39,7 +48,6 @@ ion-searchbar {
   // }
   ::ng-deep .searchbar-input-container {
     border: 1px solid var(--ion-color-medium);
-    border-radius: 5px;
     height: 30px;
     width: 60%;
 
@@ -57,29 +65,37 @@ ion-searchbar {
   position: absolute;
   background-color: transparent;
   z-index: 300;
-  padding: 0 37px 0 63px;
-  top: calc(90px + var(--sat));
+  padding: 0 40px 0 170px;
+  top: calc(41px + var(--sat));
   left: 0;
   width: 100%;
   overflow: auto;
   max-height: 50vh;
-  ion-item {
-    width: 100%;
-    --background-hover: var(--ion-color-dark);
-    ion-row {
+
+  display: grid;
+  justify-items: center;
+  div {
+    width: 60%;
+    max-height: 50vh;
+    border: 1px solid rgba(var(--ion-color-dark-contrast), 0.1);
+    ion-item {
       width: 100%;
-      ion-col {
-        overflow: hidden;
-        div {
-          width: 100%;
-          ion-label {
-            overflow: hidden;
-            text-overflow: ellipsis;
-            //     height: 100%;
-            // width: calc(100% - (64px + 80px));
-            // line-height: 35px;
-            // white-space: nowrap;
-            // cursor: pointer;
+      --background-hover: var(--ion-color-dark);
+      ion-row {
+        width: 100%;
+        ion-col {
+          overflow: hidden;
+          div {
+            width: 100%;
+            ion-label {
+              overflow: hidden;
+              text-overflow: ellipsis;
+              //     height: 100%;
+              // width: calc(100% - (64px + 80px));
+              // line-height: 35px;
+              // white-space: nowrap;
+              // cursor: pointer;
+            }
           }
         }
       }

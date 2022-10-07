@@ -127,11 +127,10 @@ ion-card {
       // margin: 0;
       font-family: 'Open Sans';
       font-style: normal;
-      font-size: 20px;
       line-height: 20px;
       color: black;
       font-weight: normal;
-      font-size: 18px;
+      font-size: 15px;
       line-height: 25px;
       text-align: left;
       max-height: 50px;
@@ -144,7 +143,7 @@ ion-card {
       font-family: 'Open Sans';
       font-style: normal;
       font-weight: normal;
-      font-size: 15px;
+      font-size: 12px;
       line-height: 16px;
       width: 55px;
       color: grey;
@@ -169,7 +168,8 @@ ion-card {
   .card-img {
     aspect-ratio: 1/1 !important;
     border-radius: 10px;
-    border: 5px solid var(--ion-color-primary-tint);
+    border: 5px solid var(--ion-color-primary-contrast);
+
     &.isPlaylist {
       border-radius: 0;
       border: none;
@@ -199,6 +199,9 @@ ion-card {
   .card-header {
     .card-playall:not(.isPlaylist) {
       &.isDir {
+        margin-top: -30px !important;
+        width: calc(100% - 10px) !important;
+        left: 5px !important;
         display: flex !important;
       }
     }
@@ -212,7 +215,7 @@ ion-card {
       max-height: 85px !important;
     }
     .card-title {
-      font-size: 17px !important;
+      font-size: 15px !important;
       &.isPlaylist {
         font-size: 25px !important;
         color: white !important;

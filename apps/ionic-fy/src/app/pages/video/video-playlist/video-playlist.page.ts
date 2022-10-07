@@ -8,7 +8,7 @@ import * as path from 'path';
 import { map } from 'rxjs/operators';
 
 @Component({
-  selector: 'fy-video-playlist',
+  selector: 'vgm-video-playlist',
   templateUrl: './video-playlist.page.html',
   styleUrls: ['./video-playlist.page.scss'],
 })
@@ -48,14 +48,16 @@ export class VideoPlaylistPage implements OnInit {
       const topicData = await this.dataFetchService.fetchItemList(topicUrl);
 
       if (topicData.children) {
-        topicData.children = topicData.children.map((item) => {
-          return {
-            ...item,
-            value: item.name.replace(/[\-\_]+/g, ' '),
-            thumb: this.getItemThumbnail(item),
-            // href: this.getItemHref(item),
-          };
-        });
+        topicData.children = await Promise.all(
+          topicData.children.map(async (item) => {
+            return {
+              ...item,
+              value: item.name.replace(/[\-\_]+/g, ' '),
+              thumb: await this.getItemThumbnail(item),
+              // href: this.getItemHref(item),
+            };
+          })
+        );
       }
       this.itemCategory = topicData;
       // console.log(this.itemCategory);
@@ -75,8 +77,6 @@ export class VideoPlaylistPage implements OnInit {
     } else {
       console.warn(`could not fetch data as topicUrl is undefined`);
     }
-
-    console.log('itemCategory:::', this.itemCategory);
   }
 
   public routerNavigation(url) {
@@ -102,15 +102,15 @@ export class VideoPlaylistPage implements OnInit {
     console.log(item);
   }
 
-  private getItemThumbnail(item: any) {
-    return this.dataFetchService.getThumbnailUrl(item); // 'https://stream.vgm.tv/VGMV/01_BaiGiang/CacDienGia/MSNHB_DeHiepMotTrongPhucVu/preview/01.jpg';
+  private async getItemThumbnail(item: any) {
+    return await this.dataFetchService.getThumbnailUrl(item); // 'https://stream.vgm.tv/VGMV/01_BaiGiang/CacDienGia/MSNHB_DeHiepMotTrongPhucVu/preview/01.jpg';
   }
 
   private getItemHref(item: any) {
     if (item.isLeaf) {
-      return `/tabs/video/playlist/${item.url}`;
+      return `/muc-luc/video/playlist/${item.url}`;
     } else {
-      return `/tabs/video/topic/${item.url}`;
+      return `/muc-luc/video/topic/${item.url}`;
     }
   }
 
@@ -126,10 +126,9 @@ export class VideoPlaylistPage implements OnInit {
       (async () => {
         await this.queueService.queue.add(async () => {
           const fetchItems = [
-            'key.vgmk',
+            '360p.m3u8',
             'playlist.m3u8',
-            '480p/content0.vgmx',
-            // '720p/data0.vgmx', '1080p/data0.vgmx'
+            '360p/content0.vgmx',
           ];
           fetchItems.forEach((item) => {
             const url = `${dirUrl}/${item}`;

@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { DataFetchService, QueueService } from '@fy/xplat/core';
-// import { ItemBase, TopicCategory } from '@fy/api-interfaces';
+// import { ItemBase, TopicCategory } from '@vgm/api-interfaces';
 import { Platform, IonSlides } from '@ionic/angular';
 import { TopMenuItem } from '@fy/xplat/ionic/features';
 
@@ -11,7 +11,7 @@ import { TopMenuItem } from '@fy/xplat/ionic/features';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 @Component({
-  selector: 'fy-video-catalog',
+  selector: 'vgm-video-catalog',
   templateUrl: './video-catalog.page.html',
   styleUrls: ['./video-catalog.page.scss'],
 })
@@ -220,5 +220,6 @@ export class VideoCatalogPage implements OnInit {
     }
     const firstItem = await this.getNonLeaf(item);
     return await this.dataFetchService.getThumbnailUrl(firstItem);
+    // 'https://stream.vgm.tv/VGMV/01_BaiGiang/CacDienGia/MSNHB_DeHiepMotTrongPhucVu/preview/01.jpg';
   }
 }

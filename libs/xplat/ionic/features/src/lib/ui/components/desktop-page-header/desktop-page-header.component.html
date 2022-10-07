@@ -9,10 +9,7 @@
 
 <ion-toolbar>
   <ion-buttons slot="start">
-    <ion-icon
-      style="font-size: 30px; margin: 15px 5px 5px 15px"
-      name="fy-logo"
-    ></ion-icon>
+    <ion-icon name="fy-logo"></ion-icon>
     <ion-label class="ion-hide-lg-down">
       {{ 'intro.title' | translate }}
     </ion-label>
@@ -41,53 +38,49 @@
     </ion-searchbar>
   </div>
 
-  <ion-buttons slot="end" style="margin: 10px 10px 0px 0px">
+  <ion-buttons slot="end">
     <ion-button color="primary">
       <ion-icon name="notifications-outline"></ion-icon>
     </ion-button>
   </ion-buttons>
 </ion-toolbar>
 <ion-list class="search-found" *ngIf="searchResult.query && searchOnFocus">
-  <ion-item
-    button
-    (click)="selectItem(item)"
-    *ngFor="let item of searchResult.hits"
-  >
-    <ion-row>
-      <ion-col
-        [ngStyle]="{
-          'min-width': home === 'video' ? '300px' : '',
-          'min-height': home === 'video' ? '120px' : '',
-          'max-width': home === 'video' ? '25%' : '65px'
-        }"
-      >
-        <fy-video-thumb-card
-          *ngIf="home === 'video'; else audioThumb"
-          title=""
-          [subtitle]="item.duration"
-          [img]="item.thumb"
-          [href]="item.href"
-          [isLeaf]="item.isLeaf"
-          [isPlaylist]="true"
-          (mouseover)="preloadData(item)"
-        ></fy-video-thumb-card>
-        <ng-template #audioThumb>
-          <ion-thumbnail>
-            <ion-img src="assets/imgs/logo-fy.svg"> </ion-img>
-          </ion-thumbnail>
-        </ng-template>
-      </ion-col>
-      <ion-col style="width: 100%">
-        <div>
-          <ion-label style="font-weight: bold"> {{ item.value }} </ion-label>
-        </div>
-        <div>
-          <ion-label> {{ item.pName }} </ion-label>
-        </div>
-      </ion-col>
-    </ion-row>
-  </ion-item>
-  <div
+  <div>
+    <ion-item
+      lines="none"
+      (click)="selectItem(item)"
+      *ngFor="let item of searchResult.hits"
+    >
+      <ion-row>
+        <ion-col style="max-width: 80%">
+          <div>
+            <ion-label style="font-weight: bold"> {{ item.value }} </ion-label>
+          </div>
+          <div>
+            <ion-label> {{ item.pName }} </ion-label>
+          </div>
+        </ion-col>
+        <ion-col style="max-width: 20%">
+          <fy-video-thumb-card
+            *ngIf="home === 'video'; else audioThumb"
+            title=""
+            [subtitle]="item.duration"
+            [img]="item.thumb"
+            [href]="item.href"
+            [isLeaf]="item.isLeaf"
+            [isPlaylist]="true"
+            (mouseover)="preloadData(item)"
+          ></fy-video-thumb-card>
+          <ng-template #audioThumb>
+            <ion-thumbnail>
+              <ion-img src="assets/imgs/logo-fy.svg"> </ion-img>
+            </ion-thumbnail>
+          </ng-template>
+        </ion-col>
+      </ion-row>
+    </ion-item>
+  </div>
+  <!-- <div
     class="see-more"
     style="justify-content: center"
     *ngIf="!searchResult.hits[0]"
@@ -95,8 +88,8 @@
     <ion-label color="primary">{{
       'msg.search.notfound' | translate
     }}</ion-label>
-  </div>
-  <div
+  </div> -->
+  <!-- <div
     class="see-more"
     style="justify-content: end"
     *ngIf="searchResult.hits[0]"
@@ -110,5 +103,5 @@
       >{{ 'component.seeAll' | translate
       }}<ion-icon name="search-outline"></ion-icon>
     </ion-button>
-  </div>
+  </div> -->
 </ion-list>

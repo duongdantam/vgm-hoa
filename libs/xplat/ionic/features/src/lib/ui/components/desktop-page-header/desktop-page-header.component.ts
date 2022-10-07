@@ -20,6 +20,7 @@ export class DesktopPageHeaderComponent extends BaseComponent {
   searchOnFocus = false;
   searchResult: any = {};
   searchQuery: string = '';
+  isSearch: boolean;
   constructor(
     private router: Router,
     private location: Location,
@@ -79,9 +80,9 @@ export class DesktopPageHeaderComponent extends BaseComponent {
   }
 
   setFocus(focus) {
-    setTimeout(() => {
-      this.searchOnFocus = focus;
-    }, 150);
+    // setTimeout(() => {
+    //   this.searchOnFocus = focus;
+    // }, 150);
   }
 
   selectItem(item) {
