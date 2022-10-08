@@ -33,6 +33,7 @@
       (ionChange)="searchChange($event)"
       (ionFocus)="searchOnFocus = true"
       (ionBlur)="setFocus(false)"
+      class="{{ searchOnFocus ? 'on-focus' : '' }}"
       [disabled]="home !== 'video' && home !== 'audio'"
     >
     </ion-searchbar>
