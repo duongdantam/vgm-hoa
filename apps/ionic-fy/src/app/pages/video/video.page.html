@@ -1,9 +1,12 @@
 <ion-header>
   <fy-desktop-page-header
     home="video"
-    class="desktop-header"
+    class="desktop-header ion-hide-lg-down"
   ></fy-desktop-page-header>
-  <!-- <fy-mobile-page-header home="video"></fy-mobile-page-header> -->
+  <fy-mobile-page-header
+    home="video"
+    class="ion-hide-lg-up"
+  ></fy-mobile-page-header>
   <fy-top-menu
     home="video"
     [activeId]="dataFetchService.videoTabActiveIndex"

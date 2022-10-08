@@ -6,6 +6,7 @@
   (touchmove)="onTouchMove($event)"
   (touchend)="onTouchEnd($event)"
   tabindex="0"
+  class="{{ menuOpen ? 'menu-open' : '' }}"
 >
   <div class="duration-div hide-lg-up">
     <ion-text class="duration" color="dark" size="small">{{

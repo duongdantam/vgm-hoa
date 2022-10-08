@@ -179,7 +179,7 @@ export class AudioCatalogPage implements OnInit {
 		if (!this._dataInit) await this.initData();
 		this.slides.getActiveIndex().then(async (index: number) => {
 			const topic: any = this.menuList[index];
-			this.dataFetchService.audioTabActiveIndex = topic.id;
+			this.dataFetchService.audioTabActiveIndex = topic ? topic.id : '';
 			// const index = this.tabData.findIndex(item => item.id === topic.id);
 			try {
 				if (!this.tabData[index].children) {

@@ -1,7 +1,7 @@
 ion-content {
   // margin-top:
   // --background: var(--ion-color-light-shade);
-  --offset-top: -20px !important;
+  // --offset-top: -20px !important;
   // --background: #e5e5e5;
   // --padding-top: 58px; // Mobile only
   .loading {
@@ -11,9 +11,16 @@ ion-content {
     justify-content: center;
     align-content: center;
   }
+
   ion-grid {
-    padding: calc(80px + var(--sat)) 0px 60px 0px;
-    // padding-left: 10px;
+    margin: 0 5px;
+    padding: calc(98px + var(--sat)) 0 20px 0;
+    ion-row {
+      padding-top: 5px;
+    }
+    ion-col {
+      padding: 0 7px;
+    }
   }
 }
 
@@ -34,4 +41,17 @@ ion-content {
 
 ion-refresher {
   z-index: 99;
+}
+
+@media screen and (max-width: 991px) {
+  ion-grid {
+    margin: 0 !important;
+    ion-row {
+      padding: 0 !important;
+      ion-col {
+        height: auto !important;
+        padding: 0 !important;
+      }
+    }
+  }
 }

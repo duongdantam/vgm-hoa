@@ -80,9 +80,9 @@ export class DesktopPageHeaderComponent extends BaseComponent {
   }
 
   setFocus(focus) {
-    // setTimeout(() => {
-    //   this.searchOnFocus = focus;
-    // }, 150);
+    setTimeout(() => {
+      this.searchOnFocus = focus;
+    }, 150);
   }
 
   selectItem(item) {
@@ -126,7 +126,7 @@ export class DesktopPageHeaderComponent extends BaseComponent {
     if (
       item.isLeaf === null &&
       this.dataFetchService.prefetchList.findIndex((elem) => elem === item.id) <
-        0
+      0
     ) {
       const playUrl = await this.dataFetchService.getPlayUrl(item, true);
       const dirUrl = path.dirname(playUrl);

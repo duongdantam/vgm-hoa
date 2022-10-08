@@ -24,7 +24,7 @@
   <!-- <ion-title>Solid Buttons</ion-title> -->
   <div>
     <ion-searchbar
-      id="desktop-search-bar"
+      id="search-bar"
       [placeholder]="'input.search' | translate"
       inputmode="search"
       enterkeyhint="search"
@@ -45,7 +45,7 @@
   </ion-buttons>
 </ion-toolbar>
 <ion-list class="search-found" *ngIf="searchResult.query && searchOnFocus">
-  <div>
+  <div class="search-list">
     <ion-item
       lines="none"
       (click)="selectItem(item)"

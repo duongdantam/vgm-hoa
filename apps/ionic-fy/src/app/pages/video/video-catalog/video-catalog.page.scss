@@ -18,7 +18,7 @@ ion-content {
   // --padding-top: 58px; // Mobile only
   ion-grid {
     margin: 0 5px;
-    padding: calc(110px + var(--sat)) 0 140px 0;
+    padding: calc(98px + var(--sat)) 0 20px 0;
     ion-row {
       padding-top: 5px;
     }
@@ -72,6 +72,7 @@ ion-content {
   ion-grid {
     margin: 0 !important;
     ion-row {
+      padding: 0 !important;
       ion-col {
         height: auto !important;
         padding: 0 !important;

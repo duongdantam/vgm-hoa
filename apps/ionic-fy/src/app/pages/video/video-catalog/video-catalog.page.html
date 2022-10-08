@@ -67,7 +67,7 @@
       *ngFor="let topicCategory of tabData"
       style="align-items: start; justify-content: start"
     >
-      <ion-content *ngIf="topicCategory.children[0].children; else waiting">
+      <ion-content *ngIf="topicCategory.children; else waiting">
         <ion-refresher
           slot="fixed"
           pullFactor="0.5"

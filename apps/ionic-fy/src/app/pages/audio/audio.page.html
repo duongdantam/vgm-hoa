@@ -1,9 +1,12 @@
 <ion-header>
   <fy-desktop-page-header
     home="audio"
-    class="desktop-header"
+    class="desktop-header ion-hide-lg-down"
   ></fy-desktop-page-header>
-  <!-- <fy-mobile-page-header home="audio"></fy-mobile-page-header> -->
+  <fy-mobile-page-header
+    home="audio"
+    class="ion-hide-lg-up"
+  ></fy-mobile-page-header>
   <fy-top-menu
     home="audio"
     [activeId]="dataFetchService.audioTabActiveIndex"

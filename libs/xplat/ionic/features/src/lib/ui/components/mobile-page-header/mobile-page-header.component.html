@@ -1,45 +1,35 @@
-<ion-toolbar class="ion-hide-lg-up">
+<ion-toolbar>
   <ion-buttons slot="start">
-    <ion-icon
-      style="font-size: 30px; margin: 15px 5px 5px 15px"
-      name="fy-logo"
-    ></ion-icon>
-    <ion-label
-      style="
-        font-size: 20px;
-        color: var(--ion-color-tertiary);
-        font-weight: bold;
-        margin: 15px 5px 5px 0px;
-      "
-    >
+    <ion-icon name="fy-logo"></ion-icon>
+    <ion-label class="ion-hide-lg-down">
       {{ 'intro.title' | translate }}
     </ion-label>
-    <ion-button color="primary" *ngIf="dataFetchService.downloading">
-      <ion-icon class="downloading" name="fy-downloading"></ion-icon>
+    <!-- <ion-button color="primary" fill="outline" (click)="backNav()">
+      <ion-icon name="arrow-back-outline"></ion-icon>
     </ion-button>
-    <!-- <ion-button color="primary" (click)="homeNavigation()">
-      <ion-icon name="library-outline"></ion-icon>
-    </ion-button> -->
-    <!-- <ion-button>
-      <ion-back-button
-        color="primary"
-        text=""
-        icon="fy-arrow-back-outline"
-        defaultHref="{{home !== 'favorite/playlist' ? 'tabs/{{ home }}/catalog' : 'tabs/{{
-          home
-        }}'}}"
-      >
-      </ion-back-button>
+
+    <ion-button color="primary" fill="outline" (click)="forwardNav()">
+      <ion-icon name="arrow-forward-outline"></ion-icon>
     </ion-button> -->
   </ion-buttons>
-  <!-- <ion-title class="ion-text-center">
-    <ion-img class="brand-logo" src="./assets/imgs/logo-fy.svg"></ion-img>
-  </ion-title> -->
+  <!-- <ion-title>Solid Buttons</ion-title> -->
+  <div>
+    <ion-searchbar
+      id="mobile-search-bar"
+      [placeholder]="'input.search' | translate"
+      inputmode="search"
+      enterkeyhint="search"
+      debounce="0"
+      (keypress)="searchKeyPress($event)"
+      (ionChange)="searchChange($event)"
+      (ionFocus)="searchOnFocus = true"
+      (ionBlur)="setFocus(false)"
+      [disabled]="home !== 'video' && home !== 'audio'"
+    >
+    </ion-searchbar>
+  </div>
 
-  <ion-buttons
-    slot="end"
-    *ngIf="!home.includes('favorite') && !home.includes('document')"
-  >
+  <ion-buttons slot="end">
     <ion-button
       shape="round"
       fill="solid"
@@ -54,34 +44,13 @@
       {{ 'app.open' | translate }}
       <!-- {{ dataFetchService.appInstalled ? 'Mở App' : 'Tải App' }} -->
     </ion-button>
-
-    <ion-button color="primary" (click)="setFocus(true)">
-      <ion-icon name="fy-search"></ion-icon>
+    <ion-button color="primary">
+      <ion-icon name="notifications-outline"></ion-icon>
     </ion-button>
-    <!-- <ion-button color="primary">
-      <ion-icon name="fy-notification"></ion-icon>
-      <ion-icon name="fy-notification-badge"></ion-icon>
-    </ion-button> -->
   </ion-buttons>
 </ion-toolbar>
-<ion-content class="search-bar" *ngIf="searchOnFocus">
-  <ion-searchbar
-    #searchbar
-    id="mobile-search-bar"
-    enterkeyhint="search"
-    searchIcon="fy-logo"
-    [placeholder]="'input.search' | translate"
-    inputmode="search"
-    debounce="0"
-    (keypress)="searchKeyPress($event)"
-    (ionChange)="searchChange($event)"
-    (ionFocus)="searchOnFocus = true"
-    (ionBlur)="setFocus(false)"
-  >
-    <ion-button color="primary" fill="clear" (click)="setFocus(false)">
-      <ion-icon name="chevron-back-outline"></ion-icon>
-    </ion-button>
-  </ion-searchbar>
+
+<ion-content *ngIf="searchOnFocus">
   <ion-list *ngIf="searchResult.query && searchOnFocus">
     <ion-item
       button

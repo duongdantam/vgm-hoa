@@ -105,6 +105,7 @@ export class VideoPlayerWidgetComponent extends BaseComponent implements OnChang
 	@Input() isHidden = true;
 	@Input() isVideoControl = true;
 	@Input() widgetLocation = 2;
+	@Input() menuOpen = true;
 
 	@Input()
 	set options(options: PlayerOptions) {
@@ -1168,11 +1169,10 @@ export class VideoPlayerWidgetComponent extends BaseComponent implements OnChang
 	}
 
 
-	toggleMinimized() {
-		if (this.playerService.videoWidgetLocation === 0) {
-			this.playerService.videoWidgetLocation$.next(1);
-		} else if (this.playerService.videoWidgetLocation === 1) {
-			this.playerService.videoWidgetLocation$.next(0);
+	toggleMinimized(pos) {
+		this.playerService.videoWidgetLocation$.next(pos);
+		if (pos === 2) {
+			this.collapsePlayer()
 		}
 	}
 

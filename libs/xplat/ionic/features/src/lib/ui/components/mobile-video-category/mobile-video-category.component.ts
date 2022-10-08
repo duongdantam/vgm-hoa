@@ -51,7 +51,6 @@ export class MobileVideoCategoryComponent
   }
 
   ngOnInit(): void {
-    console.log('item::::', this.item);
     // this.topicList = await this.dataFetchService.fetchTopicList(this.topic.url).then((topic) => {
     //   return topic.children.map((item) => ({
     //     ...item,
@@ -99,7 +98,7 @@ export class MobileVideoCategoryComponent
     if (
       item.isLeaf === null &&
       this.dataFetchService.prefetchList.findIndex((elem) => elem === item.id) <
-        0
+      0
     ) {
       const playUrl = await this.dataFetchService.getPlayUrl(item, true);
       const dirUrl = path.dirname(playUrl);

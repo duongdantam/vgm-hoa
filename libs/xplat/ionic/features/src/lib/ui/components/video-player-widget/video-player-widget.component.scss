@@ -429,7 +429,7 @@ video {
 
 .video-wrapper {
   display: flex;
-  background-color: white;
+  background-color: transparent;
   position: absolute;
   top: var(--sat);
   right: 0;
@@ -448,13 +448,12 @@ video {
     align-content: center;
   }
   ion-grid {
-    margin: 0 16px;
+    margin: 0;
   }
 
-  .toggle-minimize {
+  .position-control-btn {
     position: absolute;
     top: 0px;
-    right: 10px;
     z-index: 999;
     font-size: 15px;
     --padding-top: 0;
@@ -462,6 +461,12 @@ video {
     --padding-start: 0;
     --padding-end: 0;
     margin: 0;
+    &.left {
+      left: 10px;
+    }
+    &.right {
+      right: 10px;
+    }
   }
 
   #minimized-control-bar {
@@ -581,28 +586,27 @@ video {
     }
   }
 }
-@media screen and (min-width: 992px) and (max-width: 1089px) {
-  .video-wrapper {
-    width: calc(100% - 270px);
-  }
-  .widget-minimize {
-    left: 0;
-  }
-}
 
-@media screen and (min-width: 1090px) {
+@media screen and (min-width: 992px) {
   .video-wrapper {
-    width: calc(100% - 370px);
+    top: calc(102px + var(--sat));
+    width: calc(100% - 60px);
+    &.menu-open {
+      width: calc(100% - 160px);
+    }
   }
   .widget-minimize {
-    left: 100px;
+    right: 20px;
+    .position-control-btn {
+      max-height: 30px;
+    }
   }
 }
 
 @media screen and (max-width: 991px) {
   .widget-minimize {
     transform: translateY(calc(100% - 107px - #{var(--sab)} - #{var(--sat)}));
-    .toggle-minimize {
+    .position-control-btn {
       display: none;
     }
     .video-js {
@@ -629,11 +633,17 @@ video {
 
 @media screen and (min-width: 992px) {
   .widget-minimize {
-    width: 270px;
-    transform: translateY(calc(100% - 322px - #{var(--sab)} - #{var(--sat)}));
-    --background: var(--ion-color-light);
+    width: 270px !important;
+    --background: transparent !important;
+    transform: translateY(calc(100% - 275px - #{var(--sab)} - #{var(--sat)}));
     ion-grid {
+      padding: 0;
       margin: 0;
+      ion-row {
+        ion-col {
+          padding: 0;
+        }
+      }
     }
 
     .video-player {

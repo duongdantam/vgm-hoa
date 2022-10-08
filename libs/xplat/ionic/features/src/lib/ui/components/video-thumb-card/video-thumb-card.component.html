@@ -3,7 +3,6 @@
     imgLoading === true ? 'isLoading' : ''
   }} {{ isSearch === true ? 'isSearch' : '' }}"
 >
-  <!-- <ion-img src="assets/imgs/default-image.svg" *ngIf="imgLoading"></ion-img> -->
   <ion-img
     class="card-img {{ isLeaf === null ? 'isFile' : 'isDir' }}"
     [src]="img"
@@ -21,7 +20,10 @@
 
   <ng-template #waiting>
     <ion-card-header class="card-header">
-      <ion-skeleton-text class="card-title"></ion-skeleton-text>
+      <ion-skeleton-text
+        class="card-title"
+        style="margin-top: 5px; line-height: 15px"
+      ></ion-skeleton-text>
       <ion-skeleton-text class="card-subtitle"></ion-skeleton-text>
     </ion-card-header>
   </ng-template>
@@ -44,51 +46,4 @@
       {{ isLeaf != null ? subtitle + ('msg.chapter' | translate) : '' }}
     </ion-card-subtitle>
   </ion-card-header>
-  <!-- 
-  <div class="card-item-hover" *ngIf="isLeaf === null">
-    <div>
-      <ion-icon
-        slot="icon-only"
-        fill="outline"
-        [name]="'fy-play'"
-        color="primary"
-      ></ion-icon>
-    </div>
-  </div>
-  <div class="card-catalog-hover" *ngIf="isLeaf === true || isLeaf === false">
-    <ion-text color="light">{{ listCount }}</ion-text>
-    <ion-icon
-      slot="icon-only"
-      fill="outline"
-      name="list-circle-outline"
-      color="light"
-      font-size="20px"
-    ></ion-icon>
-  </div> -->
 </ion-card>
-
-<!-- 
-<div
-  class="loading"
-  [ngStyle]="{ padding: isPlaylist ? '5px' : '' }"
-  *ngIf="imgLoading"
->
-  <ion-skeleton-text
-    [animated]="false"
-    style="width: calc(100% - 2px)"
-  ></ion-skeleton-text>
-</div> -->
-<!-- 
-<ion-card
-  [ngClass]="isPlaylist ? 'thumbnail' : ''"
-  *ngIf="imgLoading; else waiting"
->
-  <ion-skeleton-text
-    class="card-img"
-    [ngStyle]="{ 'min-height': isPlaylist ? '80px' : '' }"
-  ></ion-skeleton-text>
-  <ion-card-header class="card-header">
-    <ion-skeleton-text class="card-subtitle"></ion-skeleton-text>
-    <ion-skeleton-text class="card-title"></ion-skeleton-text>
-  </ion-card-header>
-</ion-card> -->

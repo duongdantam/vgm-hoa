@@ -14,6 +14,7 @@
     [playingItem]="(playerService.audioPlayState$ | async).item"
     [playbackMode]="(playerService.playbackMode$ | async)"
     (onPlayerEvent)="handleAudioPlayerEvent($event)"
+    [menuOpen]="menuOpen"
   ></fy-audio-player-widget>
 
   <fy-video-player-widget
@@ -26,6 +27,7 @@
     [playingSource]="(playerService.videoPlayState$ | async).playingSource"
     [options]="{autoplay: true, controls: true, sources: [{ src: videoPlayUrl, type: type}]}"
     (onPlayerEvent)="handleVideoPlayerEvent($event)"
+    [menuOpen]="menuOpen"
   >
   </fy-video-player-widget>
 

@@ -1,7 +1,9 @@
 <ion-content
   class="video-wrapper"
   id="video-widget"
-  [ngStyle]="{ display: isHidden ? 'none' : '' }"
+  [ngStyle]="{
+    display: isHidden ? 'none' : ''
+  }"
   [ngClass]="
     widgetLocation === 1
       ? 'widget-minimize'
@@ -9,6 +11,7 @@
       ? 'widget-minimize widget-hidden'
       : ''
   "
+  class="{{ menuOpen ? 'menu-open' : '' }}"
 >
   <ion-grid>
     <ion-row>
@@ -22,15 +25,27 @@
         >
           <ion-button
             fill="clear"
-            class="toggle-minimize"
-            (click)="toggleMinimized()"
+            class="position-control-btn left"
+            (click)="toggleMinimized(0)"
+            *ngIf="playerService.videoWidgetLocation === 1"
+          >
+            <ion-icon color="light" name="expand-outline"></ion-icon>
+          </ion-button>
+          <ion-button
+            fill="clear"
+            class="position-control-btn right"
+            (click)="
+              playerService.videoWidgetLocation === 0
+                ? toggleMinimized(1)
+                : toggleMinimized(2)
+            "
           >
             <ion-icon
               color="light"
               [name]="
                 playerService.videoWidgetLocation === 0
                   ? 'chevron-down-outline'
-                  : 'chevron-up-outline'
+                  : 'close-outline'
               "
             ></ion-icon>
           </ion-button>

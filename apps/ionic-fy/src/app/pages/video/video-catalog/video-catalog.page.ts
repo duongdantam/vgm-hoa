@@ -20,7 +20,7 @@ export class VideoCatalogPage implements OnInit {
   @ViewChild('videoSlides', { static: true }) slides: IonSlides;
   // public tabIndex:number = 0;
   public tabSwipeable: boolean = true;
-  public menuList: TopMenuItem[] = [];
+  // public menuList: TopMenuItem[] = [];
   public tabs: Array<{ label: string }>;
   public tabData: any;
   private _dataInit = false;
@@ -41,8 +41,10 @@ export class VideoCatalogPage implements OnInit {
     );
     this.topicUrl$.subscribe(async (param) => {
       if (param) {
+
         if (!this._dataInit) await this.initData();
         this.topicUrl = param;
+        console.log('videoCatalogRouteStart::', param);
         this.selectTab(this.topicUrl);
       }
       // else {
@@ -52,84 +54,61 @@ export class VideoCatalogPage implements OnInit {
   }
 
   async ngOnInit() {
-    if (this.platform.is('desktop')) {
-      this.slides.lockSwipes(true);
-    }
-    if (!this.dataFetchService.isInitialized) {
-      await this.dataFetchService.init();
-    }
-    await this.initData().then(async () => {
+    try {
+      if (this.platform.is('desktop')) {
+        this.slides.lockSwipes(true);
+      }
+      if (!this.dataFetchService.isInitialized) {
+        await this.dataFetchService.init();
+      }
+      await this.initData()
       const index = this.tabData.findIndex(
         (item) => item.url === this.topicUrl
       );
-      try {
-        await this.getTabData(index);
-      } catch (error) {
-        console.log('gettab error', error);
-      }
-    });
+      await this.getTabData(index);
+    } catch (error) {
+      console.log('gettab error', error);
+    }
   }
 
   async initData() {
     return new Promise(async (resolve) => {
-      const tabs = [];
-      const tabData = [];
+      // const tabs = [];
+      // const tabData = [];
       const videoList = await this.dataFetchService.fetchRoot('video');
-      this.menuList = await videoList.map((item) => ({
+
+      this.tabData = await videoList.map((item) => ({
         ...item,
         value: item.name.replace(/[0-9]+\-/g, ''),
         href: item.url,
       }));
-      for (let i = 0; i < this.menuList.length; i++) {
-        tabs.push(this.menuList[i]);
-        this.tabs = tabs;
-        const topicUrl = this.menuList[i].href;
-        if (topicUrl) {
-          const topicData = await this.dataFetchService.fetchTopicList(
-            topicUrl
-          );
-          tabData.push(topicData);
-        } else {
-          console.warn(`could not fetch data as topicUrl is undefined`);
-        }
-        this.tabData = tabData;
-        if (i === this.menuList.length - 1) {
-          this._dataInit = true;
-          resolve(null);
-        }
-      }
+      this._dataInit = true;
+      console.log('tabData:::', this.tabData);
+      resolve(this.tabData);
     });
   }
 
   async getTabData(index) {
-    this.tabData[index].children.forEach(async (topic) => {
-      if (typeof topic.children == 'undefined') {
-        topic.children = await this.dataFetchService
-          .fetchTopicList(topic.url)
-          .then((list) => list.children);
-        for (let i = 0; i < 11; i++) {
-          if (typeof topic.children[i] != 'undefined') {
-            (async () => {
-              await this.queueService.queue.add(async () => {
-                topic.children[i].value = topic.children[i].name.replace(
-                  /[\-\_]+/g,
-                  ' '
-                );
-                topic.children[i].href = topic.children[i].url;
-                topic.children[i].thumb = await this.getItemThumbnail(
-                  topic.children[i]
-                );
-              });
-            })();
-          }
-        }
-      }
-    });
+    this.tabData[index] = await this.dataFetchService.fetchTopicList(this.tabData[index].url)
+    console.log('fetching tabData:::', this.tabData[index]);
+
+    this.tabData[index].children = await Promise.all(
+      this.tabData[index].children.map(async (item) => {
+        const thumb = await this.getItemThumbnail(item);
+        return {
+          ...item,
+          value: item.name,
+          thumb: thumb,
+          href: item.url,
+        };
+      })
+    );
+
   }
 
   async selectTab(topicUrl: string) {
-    const tabIndex: any = this.menuList.findIndex(
-      (list) => list.href === topicUrl
+    const tabIndex: any = this.tabData.findIndex(
+      (list) => list.url === topicUrl
     );
     console.log('select tab:', tabIndex, topicUrl);
     if (this.platform.is('desktop')) {
@@ -163,11 +142,13 @@ export class VideoCatalogPage implements OnInit {
 
   async onSlideChange() {
     this.slides.getActiveIndex().then(async (index: number) => {
-      const topic: any = this.menuList[index];
+      const topic: any = this.tabData[index];
       this.dataFetchService.videoTabActiveIndex = topic ? topic.id : '';
+      console.log('slideChanging::', this.tabData[index], this.dataFetchService.videoTabActiveIndex);
+      // console.log('slideChanging::', this.tabData[index], this.dataFetchService.videoTabActiveIndex);
       // const index = this.tabData.findIndex(item => item.id === topic.id);
       try {
-        if (!this.tabData[index].children[0].children) {
+        if (typeof this.tabData[index].children === 'undefined') {
           await this.getTabData(index);
         }
       } catch (error) {

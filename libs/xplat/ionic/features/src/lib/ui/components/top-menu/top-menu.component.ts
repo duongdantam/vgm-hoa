@@ -18,10 +18,12 @@ export interface TopMenuItem {
   styleUrls: ['./top-menu.component.scss'],
 })
 
-export class TopMenuComponent extends BaseComponent implements OnChanges {
+export class TopMenuComponent extends BaseComponent implements OnInit, OnChanges {
   @ViewChild(IonSlides) slides: IonSlides
   @Input() home: 'video' | 'audio' = 'video';
   @Input() activeId: string;
+  private _dataInit = false;
+  public activeHref = '';
 
   public menuList: TopMenuItem[] = [];
   public audioList: TopMenuItem[] = [];
@@ -33,6 +35,27 @@ export class TopMenuComponent extends BaseComponent implements OnChanges {
     private playerService: PlayerService
   ) {
     super();
+
+    this.router.events.subscribe(async (event) => {
+      if (
+        event instanceof NavigationEnd
+      ) {
+        if (!this._dataInit) await this.dataInit();
+        this.activeHref = event.url
+          .split('/')
+          .pop()
+          .match(/(?!.*[^?item=]=)(?!\=).*/)
+          .toString();
+        const tabIndex = this.menuList.findIndex(list => this.activeHref.startsWith(list.href));
+        if (this.activeHref && this.menuList && this.slides) {
+          this.slides.getSwiper().then(swiper => {
+            swiper.slideTo(tabIndex)
+          })
+        }
+      }
+    });
+
+
     // this.router.events.subscribe(event => {
     //   if (event instanceof NavigationEnd) {
     //     if (event.url.includes('/search?param=')) {
@@ -44,18 +67,24 @@ export class TopMenuComponent extends BaseComponent implements OnChanges {
     // })
   }
 
-  ngOnChanges(changes: SimpleChanges) {
+  async ngOnChanges(changes: SimpleChanges) {
+    if (!this._dataInit) await this.dataInit();
     if ('activeId' in changes) {
       const tabIndex = this.menuList.findIndex(list => list.key === this.activeId);
+      this.activeHref = this.menuList[tabIndex].href;
       if (this.activeId && this.menuList && this.slides) {
         this.slides.getSwiper().then(swiper => {
-          swiper.slideTo(tabIndex)
+          swiper.slideTo(tabIndex - 1)
         })
       }
     }
   }
 
   async ngOnInit() {
+    if (!this._dataInit) await this.dataInit();
+  }
+
+  async dataInit() {
     const videoList = await this.dataFetchService.fetchRoot('video');
     this.videoList = await videoList.map((item) => ({
       key: item.id,
@@ -77,7 +106,7 @@ export class TopMenuComponent extends BaseComponent implements OnChanges {
       this.menuList = this.audioList;
       this.activeId = this.menuList[0].key;
     }
-
+    this._dataInit = true;
   }
 
   itemClick() {

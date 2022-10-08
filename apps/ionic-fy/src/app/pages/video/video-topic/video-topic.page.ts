@@ -21,20 +21,41 @@ export class VideoTopicPage implements OnInit {
     const { topicUrl } = this.activatedRoute.snapshot.params;
     if (topicUrl) {
       this.topicCategory = await this.dataFetchService.fetchTopicList(topicUrl);
-      this.topicCategory.children.forEach(async (topic) => {
-        topic.children = await this.dataFetchService.fetchTopicList(topic.url).then(list => list.children);
-        for (let i = 0; i < 11; i++) {
-          if (typeof topic.children[i] != "undefined") {
-            (async () => {
-              await this.queueService.queue.add(async () => {
-                topic.children[i].value = topic.children[i].name.replace(/[\-\_]+/g, ' ');
-                topic.children[i].href = topic.children[i].url;
-                topic.children[i].thumb = await this.getItemThumbnail(topic.children[i]);
-              });
-            })();
-          }
-        }
-      });
+
+
+
+
+      // this.topicCategory.children.forEach(async (topic) => {
+      //   topic.children = await this.dataFetchService.fetchTopicList(topic.url).then(list => list.children);
+      //   for (let i = 0; i < 11; i++) {
+      //     if (typeof topic.children[i] != "undefined") {
+      //       (async () => {
+      //         await this.queueService.queue.add(async () => {
+      //           topic.children[i].value = topic.children[i].name.replace(/[\-\_]+/g, ' ');
+      //           topic.children[i].href = topic.children[i].url;
+      //           topic.children[i].thumb = await this.getItemThumbnail(topic.children[i]);
+      //         });
+      //       })();
+      //     }
+      //   }
+      // });
+
+
+
+      this.topicCategory.children = await Promise.all(
+        this.topicCategory.children.map(async (item) => {
+          const thumb = await this.getItemThumbnail(item);
+          return {
+            ...item,
+            value: item.name,
+            thumb: thumb,
+            href: item.url,
+          };
+        })
+      );
+
+
+
     } else {
       console.warn(`could not fetch data as topicUrl is undefined`);
     }

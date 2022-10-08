@@ -21,6 +21,7 @@ ion-content {
         padding: 0 20px 0 20px;
       }
       ion-select {
+        margin: 0 10px;
         border: 1px solid var(--ion-color-light-shade);
         border-radius: 5px;
         padding: 10px;
@@ -29,7 +30,6 @@ ion-content {
         color: var(--ion-color-primary);
         font-size: small;
         font-weight: bold;
-        width: 100%;
         ion-select-option {
           color: var(--ion-color-primary);
           width: 100%;
@@ -42,6 +42,9 @@ ion-content {
       margin: 0 16px;
       ion-col {
         padding: 5px;
+        ion-select {
+          margin: 0;
+        }
       }
     }
   }

@@ -12,7 +12,7 @@
   <ion-slide
     *ngFor="let item of menuList; index as i"
     class="top-menu-list"
-    [ngClass]="activeId === item.key ? 'top-menu-active' : ''"
+    [ngClass]="this.activeHref.startsWith(item.href) ? 'top-menu-active' : ''"
   >
     <div
       [routerLink]="['/tabs', home, 'catalog']"

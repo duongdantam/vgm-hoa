@@ -10,14 +10,23 @@
       <ion-refresher-content pullingIcon="" refreshingSpinner="bubbles">
       </ion-refresher-content>
     </ion-refresher>
-    <fy-mobile-video-category
-      *ngFor="let category of topicCategory.children"
-      [name]="category.name"
-      [itemList]="category.children"
-      [listUrl]="category.url"
-      [isLeaf]="category.isLeaf"
-    >
-    </fy-mobile-video-category>
+    <ion-row>
+      <ion-col
+        size="12"
+        size-xl="3"
+        size-lg="4"
+        *ngFor="let category of topicCategory.children"
+      >
+        <fy-mobile-video-category
+          [item]="category"
+          [name]="category.name"
+          [listUrl]="category.url"
+          [isLeaf]="category.isLeaf"
+          [count]="category.count"
+        >
+        </fy-mobile-video-category>
+      </ion-col>
+    </ion-row>
   </ion-grid>
 </ion-content>
 <ng-template #waiting>

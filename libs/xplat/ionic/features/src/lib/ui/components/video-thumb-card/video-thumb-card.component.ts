@@ -20,7 +20,6 @@ export class VideoThumbCardComponent extends BaseComponent {
   constructor() {
     super();
 
-    console.log('thumb:::', this.img);
   }
 
   imgCheck(type: string) {

@@ -50,7 +50,7 @@ export class AudioPlayerWidgetComponent
 	@Input() public isVideoControl: boolean = true;
 	@Input() public isPlaying: boolean = false;
 	@Input() public playingItem: Item;
-	isMuted: boolean = true;
+	@Input() public menuOpen = true;
 	@Input() public playingType: number = 1;
 	@Input() public playingSource: number = 0;
 
@@ -70,6 +70,7 @@ export class AudioPlayerWidgetComponent
 	// @Output() public onTogglePlaybackRate: EventEmitter<void> = new EventEmitter();
 	@Output() public onPlayerEvent: EventEmitter<PlayerEvent> = new EventEmitter();
 
+	isMuted: boolean = true;
 	public currentTime$: BehaviorSubject<number> = new BehaviorSubject<number>(0);
 	public currentTime: number = 0;
 	public volumeLevel: number = 1;
