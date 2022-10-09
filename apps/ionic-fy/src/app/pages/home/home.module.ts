@@ -1,12 +1,24 @@
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
+import { SuperTabsModule } from '@ionic-super-tabs/angular';
+import { IonicModule } from '@ionic/angular';
+
+import { HomePageRoutingModule } from './home-routing.module';
+
+import { HomePage } from './home.page';
 import { SharedModule } from '../../features/shared/shared.module';
-import { HomeRoutingModule } from './home-routing.module';
-import { HomeComponent } from './home.component';
 
 @NgModule({
-  imports: [SharedModule, HomeRoutingModule],
-  declarations: [HomeComponent],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  imports: [
+    SharedModule,
+    CommonModule,
+    FormsModule,
+    IonicModule,
+    SuperTabsModule,
+    HomePageRoutingModule,
+  ],
+  declarations: [HomePage],
 })
-export class HomeModule {}
+export class HomePageModule { }

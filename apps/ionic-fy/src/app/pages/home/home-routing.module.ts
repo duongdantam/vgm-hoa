@@ -1,16 +1,23 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { HomeComponent } from './home.component';
+import { Routes, RouterModule } from '@angular/router';
+import { SideMenuComponent } from '@fy/xplat/ionic/features';
 
-export const HomeRoutes: Routes = [
+import { HomePage } from './home.page';
+
+const routes: Routes = [
   {
     path: '',
-    component: HomeComponent
+    component: HomePage,
+    children: [
+      // { path: '', redirectTo: 'catalog', pathMatch: 'full' },
+    ],
   },
+
+
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(HomeRoutes)],
+  imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class HomeRoutingModule { }
+export class HomePageRoutingModule { }

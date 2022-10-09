@@ -7,8 +7,8 @@ import {
 } from '@fy/xplat/core';
 
 @Component({
-  selector: 'page-home',
-  templateUrl: 'home.component.html',
+  selector: 'page-welcome',
+  templateUrl: 'welcome.component.html',
   styles: [
     `
       ion-content {
@@ -57,7 +57,7 @@ import {
     `,
   ],
 })
-export class HomeComponent extends BaseComponent implements OnInit {
+export class WelcomeComponent extends BaseComponent implements OnInit {
   timer = 0;
   dataReady = false;
   videoList = [];
@@ -114,8 +114,9 @@ export class HomeComponent extends BaseComponent implements OnInit {
 
   async handleEnter() {
     // await this.router.navigate(['/tabs']);
-    await this.router.navigate(['/tabs', 'video', 'catalog'], {
-      queryParams: { topicUrl: this.videoList[0].url },
-    });
+    await this.router.navigate(['/tabs', 'home']);
+    // await this.router.navigate(['/tabs', 'video', 'catalog'], {
+    //   queryParams: { topicUrl: this.videoList[0].url },
+    // });
   }
 }

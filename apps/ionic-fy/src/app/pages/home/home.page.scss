@@ -1,8 +1,7 @@
-// super tabs css
 .desktop-header {
   // position: absolute;
-  // right: calc(0px + var(--sar));
-  top: calc(0px + var(--sat));
+  top: var(--sat);
+  // right: var(--sar);
   background-color: white;
   width: calc(100% - 270px);
 }

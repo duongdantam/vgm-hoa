@@ -1,0 +1,40 @@
+<ion-header>
+  <fy-desktop-page-header
+    home="home"
+    class="desktop-header ion-hide-lg-down"
+  ></fy-desktop-page-header>
+  <fy-mobile-page-header
+    home="home"
+    class="ion-hide-lg-up"
+  ></fy-mobile-page-header>
+  <!-- <fy-top-menu
+    home="home"
+    [activeId]="dataFetchService.homeTabActiveIndex"
+  ></fy-top-menu> -->
+</ion-header>
+
+<!-- <ion-split-pane contentId="home-main" disabled="true">
+  <ion-menu side="start" menuId="home-menu" contentId="main">
+    <ion-content>
+      <ion-list mode="ios" lines="inset" inset>
+        <ion-item
+          (click)="itemClick()"
+          *ngFor="let item of homeList; index as i"
+          id="{{item.href}}-btn"
+          [routerLink]="['/tabs', 'home', 'catalog']"
+          [queryParams]="{topicUrl:item.href}"
+          [queryParamsHandling]="merge"
+          routerLinkActivate="activated"
+          [ngClass]="
+        activeHref.startsWith(item.href)
+          ? 'ion-item-active'
+          : ''
+      "
+        >
+          <ion-label> {{ item.value }} </ion-label>
+        </ion-item>
+      </ion-list>
+    </ion-content>
+  </ion-menu>
+  <ion-router-outlet mode="ios" id="home-main"> </ion-router-outlet>
+</ion-split-pane> -->

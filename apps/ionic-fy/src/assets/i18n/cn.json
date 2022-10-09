@@ -7,13 +7,14 @@
     "open": "開啟程式"
   },
   "tabs": {
+    "home": "主頁",
     "video": "视道",
     "audio": "听道",
+    "my": "我的",
     "favorite": "收藏",
-    "document": "下载",
     "download": "下载"
   },
-  "document": {
+  "download": {
     "play": "播放",
     "favorite": "收藏",
     "search": "搜索",
@@ -71,7 +72,7 @@
       "share": "分享",
       "delete": "媒体已删除"
     },
-    "document": {
+    "download": {
       "description": "介绍",
       "note": "笔记",
       "add": "收藏",

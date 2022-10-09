@@ -11,14 +11,14 @@ const routes: Routes = [
       {
         path: 'playlist',
         loadChildren: () =>
-          import('./favorite-playlist/favorite-playlist.module').then(
+          import('../my/favorite-playlist/favorite-playlist.module').then(
             (m) => m.FavoritePlaylistPageModule
           ),
       },
       {
         path: 'playlist/:id',
         loadChildren: () =>
-          import('./favorite-playlist/favorite-playlist.module').then(
+          import('../my/favorite-playlist/favorite-playlist.module').then(
             (m) => m.FavoritePlaylistPageModule
           ),
       },

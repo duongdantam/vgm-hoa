@@ -1,0 +1,38 @@
+<ion-header>
+  <fy-desktop-page-header
+    home="my"
+    class="desktop-header ion-hide-lg-down"
+  ></fy-desktop-page-header>
+  <fy-mobile-page-header
+    home="my"
+    class="ion-hide-lg-up"
+  ></fy-mobile-page-header>
+  <fy-top-menu home="my"></fy-top-menu>
+</ion-header>
+
+<ion-split-pane contentId="my-main">
+  <ion-menu side="start" menuId="my-menu" contentId="main">
+    <ion-content>
+      <ion-list mode="ios" lines="inset" inset>
+        <ion-item
+          *ngFor="let t of ['favorite','download']"
+          [routerLink]="['/tabs', 'my', t]"
+          [queryParams]="{id:t}"
+          [queryParamsHandling]="merge"
+          routerLinkActivate="activated"
+          (click)="itemClick(t)"
+          [ngClass]="
+        activeHref.includes(t)
+          ? 'ion-item-active'
+          : ''
+      "
+        >
+          {{t === 'favorite' ? ('tabs.my' | translate) + ('tabs.favorite' |
+          translate) : t === 'download' ? ('tabs.my' | translate) +
+          ('tabs.download' | translate): ''}}
+        </ion-item>
+      </ion-list>
+    </ion-content>
+  </ion-menu>
+  <ion-router-outlet mode="ios" id="my-main"></ion-router-outlet>
+</ion-split-pane>

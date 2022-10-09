@@ -12,9 +12,9 @@ const routes: Routes = [
     canDeactivate: [AppGuard],
     children: [
       {
-        path: 'audio',
+        path: 'home',
         loadChildren: () =>
-          import('../audio/audio.module').then((m) => m.AudioPageModule),
+          import('../home/home.module').then((m) => m.HomePageModule),
       },
       {
         path: 'video',
@@ -22,20 +22,30 @@ const routes: Routes = [
           import('../video/video.module').then((m) => m.VideoPageModule),
       },
       {
-        path: 'favorite',
+        path: 'audio',
         loadChildren: () =>
-          import('../favorite/favorite.module').then(
-            (m) => m.FavoritePageModule
-          ),
+          import('../audio/audio.module').then((m) => m.AudioPageModule),
       },
       {
-        path: 'document',
+        path: 'my',
         loadChildren: () =>
-          import('../document/document.module').then(
-            (m) => m.DocumentPageModule
-          ),
+          import('../my/my.module').then((m) => m.MyPageModule),
       },
-      { path: '', redirectTo: 'video', pathMatch: 'full' },
+      // {
+      //   path: 'favorite',
+      //   loadChildren: () =>
+      //     import('../favorite/favorite.module').then(
+      //       (m) => m.FavoritePageModule
+      //     ),
+      // },
+      // {
+      //   path: 'download',
+      //   loadChildren: () =>
+      //     import('../download/download.module').then(
+      //       (m) => m.DocumentPageModule
+      //     ),
+      // },
+      { path: '', redirectTo: 'home', pathMatch: 'full' },
     ],
   },
   // { path: '', redirectTo: 'catalog', pathMatch: 'full' },

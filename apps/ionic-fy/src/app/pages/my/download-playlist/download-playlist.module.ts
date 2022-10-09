@@ -5,9 +5,9 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { SuperTabsModule } from '@ionic-super-tabs/angular';
 
-import { DocumentPlaylistPageRoutingModule } from './document-playlist-routing.module';
+import { DownloadPlaylistPageRoutingModule } from './download-playlist-routing.module';
 
-import { DocumentPlaylistPage } from './document-playlist.page';
+import { DownloadPlaylistPage } from './download-playlist.page';
 import { SharedModule } from '../../../features/shared/shared.module';
 
 @NgModule({
@@ -17,8 +17,8 @@ import { SharedModule } from '../../../features/shared/shared.module';
     FormsModule,
     IonicModule,
     SuperTabsModule,
-    DocumentPlaylistPageRoutingModule,
+    DownloadPlaylistPageRoutingModule,
   ],
-  declarations: [DocumentPlaylistPage],
+  declarations: [DownloadPlaylistPage],
 })
-export class DocumentPlaylistPageModule { }
+export class DownloadPlaylistPageModule { }

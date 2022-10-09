@@ -7,7 +7,7 @@ export class AppGuard implements CanActivate, CanDeactivate<any>{
 	canActivate(
 		next: ActivatedRouteSnapshot,
 		state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
-		if (state.url !== '/home') {
+		if (state.url !== '/welcome') {
 			console.log('activate gaurd', { next, state });
 			return true;
 		}
@@ -16,7 +16,7 @@ export class AppGuard implements CanActivate, CanDeactivate<any>{
 	}
 	canDeactivate(component: any, currentRoute: ActivatedRouteSnapshot, currentState: RouterStateSnapshot, nextState?: RouterStateSnapshot) {
 		console.log('deactivate gaurd', { component, currentRoute, currentState, nextState });
-		if (currentState.url === '/home') {
+		if (currentState.url === '/welcome') {
 			console.log('deactivate gaurd', { component, currentRoute, currentState, nextState });
 			return true;
 		}

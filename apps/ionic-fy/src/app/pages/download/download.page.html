@@ -1,9 +1,35 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>download</ion-title>
-  </ion-toolbar>
+  <fy-desktop-page-header
+    home="document/playlist"
+    class="desktop-header"
+  ></fy-desktop-page-header>
+  <!-- <fy-mobile-page-header home="document/playlist"></fy-mobile-page-header> -->
+  <!-- <fy-top-menu home="document"></fy-top-menu> -->
 </ion-header>
 
-<ion-content>
-
-</ion-content>
+<ion-split-pane contentId="document-main">
+  <ion-menu side="start" menuId="document-menu" contentId="main">
+    <ion-content>
+      <ion-list mode="ios" lines="inset" inset>
+        <ion-item
+          *ngFor="let t of ['video','audio']"
+          [routerLink]="['/tabs', 'document','playlist']"
+          [queryParams]="{id:t}"
+          [queryParamsHandling]="merge"
+          routerLinkActivate="activated"
+          (click)="itemClick(t)"
+          [ngClass]="
+        activeHref.includes(t)
+          ? 'ion-item-active'
+          : ''
+      "
+        >
+          {{t === 'video' ? ('tabs.video' | translate) + ('tabs.download' |
+          translate) : t === 'audio' ? ('tabs.audio' | translate) +
+          ('tabs.download' | translate): ''}}
+        </ion-item>
+      </ion-list>
+    </ion-content>
+  </ion-menu>
+  <ion-router-outlet mode="ios" id="document-main"></ion-router-outlet>
+</ion-split-pane>

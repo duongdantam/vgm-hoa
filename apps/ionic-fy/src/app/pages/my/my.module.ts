@@ -5,9 +5,9 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { SuperTabsModule } from '@ionic-super-tabs/angular';
 
-import { DocumentPageRoutingModule } from './document-routing.module';
+import { MyPageRoutingModule } from './my-routing.module';
 
-import { DocumentPage } from './document.page';
+import { MyPage } from './my.page';
 import { SharedModule } from '../../features/shared/shared.module';
 
 @NgModule({
@@ -17,8 +17,8 @@ import { SharedModule } from '../../features/shared/shared.module';
     FormsModule,
     IonicModule,
     SuperTabsModule,
-    DocumentPageRoutingModule
+    MyPageRoutingModule
   ],
-  declarations: [DocumentPage]
+  declarations: [MyPage]
 })
-export class DocumentPageModule { }
+export class MyPageModule { }

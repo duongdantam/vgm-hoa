@@ -30,10 +30,12 @@ export class TabsPage implements OnInit, OnDestroy {
   private videoRootList = [];
 
   public menuActivation = {
+    home: false,
     video: false,
     audio: false,
-    favorite: false,
-    document: false,
+    my: false,
+    // favorite: false,
+    // download: false,
   };
 
   constructor(
@@ -97,6 +99,13 @@ export class TabsPage implements OnInit, OnDestroy {
 
   menuTab = (function () {
     return function (menu: string) {
+      if (menu === 'home') {
+        // this.playerService.setVideoControlsHidden(false);
+        if (this.menuActivation.home === false) {
+          this.menuActivation.home = true;
+          this.router.navigate(['/tabs', menu]);
+        }
+      }
       if (menu === 'video') {
         this.playerService.setVideoControlsHidden(false);
         if (this.menuActivation.video === false) {
@@ -105,7 +114,8 @@ export class TabsPage implements OnInit, OnDestroy {
             queryParams: { topicUrl: this.videoRootList[0].url },
           });
         }
-      } else if (menu === 'audio') {
+      }
+      if (menu === 'audio') {
         this.playerService.setAudioControlsHidden(false);
         if (this.menuActivation.audio === false) {
           this.menuActivation.audio = true;
@@ -115,61 +125,70 @@ export class TabsPage implements OnInit, OnDestroy {
         }
       }
 
-      // thís code is for mobile
-      else if (menu === 'favorite') {
-        if (this.playerService.favoritePlayingType === 0) {
-          if (this.playerService.videoWidgetLocation === 0) {
-            this.playerService.videoWidgetLocation$.next(1);
-            // if (this.playerService.videoIsHidden) {
-            //   this.playerService.setVideoControlsHidden(false);
-            // }
-          }
-          this.playerService.setVideoControlsHidden(false);
-          this.playerService.setAudioControlsHidden(true);
-          // if (this.playerService.videoIsHidden) {
-          // } else if (this.playerService.audioIsHidden === false) {
-          // }
-        } else if (this.playerService.favoritePlayingType === 1) {
-          this.playerService.setVideoControlsHidden(true);
-          this.playerService.setAudioControlsHidden(false);
-          // if (this.playerService.videoIsHidden === false) {
-          // } else if (this.playerService.audioIsHidden) {
-          // }
-        }
-        if (this.menuActivation.favorite === false) {
-          this.menuActivation.favorite = true;
-          this.router.navigate(['/tabs', menu, 'playlist'], {
-            queryParams: { id: 'video' },
-          });
-        }
-      } else if (menu === 'document') {
-        if (this.playerService.documentPlayingType === 0) {
-          if (this.playerService.videoWidgetLocation === 0) {
-            this.playerService.videoWidgetLocation$.next(1);
-            // if (this.playerService.videoIsHidden) {
-            //   this.playerService.setVideoControlsHidden(false);
-            // }
-          }
-
-          this.playerService.setVideoControlsHidden(false);
-          this.playerService.setAudioControlsHidden(true);
-          // if (this.playerService.videoIsHidden) {
-          // } else if (this.playerService.audioIsHidden === false) {
-          // }
-        } else if (this.playerService.documentPlayingType === 1) {
-          this.playerService.setVideoControlsHidden(true);
-          this.playerService.setAudioControlsHidden(false);
-          // if (this.playerService.videoIsHidden === false) {
-          // } else if (this.playerService.audioIsHidden) {
-          // }
-        }
-        if (this.menuActivation.document === false) {
-          this.menuActivation.document = true;
-          this.router.navigate(['/tabs', menu, 'playlist'], {
-            queryParams: { id: 'video' },
-          });
+      if (menu === 'my') {
+        // this.playerService.setVideoControlsHidden(false);
+        if (this.menuActivation.my === false) {
+          this.menuActivation.my = true;
+          this.router.navigate(['/tabs', menu]);
         }
       }
+
+      // // thís code is for mobile
+      // if (menu === 'favorite') {
+      //   if (this.playerService.favoritePlayingType === 0) {
+      //     if (this.playerService.videoWidgetLocation === 0) {
+      //       this.playerService.videoWidgetLocation$.next(1);
+      //       // if (this.playerService.videoIsHidden) {
+      //       //   this.playerService.setVideoControlsHidden(false);
+      //       // }
+      //     }
+      //     this.playerService.setVideoControlsHidden(false);
+      //     this.playerService.setAudioControlsHidden(true);
+      //     // if (this.playerService.videoIsHidden) {
+      //     // } else if (this.playerService.audioIsHidden === false) {
+      //     // }
+      //   } else if (this.playerService.favoritePlayingType === 1) {
+      //     this.playerService.setVideoControlsHidden(true);
+      //     this.playerService.setAudioControlsHidden(false);
+      //     // if (this.playerService.videoIsHidden === false) {
+      //     // } else if (this.playerService.audioIsHidden) {
+      //     // }
+      //   }
+      //   if (this.menuActivation.favorite === false) {
+      //     this.menuActivation.favorite = true;
+      //     this.router.navigate(['/tabs', menu, 'playlist'], {
+      //       queryParams: { id: 'video' },
+      //     });
+      //   }
+      // }
+      // if (menu === 'download') {
+      //   if (this.playerService.downloadPlayingType === 0) {
+      //     if (this.playerService.videoWidgetLocation === 0) {
+      //       this.playerService.videoWidgetLocation$.next(1);
+      //       // if (this.playerService.videoIsHidden) {
+      //       //   this.playerService.setVideoControlsHidden(false);
+      //       // }
+      //     }
+
+      //     this.playerService.setVideoControlsHidden(false);
+      //     this.playerService.setAudioControlsHidden(true);
+      //     // if (this.playerService.videoIsHidden) {
+      //     // } else if (this.playerService.audioIsHidden === false) {
+      //     // }
+      //   } else if (this.playerService.downloadPlayingType === 1) {
+      //     this.playerService.setVideoControlsHidden(true);
+      //     this.playerService.setAudioControlsHidden(false);
+      //     // if (this.playerService.videoIsHidden === false) {
+      //     // } else if (this.playerService.audioIsHidden) {
+      //     // }
+      //   }
+      //   if (this.menuActivation.download === false) {
+      //     this.menuActivation.download = true;
+      //     this.router.navigate(['/tabs', menu, 'playlist'], {
+      //       queryParams: { id: 'video' },
+      //     });
+      //   }
+      // }
     };
   })();
 

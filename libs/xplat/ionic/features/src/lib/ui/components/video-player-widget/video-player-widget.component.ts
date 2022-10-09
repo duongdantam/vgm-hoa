@@ -312,7 +312,7 @@ export class VideoPlayerWidgetComponent extends BaseComponent implements OnChang
 				//   'window.outerHeight', window.outerHeight, '\n',
 				//   'screenHeight', screen.height, '\n',
 				//   'screenAvaiHeight', screen.availHeight, '\n',
-				//   'document.body.clientHeight', document.body.clientHeight, '\n',
+				//   'download.body.clientHeight', document.body.clientHeight, '\n',
 				// );
 				await this.getPlayingInfo();
 
@@ -873,19 +873,19 @@ export class VideoPlayerWidgetComponent extends BaseComponent implements OnChang
 	getListTitle() {
 		switch (this.playingSource) {
 			case 0:
-				return `${this.translateService.instant('document.play')}${this.translateService.instant('document.document')}`;
+				return `${this.translateService.instant('download.play')}${this.translateService.instant('download.document')}`;
 				break;
 			case 1:
-				return `${this.translateService.instant('document.favorite')}${this.translateService.instant('document.document')}`;
+				return `${this.translateService.instant('download.favorite')}${this.translateService.instant('download.document')}`;
 				break;
 			case 2:
-				return `${this.translateService.instant('document.search')}${this.translateService.instant('document.document')}`;
+				return `${this.translateService.instant('download.search')}${this.translateService.instant('download.document')}`;
 				break;
 			case 3:
-				return `${this.translateService.instant('document.download')}${this.translateService.instant('document.document')}`;
+				return `${this.translateService.instant('download.download')}${this.translateService.instant('download.document')}`;
 				break;
 			default:
-				return `${this.translateService.instant('document.play')}${this.translateService.instant('document.document')}`;
+				return `${this.translateService.instant('download.play')}${this.translateService.instant('download.document')}`;
 				break;
 		}
 	}

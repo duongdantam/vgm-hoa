@@ -1,20 +1,12 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
-import { IonicModule } from '@ionic/angular';
-
-import { WelcomePageRoutingModule } from './welcome-routing.module';
-
-import { WelcomePage } from './welcome.page';
+import { SharedModule } from '../../features/shared/shared.module';
+import { WelcomeRoutingModule } from './welcome-routing.module';
+import { WelcomeComponent } from './welcome.component';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    IonicModule,
-    WelcomePageRoutingModule
-  ],
-  declarations: [WelcomePage]
+  imports: [SharedModule, WelcomeRoutingModule],
+  declarations: [WelcomeComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
-export class WelcomePageModule {}
+export class WelcomeModule { }

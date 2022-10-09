@@ -1,17 +1,16 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
+import { WelcomeComponent } from './welcome.component';
 
-import { WelcomePage } from './welcome.page';
-
-const routes: Routes = [
+export const WelcomeRoutes: Routes = [
   {
     path: '',
-    component: WelcomePage
-  }
+    component: WelcomeComponent
+  },
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
+  imports: [RouterModule.forChild(WelcomeRoutes)],
   exports: [RouterModule],
 })
-export class WelcomePageRoutingModule {}
+export class WelcomeRoutingModule { }

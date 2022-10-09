@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { DocumentPlaylistPage } from './document-playlist.page';
+import { DocumentPlaylistPage } from './download-playlist.page';
 
 describe('DocumentPlaylistPage', () => {
   let component: DocumentPlaylistPage;

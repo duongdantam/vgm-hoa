@@ -11,12 +11,12 @@ import { Observable, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 @Component({
-	selector: 'fy-document-playlist',
-	templateUrl: './document-playlist.page.html',
-	styleUrls: ['./document-playlist.page.scss'],
+	selector: 'fy-download-playlist',
+	templateUrl: './download-playlist.page.html',
+	styleUrls: ['./download-playlist.page.scss'],
 })
 
-export class DocumentPlaylistPage implements OnInit {
+export class DownloadPlaylistPage implements OnInit {
 	@ViewChild('superTabs', { read: SuperTabs }) st: SuperTabs;
 	documentUrl$: Observable<string>;
 
