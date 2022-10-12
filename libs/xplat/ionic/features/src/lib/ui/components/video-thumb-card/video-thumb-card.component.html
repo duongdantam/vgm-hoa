@@ -4,9 +4,10 @@
   }} {{ isSearch === true ? 'isSearch' : '' }}"
 >
   <ion-img
-    class="card-img {{ isLeaf === null ? 'isFile' : 'isDir' }}"
+    class="card-img {{ isLeaf === null ? 'isFile' : 'isDir' }} {{
+      isSearch === true ? 'isSearch' : ''
+    }}"
     [src]="img"
-    [ngStyle]="{ 'min-height': isPlaylist ? '80px' : '' }"
     (ionError)="imgCheck('error')"
     (ionImgDidLoad)="imgCheck('loaded')"
   >
@@ -14,12 +15,13 @@
   <ion-skeleton-text
     *ngIf="imgLoading"
     class="card-img"
-    [ngStyle]="{ 'min-height': isPlaylist ? '80px' : '' }"
     style="position: absolute; top: 0"
   ></ion-skeleton-text>
 
   <ng-template #waiting>
-    <ion-card-header class="card-header">
+    <ion-card-header
+      class="card-header {{ isSearch === true ? 'isSearch' : '' }}"
+    >
       <ion-skeleton-text
         class="card-title"
         style="margin-top: 5px; line-height: 15px"
@@ -27,7 +29,10 @@
       <ion-skeleton-text class="card-subtitle"></ion-skeleton-text>
     </ion-card-header>
   </ng-template>
-  <ion-card-header class="card-header" *ngIf="!imgLoading; else waiting">
+  <ion-card-header
+    class="card-header {{ isSearch === true ? 'isSearch' : '' }}"
+    *ngIf="!imgLoading; else waiting"
+  >
     <div
       class="card-duration  {{
         isLeaf === null && duration ? 'isFile' : 'isDir'

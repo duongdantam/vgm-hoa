@@ -1,0 +1,34 @@
+<ion-grid class="card-slider">
+  <ion-row class="ion-justify-content-between ion-align-items-center">
+    <ion-col style="text-align: left">
+      <h6 style="margin-top: 5px">
+        <ion-text>jhkgjgjk</ion-text>
+      </h6>
+    </ion-col>
+  </ion-row>
+
+  <ion-row>
+    <ion-slides
+      [options]="{
+        slidesPerView: 'auto',
+        zoom: false,
+        grabCursor: true,
+        mousewheel: true
+      }"
+    >
+      <ion-slide *ngFor="let item of children">
+        <fy-video-thumb-card
+          (click)="selectItem(item)"
+          [title]="name"
+          [subtitle]="count"
+          [img]="item.thumb"
+          [href]="listUrl"
+          [isLeaf]="isLeaf"
+          (mouseover)="preloadData(item)"
+          [duration]="duration"
+        >
+        </fy-video-thumb-card>
+      </ion-slide>
+    </ion-slides>
+  </ion-row>
+</ion-grid>

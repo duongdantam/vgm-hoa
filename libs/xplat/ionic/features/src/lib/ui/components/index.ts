@@ -12,6 +12,8 @@ import { DesktopPageHeaderComponent } from './desktop-page-header/desktop-page-h
 
 import { MobilePageHeaderComponent } from './mobile-page-header/mobile-page-header.component';
 
+import { VideoCardSliderComponent } from './video-card-slider/video-card-slider.component';
+
 import { VideoPlayerWidgetComponent } from './video-player-widget/video-player-widget.component';
 
 import { TopMenuComponent } from './top-menu/top-menu.component';
@@ -39,6 +41,7 @@ export * from './mobile-page-header/mobile-page-header.component';
 export * from './video-player-widget/video-player-widget.component';
 export * from './top-menu/top-menu.component';
 export * from './mobile-video-category/mobile-video-category.component';
+export * from './video-card-slider/video-card-slider.component';
 export * from './audio-category/audio-category.component';
 export * from './mobile-audio-category/mobile-audio-category.component';
 export * from './audio-thumb-card/audio-thumb-card.component';

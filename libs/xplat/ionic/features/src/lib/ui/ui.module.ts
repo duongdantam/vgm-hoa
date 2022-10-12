@@ -10,6 +10,7 @@ import {
   MobileAudioCategoryComponent,
   MobilePageHeaderComponent,
   MobileVideoCategoryComponent,
+  VideoCardSliderComponent,
   VideoPlayerWidgetComponent,
   SearchBarComponent,
   SideMenuComponent,
@@ -36,6 +37,7 @@ import { RangeDirective } from './directives';
     MobilePageHeaderComponent,
     MobileVideoCategoryComponent,
     VideoPlayerWidgetComponent,
+    VideoCardSliderComponent,
     // Audio
     AudioThumbCardComponent,
     AudioPlayListComponent,
@@ -59,6 +61,7 @@ import { RangeDirective } from './directives';
     DesktopPageHeaderComponent,
     MobilePageHeaderComponent,
     MobileVideoCategoryComponent,
+    VideoCardSliderComponent,
     VideoPlayerWidgetComponent,
     // Audio
     AudioThumbCardComponent,

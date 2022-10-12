@@ -1,0 +1,23 @@
+.card-slider {
+  ion-slides {
+    overflow-x: scroll;
+    &::-webkit-scrollbar {
+      display: none;
+    }
+    margin: 0;
+    ion-slide {
+      width: auto;
+      height: auto;
+      fy-video-thumb-card {
+        min-width: 160px;
+        height: auto;
+        padding: 0 5px;
+      }
+    }
+  }
+}
+@media screen and (min-width: 992px) {
+  fy-video-thumb-card {
+    min-width: 200px !important;
+  }
+}

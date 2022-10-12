@@ -12,6 +12,28 @@
     [activeId]="dataFetchService.homeTabActiveIndex"
   ></fy-top-menu> -->
 </ion-header>
+<ion-content>
+  <ion-slides
+    pager="true"
+    [options]="{
+    initialSlide: 3,
+    speed:  400,
+    observer: true,
+    observeParents: true,
+    autoplay: {
+      delay: 4000
+    }
+  }"
+  >
+    <ion-slides>
+      <ion-slide *ngFor="let item of [2,3,4]">
+        <ion-img src="{{ 'assets/imgs/' + item + '.jpg' }}"> </ion-img>
+      </ion-slide>
+    </ion-slides>
+  </ion-slides>
+
+  <fy-video-card-slider> </fy-video-card-slider>
+</ion-content>
 
 <!-- <ion-split-pane contentId="home-main" disabled="true">
   <ion-menu side="start" menuId="home-menu" contentId="main">

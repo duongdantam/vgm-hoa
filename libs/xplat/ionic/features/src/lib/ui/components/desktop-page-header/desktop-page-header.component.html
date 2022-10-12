@@ -49,13 +49,17 @@
   <div class="search-list">
     <ion-item
       lines="none"
+      button
+      [detail]="false"
       (click)="selectItem(item)"
       *ngFor="let item of searchResult.hits"
     >
       <ion-row>
         <ion-col style="max-width: 80%">
           <div>
-            <ion-label style="font-weight: bold"> {{ item.value }} </ion-label>
+            <ion-label style="font-weight: bold; font-size: 12px">
+              {{ item.value }}
+            </ion-label>
           </div>
           <div>
             <ion-label> {{ item.pName }} </ion-label>
@@ -70,6 +74,7 @@
             [href]="item.href"
             [isLeaf]="item.isLeaf"
             [isPlaylist]="true"
+            [isSearch]="true"
             (mouseover)="preloadData(item)"
           ></fy-video-thumb-card>
           <ng-template #audioThumb>

@@ -89,13 +89,17 @@ ion-searchbar {
     box-shadow: 0px 0px 10px -5px;
     ion-item {
       width: 100%;
+      cursor: pointer;
       --background-hover: var(--ion-color-dark);
       ion-row {
+        min-height: 50px !important;
         width: 100%;
         ion-col {
           overflow: hidden;
+          display: grid !important;
+          align-content: center !important;
           div {
-            width: 100%;
+            width: 90%;
             ion-label {
               overflow: hidden;
               text-overflow: ellipsis;
@@ -109,6 +113,9 @@ ion-searchbar {
         }
       }
     }
+    // ion-item:hover {
+    //   --background: var(--ion-color-dark);
+    // }
   }
   .see-more {
     width: 100%;
