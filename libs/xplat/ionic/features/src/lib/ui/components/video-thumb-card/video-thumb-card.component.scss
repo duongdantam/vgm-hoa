@@ -184,12 +184,29 @@ ion-card {
       display: flex !important;
     }
   }
+
+  ion-card {
+    &.isCardSlider {
+      width: 200px !important;
+      height: auto !important;
+      padding: 5px !important;
+    }
+  }
 }
+
 @media screen and (max-width: 991px) {
   ion-card {
     padding: 0 !important;
+    &.isCardSlider {
+      width: 160px;
+      height: auto !important;
+      padding: 5px !important;
+    }
     .card-header {
       padding: 5px 10px 20px 10px !important;
+      &.isCardSlider {
+        padding: 5px 0px 20px 0px !important;
+      }
       .card-playall.isDir {
         display: flex !important;
       }

@@ -47,9 +47,10 @@ export class HomePage implements OnInit {
     this.videoRandomList = await this.getChildren(
       videoList[videoRandomIndex].url
     );
-
-    console.log('hello', this.videoRandomList);
-
+    this.audioRandomList = await this.getChildren(
+      audioList[audioRandomIndex].url
+    );
+    console.log('videoRandomList:::::', this.videoRandomList);
     // .then((list) => {
     //   return list.map((item) => ({
     //     key: item.id,
@@ -60,14 +61,44 @@ export class HomePage implements OnInit {
   }
 
   async getChildren(url: string) {
-    const itemInfo = await this.dataFetchService.fetchTopicList(url);
+    return new Promise(async (resolve, reject) => {
+      const recurse = async (url: string) => {
+        const itemInfo = await this.dataFetchService.fetchTopicList(url);
 
-    if (itemInfo.children && itemInfo.children[0].isLeaf === null) {
-      return itemInfo;
-    } else {
-      const randomIndex = Math.floor(Math.random() * itemInfo.children.length);
-      return await this.getChildren(itemInfo[randomIndex].url);
-    }
+        if (
+          itemInfo.children &&
+          itemInfo.children.length > 0 &&
+          itemInfo.children[0].isLeaf === null
+        ) {
+          itemInfo.children = await Promise.all(
+            itemInfo.children.map(async (item) => {
+              const thumb = await this.getItemThumbnail(item);
+              return {
+                ...item,
+                thumb: thumb,
+              };
+            })
+          );
+
+          resolve(itemInfo);
+        }
+        if (
+          itemInfo.children &&
+          itemInfo.children.length > 0 &&
+          itemInfo.children[0].isLeaf !== null
+        ) {
+          const randomIndex = Math.floor(
+            Math.random() * itemInfo.children.length
+          );
+          await recurse(itemInfo.children[randomIndex].url);
+        }
+        if (!itemInfo.children) {
+          reject();
+        }
+      };
+
+      recurse(url);
+    });
   }
 
   async ngOnInit() {
@@ -107,4 +138,29 @@ export class HomePage implements OnInit {
   //   }
   //   this.playerService.videoPause();
   // }
+
+  private getNonLeaf(item: any) {
+    return new Promise(async (resolve) => {
+      const recurse = async (item) => {
+        if (item.isLeaf === null) {
+          resolve(item);
+        }
+        if (item.isLeaf === true || item.isLeaf === false) {
+          await this.dataFetchService.fetchTopicList(item.url).then((list) => {
+            if (list.children[0]) recurse(list.children[0]);
+          });
+        }
+      };
+      recurse(item);
+    });
+  }
+
+  private async getItemThumbnail(item: any) {
+    if (item.isLeaf === null) {
+      return await this.dataFetchService.getThumbnailUrl(item);
+    }
+    const firstItem = await this.getNonLeaf(item);
+    return await this.dataFetchService.getThumbnailUrl(firstItem);
+    // 'https://stream.vgm.tv/VGMV/01_BaiGiang/CacDienGia/MSNHB_DeHiepMotTrongPhucVu/preview/01.jpg';
+  }
 }

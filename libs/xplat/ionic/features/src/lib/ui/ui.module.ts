@@ -18,6 +18,7 @@ import {
   TopMenuComponent,
   VideoCategoryComponent,
   SocialShareModalComponent,
+  AudioCardSliderComponent,
 } from './components';
 import { AudioPlayListComponent } from './components/audio-play-list/audio-play-list.component';
 import { ImgFallbackDirective } from './directives';
@@ -43,6 +44,7 @@ import { RangeDirective } from './directives';
     AudioPlayListComponent,
     MobileAudioCategoryComponent,
     AudioPlayerWidgetComponent,
+    AudioCardSliderComponent,
     // Directives
     SocialShareModalComponent,
     ImgFallbackDirective,
@@ -68,6 +70,7 @@ import { RangeDirective } from './directives';
     AudioPlayListComponent,
     MobileAudioCategoryComponent,
     AudioPlayerWidgetComponent,
+    AudioCardSliderComponent,
     // Directives
     SocialShareModalComponent,
     ImgFallbackDirective,

@@ -17,18 +17,12 @@
       }"
     >
       <ion-slide *ngFor="let item of topic.children">
-        <fy-video-thumb-card
-          (click)="selectItem(item)"
+        <fy-audio-thumb-card
           [title]="item.name"
-          [subtitle]="'tabs.video' | translate"
-          [img]="item.thumb"
-          [href]="item.url"
-          [isLeaf]="item.isLeaf"
-          [isCardSlider]="true"
-          (mouseover)="(item)"
-          [duration]="item.duration"
+          [subtitle]="'tabs.audio' | translate"
+          [isPlaylist]="true"
         >
-        </fy-video-thumb-card>
+        </fy-audio-thumb-card>
       </ion-slide>
     </ion-slides>
   </ion-row>

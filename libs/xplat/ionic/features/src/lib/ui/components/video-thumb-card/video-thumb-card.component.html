@@ -1,7 +1,9 @@
 <ion-card
   class="  {{ isPlaylist ? 'isPlaylist' : '' }} {{
     imgLoading === true ? 'isLoading' : ''
-  }} {{ isSearch === true ? 'isSearch' : '' }}"
+  }} {{ isSearch === true ? 'isSearch' : '' }}
+   {{ isCardSlider ? 'isCardSlider' : '' }}
+  "
 >
   <ion-img
     class="card-img {{ isLeaf === null ? 'isFile' : 'isDir' }} {{
@@ -20,7 +22,9 @@
 
   <ng-template #waiting>
     <ion-card-header
-      class="card-header {{ isSearch === true ? 'isSearch' : '' }}"
+      class="card-header {{ isSearch === true ? 'isSearch' : '' }}  {{
+        isCardSlider ? 'isCardSlider' : ''
+      }}"
     >
       <ion-skeleton-text
         class="card-title"
@@ -30,7 +34,8 @@
     </ion-card-header>
   </ng-template>
   <ion-card-header
-    class="card-header {{ isSearch === true ? 'isSearch' : '' }}"
+    class="card-header {{ isSearch === true ? 'isSearch' : '' }}
+     {{ isCardSlider ? 'isCardSlider' : '' }}"
     *ngIf="!imgLoading; else waiting"
   >
     <div
@@ -48,7 +53,11 @@
       {{ title }}</ion-card-title
     >
     <ion-card-subtitle class="card-subtitle">
-      {{ isLeaf != null ? subtitle + ('msg.chapter' | translate) : '' }}
+      {{
+        isLeaf != null
+          ? subtitle + ('msg.chapter' | translate)
+          : ('tabs.video' | translate)
+      }}
     </ion-card-subtitle>
   </ion-card-header>
 </ion-card>

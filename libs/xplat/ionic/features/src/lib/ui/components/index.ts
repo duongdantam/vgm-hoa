@@ -30,6 +30,8 @@ import { AudioPlayListComponent } from './audio-play-list/audio-play-list.compon
 
 import { AudioPlayerWidgetComponent } from './audio-player-widget/audio-player-widget.component';
 
+import { AudioCardSliderComponent } from './audio-card-slider/audio-card-slider.component';
+
 export * from './header/header.component';
 export * from './side-menu/side-menu.component';
 export * from './search-bar/search-bar.component';
@@ -47,3 +49,4 @@ export * from './mobile-audio-category/mobile-audio-category.component';
 export * from './audio-thumb-card/audio-thumb-card.component';
 export * from './audio-play-list/audio-play-list.component';
 export * from './audio-player-widget/audio-player-widget.component';
+export * from './audio-card-slider/audio-card-slider.component';

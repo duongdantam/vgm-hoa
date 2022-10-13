@@ -15,6 +15,7 @@ export class VideoThumbCardComponent extends BaseComponent {
   @Input() listCount: number = 0;
   @Input() duration: string;
   @Input() isSearch: boolean = false;
+  @Input() isCardSlider: boolean = false;
   imgLoading = true;
   // @Output() public onPreloadData: EventEmitter<string> = new EventEmitter();
   constructor() {
