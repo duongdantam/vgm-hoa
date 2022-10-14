@@ -3,6 +3,11 @@ ion-card {
   border-radius: 0;
   box-shadow: none;
   background-color: transparent;
+	&.isCardSlider {
+		width: 160px;
+    height: auto;
+    padding: 0 5px;
+	}
 }
 .wrapper:active,
 .wrapper:focus {
@@ -165,6 +170,12 @@ ion-card {
       display: flex !important;
     }
   }
+
+	ion-card {
+		&.isCardSlider {
+			width: 200px;
+		}
+	}
 }
 @media screen and (max-width: 991px) {
   .card-img {

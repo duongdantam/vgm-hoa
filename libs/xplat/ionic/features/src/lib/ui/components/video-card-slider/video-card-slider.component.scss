@@ -11,8 +11,17 @@
     }
     margin: 0;
     ion-slide {
+			align-items: flex-start;
       width: auto;
       height: auto;
+    }
+  }
+}
+
+@media screen and (max-width: 991px) {
+  .card-slider {
+    h6 {
+      font-size: 18px !important;
     }
   }
 }
