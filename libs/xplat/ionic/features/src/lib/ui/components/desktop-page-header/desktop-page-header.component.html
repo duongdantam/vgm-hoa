@@ -22,7 +22,11 @@
     </ion-button> -->
   </ion-buttons>
   <!-- <ion-title>Solid Buttons</ion-title> -->
-  <div>
+  <div
+    [ngStyle]="{
+      visibility: home !== 'video' && home !== 'audio' ? 'hidden' : 'visibile'
+    }"
+  >
     <ion-searchbar
       id="search-bar"
       [placeholder]="'input.search' | translate"

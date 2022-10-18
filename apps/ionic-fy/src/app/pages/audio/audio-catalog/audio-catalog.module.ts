@@ -21,4 +21,4 @@ import { SharedModule } from '../../../features/shared/shared.module';
   ],
   declarations: [AudioCatalogPage],
 })
-export class AudioCatalogPageModule { }
+export class AudioCatalogPageModule {}

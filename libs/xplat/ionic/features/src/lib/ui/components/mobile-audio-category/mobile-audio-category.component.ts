@@ -12,7 +12,7 @@ export class MobileAudioCategoryComponent extends BaseComponent {
   @Input() href: string;
   @Input() isLeaf: boolean;
   @Input() avatar: string;
-
+  @Input() thumb: string = '';
   constructor() {
     super();
   }

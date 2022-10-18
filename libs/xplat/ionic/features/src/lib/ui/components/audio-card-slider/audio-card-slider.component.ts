@@ -69,21 +69,25 @@ export class AudioCardSliderComponent
   //   ]);
   // }
 
-  // public selectItem(item: Item) {
-  //   if (item.isLeaf === null) {
-  //     this.playerService.setVideoPlaylist(this.topic.children);
-  //     this.playerService.playVideo(item, 0);
-  //     this.playerService.videoWidgetLocation$.next(0);
-  //   }
-  //   if (item.isLeaf !== null) {
-  //     this.router.navigate([
-  //       '/tabs',
-  //       'video',
-  //       item.isLeaf ? 'playlist' : 'topic',
-  //       item.url,
-  //     ]);
-  //   }
-  // }
+  public selectItem(item: Item) {
+    console.log('kjjkhhkhkljlk', this.topic, item);
+
+    if (item.isLeaf === null) {
+      this.router.navigate(['/tabs', 'audio', 'playlist', this.topic.url], {
+        queryParams: {
+          item: item.url.split('.')[item.url.split('.').length - 1],
+        },
+      });
+    }
+    if (item.isLeaf !== null) {
+      this.router.navigate([
+        '/tabs',
+        'audio',
+        item.isLeaf ? 'playlist' : 'topic',
+        item.url,
+      ]);
+    }
+  }
 
   // public slideTouch(status: boolean) {
   //   this.onSlideTouch.emit(status);

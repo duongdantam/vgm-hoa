@@ -36,6 +36,9 @@ export class DataFetchService {
   public webDomain: string;
   public apiGateway: string;
   public searchAPIKey: string;
+  public audioConstantUrl: string;
+  public videoConstantUrl: string;
+  public defaultImgs: string;
   public searchClient;
   // blockchain config
   private vgmCore: any;
@@ -84,12 +87,21 @@ export class DataFetchService {
           getValue(remoteConfig, 'API_GATEWAY').asString() || '';
         this.searchAPIKey =
           getValue(remoteConfig, 'SEARCH_API').asString() || '';
+        this.audioConstantUrl =
+          getValue(remoteConfig, 'AUDIO_CONSTANT_URL').asString() || '';
+        this.videoConstantUrl =
+          getValue(remoteConfig, 'VIDEO_CONSTANT_URL').asString() || '';
+        this.defaultImgs =
+          getValue(remoteConfig, 'DEFAULT_IMGS').asString() || '';
         console.log(`got config from firebase:
             ${this.streamGateway}, 
             ${this.downloadGateway},
             ${this.cloudGateway},
             ${this.searchGateway},
             ${this.webDomain},
+            ${this.audioConstantUrl},
+            ${this.videoConstantUrl},
+            ${this.defaultImgs},
             ${this.apiGateway}`);
       })
       .then(() => {

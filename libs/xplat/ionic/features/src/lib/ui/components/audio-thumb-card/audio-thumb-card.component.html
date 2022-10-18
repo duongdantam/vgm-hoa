@@ -48,9 +48,16 @@
     class="card-header {{ isPlaylist === true ? 'isPlaylist' : '' }}"
   >
     <div
+      class="card-duration  {{
+        isLeaf === null && duration ? 'isFile' : 'isDir'
+      }} {{ isCardSlider ? 'isCardSlider' : '' }} "
+    >
+      {{ duration }}
+    </div>
+    <div
       class="card-playall {{ isPlaylist === true ? 'isPlaylist' : '' }} {{
         isLeaf === null ? 'isFile' : 'isDir'
-      }} "
+      }} {{ isCardSlider ? 'isCardSlider' : '' }} "
     >
       <ion-icon name="fy-playall"></ion-icon>
     </div>
@@ -67,7 +74,7 @@
     <!-- </div> -->
   </ion-card-header>
   <ng-template #waiting>
-    <ion-card-header class="card-header">
+    <ion-card-header class="card-header" *ngIf="!isPlaylist">
       <ion-skeleton-text class="card-title">{{ title }}</ion-skeleton-text>
       <ion-skeleton-text class="card-subtitle">{{
         subtitle

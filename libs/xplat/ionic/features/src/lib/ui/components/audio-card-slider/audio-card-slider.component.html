@@ -16,11 +16,14 @@
         mousewheel: true
       }"
     >
-      <ion-slide *ngFor="let item of topic.children">
+      <ion-slide *ngFor="let item of topic.children" (click)="selectItem(item)">
         <fy-audio-thumb-card
           [title]="item.name"
           [subtitle]="'tabs.audio' | translate"
-					[isCardSlider]="true"
+          [img]="item.thumb || ''"
+          [isCardSlider]="true"
+          [isLeaf]="item.isLeaf"
+          [duration]="item.duration"
         >
         </fy-audio-thumb-card>
       </ion-slide>

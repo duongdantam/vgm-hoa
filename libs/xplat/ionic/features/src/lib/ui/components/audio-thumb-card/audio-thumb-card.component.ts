@@ -1,13 +1,13 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 import { BaseComponent } from '@fy/xplat/core';
-
+import { DataFetchService } from '@fy/xplat/core';
 @Component({
   selector: 'fy-audio-thumb-card',
   templateUrl: 'audio-thumb-card.component.html',
   styleUrls: ['./audio-thumb-card.component.scss'],
 })
-export class AudioThumbCardComponent extends BaseComponent {
+export class AudioThumbCardComponent extends BaseComponent implements OnInit {
   @Input() title: string;
   @Input() subtitle: string;
   @Input() href: string;
@@ -15,12 +15,23 @@ export class AudioThumbCardComponent extends BaseComponent {
   @Input() isLeaf: boolean = false;
   @Input() avatar: string = null;
   @Input() isCardSlider: boolean = false;
-  @Input() img: string = 'assets/imgs/default-image.svg';
+  @Input() img: string = '';
+  @Input() duration: string;
 
   imgLoading = true;
-  constructor() {
+  constructor(public dataFetchService: DataFetchService) {
     super();
   }
+
+  async ngOnInit() {
+    if (!this.img) {
+      const random = Math.ceil(Math.random() * 50);
+      // this.img = this.dataFetchService.defaultImgs + '/' + random + '.webp';
+      this.img = `${this.dataFetchService.defaultImgs}/${random}.webp`;
+    }
+    // console.log('img::::::', this.img);
+  }
+
   imgCheck(type: string) {
     switch (type) {
       case 'error':
