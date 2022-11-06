@@ -38,7 +38,8 @@ export class TopMenuComponent extends BaseComponent implements OnInit, OnChanges
 
     this.router.events.subscribe(async (event) => {
       if (
-        event instanceof NavigationEnd
+        event instanceof NavigationEnd &&
+        event.url.includes(`/tabs/${this.home}/`)
       ) {
         if (!this._dataInit) await this.dataInit();
         this.activeHref = event.url

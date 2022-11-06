@@ -16,16 +16,12 @@ if (environment.production) {
 	}
 	// // TODO: This can be done in better way using logger service and logger factory.
 }
-platformBrowserDynamic()
-	.bootstrapModule(AppModule)
-	.catch((err) => console.log(err));
-registerServiceWorker('service-worker');
 
 
-function registerServiceWorker(swName: string) {
+const registerServiceWorker = async (swName: string) => {
 	if ('serviceWorker' in navigator) {
 		console.log('got SW:::::', navigator.serviceWorker);
-		navigator.serviceWorker
+		await navigator.serviceWorker
 			.register(`/${swName}.js`)
 			.then(reg => {
 				reg.update();
@@ -51,7 +47,7 @@ function registerServiceWorker(swName: string) {
 			.catch(err =>
 				console.error('[App] Service worker registration failed', err)
 			);
-
+		await navigator.serviceWorker.ready
 
 	} else {
 		console.error('[App] Service Worker API is not supported in current browser');
@@ -59,3 +55,7 @@ function registerServiceWorker(swName: string) {
 }
 
 
+platformBrowserDynamic()
+	.bootstrapModule(AppModule)
+	.catch((err) => console.log(err));
+registerServiceWorker('service-worker');

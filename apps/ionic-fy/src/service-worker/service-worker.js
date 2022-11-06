@@ -1,23 +1,24 @@
 importScripts('./custom.js');
 
-// self.addEventListener('install', (event) => {
-//   self.skipWaiting();
-//   // console.log('Service Worker installing', event);
-//   // event.waitUntil(
-//   //   caches.open('v1').then((cache) => {
-//   //     return cache.addAll(['./', './index.html']);
-//   //   })
-//   // );
-// });
+self.addEventListener('install', (event) => {
+  event.waitUntil(event.target.skipWaiting());
+  // console.log('Service Worker installing', event);
+  // event.waitUntil(
+  //   caches.open('v1').then((cache) => {
+  //     return cache.addAll(['./', './index.html']);
+  //   })
+  // );
+});
 
-// self.addEventListener('activate', (event) => {
-//   console.log('Service Worker activated:', event);
-// });
+self.addEventListener('activate', async (event) => {
+  console.log('Service Worker activated:', event);
+  event.waitUntil(event.target.clients.claim());
+});
 
-// self.addEventListener('notificationclick', (event) => {
-//   event.notification.close();
-//   console.log('notification details from SW: ', event.notification);
-// });
+self.addEventListener('notificationclick', (event) => {
+  event.notification.close();
+  console.log('notification details from SW: ', event.notification);
+});
 
 // self.addEventListener('message', (event) => {
 //   console.log('message from main:', event.data);
@@ -122,7 +123,7 @@ const abFromIDB = async function (key) {
       let db = await request.result;
       let tx = await db.transaction('data', 'readwrite');
       const uri = key
-        .replace(/.*(?=\/encrypted(-\w+)?\/.*)/, '')
+        .replace(/.*(?=\/encrypted\/.*)/, '')
         .replace(/.*(?=\/ipfs\/.*)/, '');
       let store = tx.objectStore('data').get(uri);
       store.onsuccess = function (e) {
@@ -145,7 +146,7 @@ const abToIDB = async function (key, data) {
       let tx = await db.transaction('data', 'readwrite');
       let store = tx.objectStore('data');
       const uri = key
-        .replace(/.*(?=\/encrypted(-\w+)?\/.*)/, '')
+        .replace(/.*(?=\/encrypted\/.*)/, '')
         .replace(/.*(?=\/ipfs\/.*)/, '');
       await store.put({ uri: uri, data: data });
       resolve(tx.complete);
