@@ -129,7 +129,7 @@ export class TabsPage implements OnInit, OnDestroy {
         // this.playerService.setVideoControlsHidden(false);
         if (this.menuActivation.my === false) {
           this.menuActivation.my = true;
-          this.router.navigate(['/tabs', menu]);
+          this.router.navigate(['/tabs', menu, 'all']);
         }
       }
 

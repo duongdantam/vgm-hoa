@@ -33,7 +33,7 @@ ion-item {
   color: var(--ion-color-primary);
 }
 
-ion-item:hover {
+ion-item:not(.header):hover {
   --background: white;
 }
 
@@ -42,14 +42,18 @@ ion-item:hover {
   font-weight: bold;
 }
 
-.list-ios.list-inset {
+.list-ios.list-inset:not(.header) {
   margin-right: 0;
-  ion-item {
+  ion-item:not(.header) {
     --border-width: 0;
-    --border-radius: 15px 0px 0px 15px;
     --inner-border-width: 0;
+    --border-radius: 15px 0px 0px 15px;
     &.active {
       background-color: #fff;
     }
   }
+}
+
+.isHidden {
+  display: none;
 }

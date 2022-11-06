@@ -57,9 +57,9 @@ export class FavoritePlaylistPage implements OnInit {
     );
 
     this.favoriteUrl$.subscribe(param => {
-      if (param === 'video') {
+      if (param === 'favorite-video') {
         this.selectTab(0);
-      } else if (param === 'audio') {
+      } else if (param === 'favorite-audio') {
         this.selectTab(1);
       }
     });

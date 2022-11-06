@@ -19,8 +19,20 @@ ion-grid {
   margin: 5px;
   padding: 0;
 }
+ion-item {
+  height: calc(48px + var(--sat));
+  --background-focused: white;
+  --background-hover: white;
+  --border-width: 0;
+  --inner-border-width: 0;
+  --color-hover: var(--ion-color-primary);
+  font-size: large;
+  font-weight: bold;
+  color: var(--ion-color-primary);
+  line-height: 35px;
+}
 super-tabs {
-  padding-top: calc(48px + var(--sat));
+  order: 1;
   background-color: white;
 }
 @media screen and (min-width: 992px) {

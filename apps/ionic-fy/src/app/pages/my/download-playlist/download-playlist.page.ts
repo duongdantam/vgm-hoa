@@ -53,9 +53,9 @@ export class DownloadPlaylistPage implements OnInit {
 			map((params: ParamMap) => params.get('id')),
 		);
 		this.documentUrl$.subscribe(param => {
-			if (param === 'video') {
+			if (param === 'downloaded-video') {
 				this.selectTab(0);
-			} else if (param === 'audio') {
+			} else if (param === 'downloaded-audio') {
 				this.selectTab(1);
 			}
 		});

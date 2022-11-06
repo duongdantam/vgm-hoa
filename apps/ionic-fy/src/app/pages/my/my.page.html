@@ -5,7 +5,7 @@
   ></fy-desktop-page-header>
   <fy-mobile-page-header
     home="my"
-    class="ion-hide-lg-up"
+    class="ion-hide-lg-up {{isHidden ? 'isHidden' : ''}}"
   ></fy-mobile-page-header>
   <fy-top-menu home="my"></fy-top-menu>
 </ion-header>
@@ -14,22 +14,64 @@
   <ion-menu side="start" menuId="my-menu" contentId="main">
     <ion-content>
       <ion-list mode="ios" lines="inset" inset>
+        <ion-item button detail="false" lines="inset" class="header">
+          <ion-label>
+            {{('tabs.my' | translate) + ('tabs.favorite' | translate)}}
+          </ion-label>
+        </ion-item>
+
         <ion-item
-          *ngFor="let t of ['favorite','download']"
-          [routerLink]="['/tabs', 'my', t]"
+          *ngFor="let t of ['favorite-video','favorite-audio']"
+          lines="none"
+          [routerLink]="['/tabs', 'my', 'favorite']"
           [queryParams]="{id:t}"
           [queryParamsHandling]="merge"
           routerLinkActivate="activated"
-          (click)="itemClick(t)"
           [ngClass]="
-        activeHref.includes(t)
+        activeHref.endsWith('?id='+t)
           ? 'ion-item-active'
           : ''
       "
         >
-          {{t === 'favorite' ? ('tabs.my' | translate) + ('tabs.favorite' |
-          translate) : t === 'download' ? ('tabs.my' | translate) +
-          ('tabs.download' | translate): ''}}
+          <ion-icon
+            [name]="t === 'favorite-video' ? 'videocam-outline' : 'volume-medium-outline'"
+            slot="start"
+          ></ion-icon>
+          <ion-label>
+            {{t === 'favorite-video' ? ('tabs.video' | translate) +
+            ('tabs.favorite' | translate) : t === 'favorite-audio' ?
+            ('tabs.audio' | translate) + ('tabs.favorite' | translate): ''}}
+          </ion-label>
+        </ion-item>
+
+        <ion-item button detail="false" lines="inset" class="header">
+          <ion-label>
+            {{('tabs.my' | translate) + ('tabs.download' | translate)}}
+          </ion-label>
+        </ion-item>
+
+        <ion-item
+          lines="none"
+          *ngFor="let t of ['downloaded-video','downloaded-audio']"
+          [routerLink]="['/tabs', 'my', 'download']"
+          [queryParams]="{id:t}"
+          [queryParamsHandling]="merge"
+          routerLinkActivate="activated"
+          [ngClass]="
+        activeHref.endsWith('?id='+t)
+          ? 'ion-item-active'
+          : ''
+      "
+        >
+          <ion-icon
+            [name]="t === 'downloaded-video' ? 'videocam-outline' : 'volume-medium-outline'"
+            slot="start"
+          ></ion-icon>
+          <ion-label>
+            {{t === 'downloaded-video' ? ('tabs.video' | translate) +
+            ('tabs.download' | translate) : t === 'downloaded-audio' ?
+            ('tabs.audio' | translate) + ('tabs.download' | translate): ''}}
+          </ion-label>
         </ion-item>
       </ion-list>
     </ion-content>

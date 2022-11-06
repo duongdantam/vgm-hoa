@@ -8,6 +8,13 @@ const routes: Routes = [
     path: '',
     component: MyPage,
     children: [
+      // { path: '', redirectTo: 'all', pathMatch: 'full' },
+      // { path: '**', redirectTo: 'all', pathMatch: 'full' },
+      {
+        path: 'all',
+        loadChildren: () =>
+          import('./my-all/my-all.module').then((m) => m.MyAllPageModule),
+      },
       {
         path: 'favorite',
         loadChildren: () =>
@@ -28,7 +35,6 @@ const routes: Routes = [
         loadChildren: () =>
           import('./download-playlist/download-playlist.module').then((m) => m.DownloadPlaylistPageModule),
       },
-      // { path: '', redirectTo: 'playlist', pathMatch: 'full' },
     ],
   },
 

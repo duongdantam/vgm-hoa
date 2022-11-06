@@ -1,10 +1,22 @@
+<ion-item
+  slot="start"
+  button
+  detail="false"
+  [routerLink]="['/tabs', 'my', 'all']"
+  routerDirection="back"
+>
+  <ion-icon name="arrow-back-outline" slot="start"></ion-icon>
+  <ion-label>
+    {{('tabs.my' | translate) + ('tabs.favorite' | translate) }}
+  </ion-label>
+</ion-item>
 <super-tabs
   #superTabs
   [config]="{ 
     lazyLoad: true, 
     unloadWhenInvisible: true,  
     debug: true, 
-    nativeSmoothScroll: platform.is('mobile') ? true : false, 
+    nativeSmoothScroll: true, 
     transitionDuration: 2}"
   (tabChange)="onTabChange($event)"
 >

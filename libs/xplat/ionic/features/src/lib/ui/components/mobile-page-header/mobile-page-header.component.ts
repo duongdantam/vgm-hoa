@@ -157,7 +157,7 @@ export class MobilePageHeaderComponent extends BaseComponent implements OnInit {
     if (
       item.isLeaf === null &&
       this.dataFetchService.prefetchList.findIndex((elem) => elem === item.id) <
-        0
+      0
     ) {
       const playUrl = await this.dataFetchService.getPlayUrl(item, true);
       const dirUrl = path.dirname(playUrl);
@@ -183,8 +183,8 @@ export class MobilePageHeaderComponent extends BaseComponent implements OnInit {
       this.home === 'video'
         ? this.videoRootList[0].url
         : this.home === 'audio'
-        ? this.audioRootList[0].url
-        : '';
+          ? this.audioRootList[0].url
+          : '';
     this.router.navigate(['/muc-luc', this.home, 'catalog'], {
       queryParams: { topicUrl: param },
     });

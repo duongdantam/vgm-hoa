@@ -34,34 +34,7 @@
 
   <fy-video-card-slider [topic]="videoConstantList"> </fy-video-card-slider>
   <fy-audio-card-slider [topic]="audioConstantList"> </fy-audio-card-slider>
-	
+
   <fy-video-card-slider [topic]="videoRandomList"> </fy-video-card-slider>
   <fy-audio-card-slider [topic]="audioRandomList"> </fy-audio-card-slider>
-
 </ion-content>
-
-<!-- <ion-split-pane contentId="home-main" disabled="true">
-  <ion-menu side="start" menuId="home-menu" contentId="main">
-    <ion-content>
-      <ion-list mode="ios" lines="inset" inset>
-        <ion-item
-          (click)="itemClick()"
-          *ngFor="let item of homeList; index as i"
-          id="{{item.href}}-btn"
-          [routerLink]="['/tabs', 'home', 'catalog']"
-          [queryParams]="{topicUrl:item.href}"
-          [queryParamsHandling]="merge"
-          routerLinkActivate="activated"
-          [ngClass]="
-        activeHref.startsWith(item.href)
-          ? 'ion-item-active'
-          : ''
-      "
-        >
-          <ion-label> {{ item.value }} </ion-label>
-        </ion-item>
-      </ion-list>
-    </ion-content>
-  </ion-menu>
-  <ion-router-outlet mode="ios" id="home-main"> </ion-router-outlet>
-</ion-split-pane> -->

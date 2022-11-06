@@ -8,9 +8,9 @@ ion-content {
     align-content: center;
   }
   ion-grid {
-    margin: 78px 0px 0px 0px;
+    margin: calc(78px + var(--sat)) 0px 0px 0px;
     padding: 0;
-    max-height: calc(100vh - 78px);
+    max-height: calc(100vh - 78px - var(--sat));
     ion-row {
       padding: 5px;
       ion-col:first-child {

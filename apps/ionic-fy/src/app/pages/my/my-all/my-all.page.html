@@ -1,0 +1,67 @@
+<ion-content [fullscreen]="true" class="ion-hide-lg-up">
+  <ion-list>
+    <ion-item button detail="false" lines="inset" class="header">
+      <ion-label>
+        {{('tabs.my' | translate) + ('tabs.favorite' | translate)}}
+      </ion-label>
+    </ion-item>
+
+    <ion-item
+      *ngFor="let t of ['favorite-video','favorite-audio']"
+      button
+      detail="false"
+      lines="none"
+      [routerLink]="['/tabs', 'my', 'favorite']"
+      [queryParams]="{id:t}"
+      [queryParamsHandling]="merge"
+      routerLinkActivate="activated"
+      [ngClass]="
+              activeHref.includes(t)
+                ? 'ion-item-active'
+                : ''
+            "
+    >
+      <ion-icon
+        [name]="t === 'favorite-video' ? 'videocam-outline' : 'volume-medium-outline'"
+        slot="start"
+      ></ion-icon>
+      <ion-label>
+        {{t === 'favorite-video' ? ('tabs.video' | translate) + ('tabs.favorite'
+        | translate) : t === 'favorite-audio' ? ('tabs.audio' | translate) +
+        ('tabs.favorite' | translate): ''}}
+      </ion-label>
+    </ion-item>
+
+    <ion-item button detail="false" lines="inset" class="header">
+      <ion-label>
+        {{('tabs.my' | translate) + ('tabs.download' | translate)}}
+      </ion-label>
+    </ion-item>
+
+    <ion-item
+      *ngFor="let t of ['downloaded-video','downloaded-audio']"
+      button
+      detail="false"
+      lines="none"
+      [routerLink]="['/tabs', 'my', 'download']"
+      [queryParams]="{id:t}"
+      [queryParamsHandling]="merge"
+      routerLinkActivate="activated"
+      [ngClass]="
+              activeHref.includes(t)
+                ? 'ion-item-active'
+                : ''
+            "
+    >
+      <ion-icon
+        [name]="t === 'downloaded-video' ? 'videocam-outline' : 'volume-medium-outline'"
+        slot="start"
+      ></ion-icon>
+      <ion-label>
+        {{t === 'downloaded-video' ? ('tabs.video' | translate) +
+        ('tabs.download' | translate) : t === 'downloaded-audio' ? ('tabs.audio'
+        | translate) + ('tabs.download' | translate): ''}}
+      </ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>
