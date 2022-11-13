@@ -32,10 +32,6 @@ export class DesktopPageHeaderComponent extends BaseComponent {
     super();
   }
 
-  searchTypeChange() {
-    this.isVideo = !this.isVideo;
-  }
-
   async searchChange(e?) {
     const index = this.dataFetchService.searchClient.index('VGM');
     this.searchQuery = e.detail.value;

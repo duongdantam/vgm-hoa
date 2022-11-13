@@ -36,8 +36,8 @@
       class="{{ searchOnFocus ? 'on-focus' : '' }}"
     >
       <ion-button
-        fill="outline"
-        class="search-btn"
+        fill="fill"
+        class="search-btn {{ searchOnFocus ? 'isFocus' : '' }}"
         (click)="isVideo = !isVideo"
       >
         <ion-icon [name]="isVideo ? 'videocam' : 'volume-medium'"></ion-icon>

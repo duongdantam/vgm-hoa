@@ -28,7 +28,11 @@
       (ionBlur)="setFocus(false)"
       class="{{ searchOnFocus ? 'on-focus' : '' }}"
     >
-      <ion-button fill="clear" class="search-btn" (click)="isVideo = !isVideo">
+      <ion-button
+        fill="solid"
+        class="search-btn {{ searchOnFocus ? 'isFocus' : '' }}"
+        (click)="isVideo = !isVideo"
+      >
         <ion-icon [name]="isVideo ? 'videocam' : 'volume-medium'"></ion-icon>
       </ion-button>
     </ion-searchbar>
@@ -55,7 +59,7 @@
   </ion-buttons>
 </ion-toolbar>
 
-<ion-content *ngIf="searchOnFocus && home !== 'home'">
+<ion-content *ngIf="searchOnFocus">
   <ion-list *ngIf="searchResult.query && searchOnFocus">
     <ion-item
       lines="none"
@@ -77,7 +81,7 @@
         </ion-col>
         <ion-col style="max-width: 20%">
           <fy-video-thumb-card
-            *ngIf="home === 'video'; else audioThumb"
+            *ngIf="isVideo === true; else audioThumb"
             title=""
             [subtitle]="item.duration"
             [img]="item.thumb"
