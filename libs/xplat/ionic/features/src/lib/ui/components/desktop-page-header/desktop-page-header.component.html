@@ -22,11 +22,7 @@
     </ion-button> -->
   </ion-buttons>
   <!-- <ion-title>Solid Buttons</ion-title> -->
-  <div
-    [ngStyle]="{
-      visibility: home !== 'video' && home !== 'audio' ? 'hidden' : 'visibile'
-    }"
-  >
+  <div>
     <ion-searchbar
       id="search-bar"
       [placeholder]="'input.search' | translate"
@@ -38,8 +34,17 @@
       (ionFocus)="searchOnFocus = true"
       (ionBlur)="setFocus(false)"
       class="{{ searchOnFocus ? 'on-focus' : '' }}"
-      [disabled]="home !== 'video' && home !== 'audio'"
     >
+      <ion-button
+        fill="outline"
+        class="search-btn"
+        (click)="isVideo = !isVideo"
+      >
+        <ion-icon [name]="isVideo ? 'videocam' : 'volume-medium'"></ion-icon>
+        <ion-label>{{
+          isVideo ? ('tabs.video' | translate) : ('tabs.audio' | translate)
+        }}</ion-label>
+      </ion-button>
     </ion-searchbar>
   </div>
 

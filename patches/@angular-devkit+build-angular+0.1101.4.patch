@@ -1,0 +1,13 @@
+diff --git a/node_modules/@angular-devkit/build-angular/src/webpack/configs/browser.js b/node_modules/@angular-devkit/build-angular/src/webpack/configs/browser.js
+index d1e100d..9c1f2ab 100644
+--- a/node_modules/@angular-devkit/build-angular/src/webpack/configs/browser.js
++++ b/node_modules/@angular-devkit/build-angular/src/webpack/configs/browser.js
+@@ -79,7 +79,7 @@ function getBrowserConfig(wco) {
+             }),
+             ...extraPlugins,
+         ],
+-        node: false,
++        node: {crypto: true, stream: true, fs: "empty"},
+     };
+ }
+ exports.getBrowserConfig = getBrowserConfig;

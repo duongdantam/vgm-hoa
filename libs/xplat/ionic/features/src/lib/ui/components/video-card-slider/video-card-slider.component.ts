@@ -46,7 +46,7 @@ export class VideoCardSliderComponent
   }
 
   ngOnInit(): void {
-    console.log('videoRandomList:::::', this.topic);
+    // console.log('videoRandomList:::::', this.topic);
     // this.topicList = await this.dataFetchService.fetchTopicList(this.topic.url).then((topic) => {
     //   return topic.children.map((item) => ({
     //     ...item,
@@ -97,7 +97,7 @@ export class VideoCardSliderComponent
     if (
       item.isLeaf === null &&
       this.dataFetchService.prefetchList.findIndex((elem) => elem === item.id) <
-        0
+      0
     ) {
       const playUrl = await this.dataFetchService.getPlayUrl(item, true);
       const dirUrl = path.dirname(playUrl);

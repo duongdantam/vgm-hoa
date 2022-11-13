@@ -9,7 +9,7 @@
 ion-content {
   --background: var(--ion-color-light);
   ion-list {
-    margin-top: 100px;
+    margin-top: 125px;
     background-color: transparent;
   }
 }
@@ -28,6 +28,7 @@ ion-item {
   --background: var(--ion-color-light);
   --background-focused: white;
   --background-hover: white;
+  --color-activated: white;
   --color-hover: var(--ion-color-primary);
   font-size: medium;
   color: var(--ion-color-primary);

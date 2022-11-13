@@ -34,7 +34,8 @@ ion-back-button {
 
 ion-searchbar {
   --icon-color: --ion-color-primary;
-  justify-content: space-evenly;
+  justify-content: center;
+  flex-direction: row-reverse;
   &.sc-ion-searchbar-ios-h {
     --border-radius: 0px;
     --background: rgba(var(--ion-color-dark-contrast), 0.1);
@@ -63,6 +64,22 @@ ion-searchbar {
     ::ng-deep .searchbar-input-container {
       box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
       border: 1px solid var(--ion-color-secondary-tint);
+    }
+  }
+
+  .search-btn {
+    --border-radius: 0;
+    --border-color: var(--ion-color-dark);
+    --background-activated: var(--ion-color-primary-contrast);
+    --background-focused: var(--ion-color-primary-contrast);
+    // --color: white;
+    --color-activated: var(--icon-color-primary);
+    --color-focused: var(--icon-color-primary);
+    padding: 0;
+    margin: 0;
+    height: 30px;
+    ion-icon {
+      padding-right: 10px;
     }
   }
 }
