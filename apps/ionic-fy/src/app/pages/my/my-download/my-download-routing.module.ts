@@ -1,17 +1,17 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { DownloadPlaylistPage } from './download-playlist.page';
+import { MyDownloadPage } from './my-download.page';
 
 const routes: Routes = [
   {
     path: '',
-    component: DownloadPlaylistPage
-  }
+    component: MyDownloadPage,
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class DownloadPlaylistPageRoutingModule { }
+export class MyDownloadPageRoutingModule {}

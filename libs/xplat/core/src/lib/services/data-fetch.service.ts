@@ -43,9 +43,9 @@ export class DataFetchService {
   // blockchain config
   private vgmCore: any;
   private _isInitialized: boolean = false;
-  private kardiaClient = new KardiaClient.default({
-    endpoint: 'https://rpc.kardiachain.io',
-  });
+  // private kardiaClient = new KardiaClient.default({
+  //   endpoint: 'https://rpc.kardiachain.io',
+  // });
 
   public whenInitialized$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
     false
@@ -57,8 +57,8 @@ export class DataFetchService {
   public downloading = false;
   public prefetchList = [];
   constructor(private localforageService: LocalforageService) {
-    this.kardiaClient.contract.updateAbi(ABI);
-    this.kardiaClient.contract.updateByteCode(bytesCode);
+    // this.kardiaClient.contract.updateAbi(ABI);
+    // this.kardiaClient.contract.updateByteCode(bytesCode);
   }
 
   /**
@@ -116,26 +116,26 @@ export class DataFetchService {
         console.log('firebase init error', err);
       });
 
-    const deployedContract = this.kardiaClient.contract.invokeContract(
-      'getAll',
-      [1]
-    );
-    const defaultInvokePayload = deployedContract.getDefaultTxPayload();
-    const estimatedGasForInvoke = await deployedContract.estimateGas(
-      defaultInvokePayload
-    );
-    const instructor = await deployedContract.call(
-      '0x450B468C834d684dD0482CCD6e2360e10c8D6C18',
-      {
-        gas: estimatedGasForInvoke * 10,
-      },
-      'latest'
-    );
-    console.log(`transaction hash:`, instructor);
+    // const deployedContract = this.kardiaClient.contract.invokeContract(
+    //   'getAll',
+    //   [1]
+    // );
+    // const defaultInvokePayload = deployedContract.getDefaultTxPayload();
+    // const estimatedGasForInvoke = await deployedContract.estimateGas(
+    //   defaultInvokePayload
+    // );
+    // const instructor = await deployedContract.call(
+    //   '0x450B468C834d684dD0482CCD6e2360e10c8D6C18',
+    //   {
+    //     gas: estimatedGasForInvoke * 10,
+    //   },
+    //   'latest'
+    // );
+    // console.log(`transaction hash:`, instructor);
     return new Promise((resolve) => {
       this.vgmCore = core(
         {
-          preferGateways: instructor.gateway,
+          preferGateways: [this.streamGateway], //instructor.gateway,
           exclude: ['06'],
           storage: {
             set: this.localforageService.set,
@@ -143,9 +143,9 @@ export class DataFetchService {
           },
           config: {
             api: this.apiGateway, // instructor.api,
-            gateway: instructor.gateway,
-            api_version: instructor.api_version,
-            thumbnails: instructor.thumbnails,
+            gateway: this.streamGateway, // instructor.gateway,
+            api_version: 221108, //instructor.api_version,
+            thumbnails: '', //instructor.thumbnails,
           },
         },
         async () => {
@@ -273,22 +273,22 @@ export class DataFetchService {
     const cacheList = await this.localforageService.get(topicUrl);
     if (!cacheList) {
       list = await this.vgmCore.navigator.fetchTopicList(topicUrl);
-      if (
-        /^(01-bai-giang.hoc-theo-sach-trong-kinh-thanh).*/.test(list.url) ||
-        /^(phat-thanh-nguon-song).*/.test(list.url)
-      )
-        expiredTime = 43200; // 172800
-      if (list.url === '01-bai-giang.cac-dien-gia') {
-        for (let i = list.children.length - 1; i > 0; i--) {
-          const j = Math.floor(Math.random() * (i + 1));
-          const temp = list.children[i];
-          list.children[i] = list.children[j];
-          list.children[j] = temp;
-        }
-      }
-      list.children.sort(function (a, b) {
-        return parseInt(a.name.match(/^\d+/)) - parseInt(b.name.match(/^\d+/));
-      });
+      // if (
+      //   /^(01-bai-giang.hoc-theo-sach-trong-kinh-thanh).*/.test(list.url) ||
+      //   /^(phat-thanh-nguon-song).*/.test(list.url)
+      // )
+      //   expiredTime = 43200; // 172800
+      // if (list.url === '01-bai-giang.cac-dien-gia') {
+      //   for (let i = list.children.length - 1; i > 0; i--) {
+      //     const j = Math.floor(Math.random() * (i + 1));
+      //     const temp = list.children[i];
+      //     list.children[i] = list.children[j];
+      //     list.children[j] = temp;
+      //   }
+      // }
+      // list.children.sort(function (a, b) {
+      //   return parseInt(a.name.match(/^\d+/)) - parseInt(b.name.match(/^\d+/));
+      // });
       await this.localforageService.set(topicUrl, list, expiredTime);
       console.log(`Saved 1 catalog to local storage`);
     } else {
@@ -308,16 +308,16 @@ export class DataFetchService {
       const cacheList: any = await this.localforageService.get(topicUrl);
       if (!cacheList) {
         list = await this.vgmCore.navigator.fetchItemList(topicUrl);
-        if (
-          /^(01-bai-giang\.hoc-theo-sach-trong-kinh-thanh).+/.test(list.url) ||
-          /^(phat-thanh-nguon-song\.nam\-\d+\.thang).+/.test(list.url)
-        )
-          expiredTime = 43200; // 86400
-        list.children.sort(function (a, b) {
-          return (
-            parseInt(a.name.match(/^\d+/)) - parseInt(b.name.match(/^\d+/))
-          );
-        });
+        // if (
+        //   /^(01-bai-giang\.hoc-theo-sach-trong-kinh-thanh).+/.test(list.url) ||
+        //   /^(phat-thanh-nguon-song\.nam\-\d+\.thang).+/.test(list.url)
+        // )
+        //   expiredTime = 43200; // 86400
+        // list.children.sort(function (a, b) {
+        //   return (
+        //     parseInt(a.name.match(/^\d+/)) - parseInt(b.name.match(/^\d+/))
+        //   );
+        // });
         await this.localforageService.set(topicUrl, list, expiredTime);
         console.log(`Saved 1 item list to local storage`);
       } else {

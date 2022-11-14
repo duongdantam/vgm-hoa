@@ -5,9 +5,9 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { SuperTabsModule } from '@ionic-super-tabs/angular';
 
-import { DownloadPlaylistPageRoutingModule } from './download-playlist-routing.module';
+import { MyDownloadPageRoutingModule } from './my-download-routing.module';
 
-import { DownloadPlaylistPage } from './download-playlist.page';
+import { MyDownloadPage } from './my-download.page';
 import { SharedModule } from '../../../features/shared/shared.module';
 
 @NgModule({
@@ -17,8 +17,8 @@ import { SharedModule } from '../../../features/shared/shared.module';
     FormsModule,
     IonicModule,
     SuperTabsModule,
-    DownloadPlaylistPageRoutingModule,
+    MyDownloadPageRoutingModule,
   ],
-  declarations: [DownloadPlaylistPage],
+  declarations: [MyDownloadPage],
 })
-export class DownloadPlaylistPageModule { }
+export class MyDownloadPageModule {}

@@ -18,31 +18,37 @@ const routes: Routes = [
       {
         path: 'favorite',
         loadChildren: () =>
-          import('./favorite-playlist/favorite-playlist.module').then((m) => m.FavoritePlaylistPageModule),
+          import('./my-favorite/my-favorite.module').then(
+            (m) => m.MyFavoritePageModule
+          ),
       },
       {
         path: 'favorite/:id',
         loadChildren: () =>
-          import('./favorite-playlist/favorite-playlist.module').then((m) => m.FavoritePlaylistPageModule),
+          import('./my-favorite/my-favorite.module').then(
+            (m) => m.MyFavoritePageModule
+          ),
       },
       {
         path: 'download',
         loadChildren: () =>
-          import('./download-playlist/download-playlist.module').then((m) => m.DownloadPlaylistPageModule),
+          import('./my-download/my-download.module').then(
+            (m) => m.MyDownloadPageModule
+          ),
       },
       {
         path: 'download/:id',
         loadChildren: () =>
-          import('./download-playlist/download-playlist.module').then((m) => m.DownloadPlaylistPageModule),
+          import('./my-download/my-download.module').then(
+            (m) => m.MyDownloadPageModule
+          ),
       },
     ],
   },
-
-
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class MyPageRoutingModule { }
+export class MyPageRoutingModule {}

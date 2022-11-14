@@ -5,9 +5,9 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { SuperTabsModule } from '@ionic-super-tabs/angular';
 
-import { FavoritePlaylistPageRoutingModule } from './favorite-playlist-routing.module';
+import { MyFavoritePageRoutingModule } from './my-favorite-routing.module';
 
-import { FavoritePlaylistPage } from './favorite-playlist.page';
+import { MyFavoritePage } from './my-favorite.page';
 import { SharedModule } from '../../../features/shared/shared.module';
 
 @NgModule({
@@ -17,8 +17,8 @@ import { SharedModule } from '../../../features/shared/shared.module';
     FormsModule,
     IonicModule,
     SuperTabsModule,
-    FavoritePlaylistPageRoutingModule,
+    MyFavoritePageRoutingModule,
   ],
-  declarations: [FavoritePlaylistPage],
+  declarations: [MyFavoritePage],
 })
-export class FavoritePlaylistPageModule { }
+export class MyFavoritePageModule {}

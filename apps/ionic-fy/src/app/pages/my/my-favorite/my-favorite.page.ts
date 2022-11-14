@@ -11,11 +11,10 @@ import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'fy-favorite-playlist',
-  templateUrl: './favorite-playlist.page.html',
-  styleUrls: ['./favorite-playlist.page.scss'],
+  templateUrl: './my-favorite.page.html',
+  styleUrls: ['./my-favorite.page.scss'],
 })
-
-export class FavoritePlaylistPage implements OnInit {
+export class MyFavoritePage implements OnInit {
   @ViewChild('superTabs', { read: SuperTabs }) st: SuperTabs;
   favoriteUrl$: Observable<string>;
 
@@ -31,74 +30,70 @@ export class FavoritePlaylistPage implements OnInit {
     private dataFetchService: DataFetchService,
     private playerService: PlayerService,
     public platform: Platform
-
   ) {
-    this.favoriteVideoSub = this.playerService.favoriteVideoPlaylist$.subscribe((data) => {
-      this.favoriteVideoList = data;
-    });
+    this.favoriteVideoSub = this.playerService.favoriteVideoPlaylist$.subscribe(
+      (data) => {
+        this.favoriteVideoList = data;
+      }
+    );
 
-    this.favoriteAudioSub = this.playerService.favoriteAudioPlaylist$.subscribe((data) => {
-      this.favoriteAudioList = data;
-    });
-
+    this.favoriteAudioSub = this.playerService.favoriteAudioPlaylist$.subscribe(
+      (data) => {
+        this.favoriteAudioList = data;
+      }
+    );
   }
 
   async ngOnInit() {
-    const favoriteVideoList = await this.dataFetchService.fetchFavorite('video');
-    this.playerService.setFavoritePlayList(0, favoriteVideoList);
-    const favoriteAudioList = await this.dataFetchService.fetchFavorite('audio');
-    this.playerService.setFavoritePlayList(1, favoriteAudioList);
-
-
-
+    const favoriteVideoList = await this.dataFetchService.fetchFavorite(
+      'video'
+    );
+    this.playerService.setMyFavorite(0, favoriteVideoList);
+    const favoriteAudioList = await this.dataFetchService.fetchFavorite(
+      'audio'
+    );
+    this.playerService.setMyFavorite(1, favoriteAudioList);
 
     this.favoriteUrl$ = this.activatedRoute.queryParamMap.pipe(
-      map((params: ParamMap) => params.get('id')),
+      map((params: ParamMap) => params.get('id'))
     );
 
-    this.favoriteUrl$.subscribe(param => {
+    this.favoriteUrl$.subscribe((param) => {
       if (param === 'favorite-video') {
         this.selectTab(0);
       } else if (param === 'favorite-audio') {
         this.selectTab(1);
       }
     });
-
   }
-
-
-
 
   selectTab(tabIndex: number) {
     setTimeout(function () {
-      let element: HTMLElement = document.getElementById('favorite-tab' + tabIndex) as HTMLElement;
-      element.click()
+      let element: HTMLElement = document.getElementById(
+        'favorite-tab' + tabIndex
+      ) as HTMLElement;
+      element.click();
     }, 10);
-
-
   }
 
   onTabChange(ev: CustomEvent<SuperTabChangeEventDetail>) {
     const index = ev.detail.index;
-    this.playerService.favoritePlayingType$.next(index)
+    this.playerService.favoritePlayingType$.next(index);
     if (index === 0) {
       this.playerService.setVideoControlsHidden(false);
     } else if (index === 1) {
       this.playerService.setAudioControlsHidden(false);
     }
-
   }
 
   public selectVideoItem(item: Item) {
     this.playerService.setVideoPlaylist(this.favoriteVideoList);
     this.playerService.playVideo(item, 1);
-
   }
 
   public selectAudioItem(item: Item) {
     this.playerService.setAudioPlaylist(this.favoriteAudioList);
     this.playerService.playAudio(item, 1);
-
   }
 
   videoRefresh(event) {
@@ -144,7 +139,7 @@ export class FavoritePlaylistPage implements OnInit {
   }
 
   ngOnDestroy(): void {
-    (this.favoriteVideoSub, this.favoriteAudioSub as Subscription).unsubscribe();
+    (this.favoriteVideoSub,
+    this.favoriteAudioSub as Subscription).unsubscribe();
   }
-
 }

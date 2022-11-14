@@ -22,7 +22,7 @@ export enum PlayingSource {
   NORMAL,
   FAVORITE,
   SEARCH,
-  DOWNLOAD
+  DOWNLOAD,
 }
 
 export interface PlayerEvent {
@@ -43,7 +43,7 @@ export interface PlayState {
 export enum WidgetLocation {
   SHOW,
   MINIMIZE,
-  HIDE
+  HIDE,
 }
 
 @Injectable({
@@ -51,16 +51,24 @@ export enum WidgetLocation {
 })
 export class PlayerService {
   public audioIsHidden = true;
-  public audioIsHidden$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
+  public audioIsHidden$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
+    true
+  );
 
   public videoIsHidden = true;
-  public videoIsHidden$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
+  public videoIsHidden$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
+    true
+  );
 
   public isOnVideoControl = true;
-  public isOnVideoControl$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
+  public isOnVideoControl$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
+    true
+  );
 
   public videoWidgetLocation: WidgetLocation = 2;
-  public videoWidgetLocation$: BehaviorSubject<WidgetLocation> = new BehaviorSubject<WidgetLocation>(2);
+  public videoWidgetLocation$: BehaviorSubject<WidgetLocation> = new BehaviorSubject<WidgetLocation>(
+    2
+  );
 
   public playbackMode: PlaybackMode;
   public playbackMode$: BehaviorSubject<PlaybackMode> = new BehaviorSubject<PlaybackMode>(
@@ -73,28 +81,44 @@ export class PlayerService {
   );
 
   public audioPlaylist: Item[] = [];
-  public audioPlaylist$: BehaviorSubject<Item[]> = new BehaviorSubject<Item[]>([]);
+  public audioPlaylist$: BehaviorSubject<Item[]> = new BehaviorSubject<Item[]>(
+    []
+  );
 
   public videoPlaylist: Item[] = [];
-  public videoPlaylist$: BehaviorSubject<Item[]> = new BehaviorSubject<Item[]>([]);
+  public videoPlaylist$: BehaviorSubject<Item[]> = new BehaviorSubject<Item[]>(
+    []
+  );
 
   public favoriteAudioPlaylist: Item[] = [];
-  public favoriteAudioPlaylist$: BehaviorSubject<Item[]> = new BehaviorSubject<Item[]>([]);
+  public favoriteAudioPlaylist$: BehaviorSubject<Item[]> = new BehaviorSubject<
+    Item[]
+  >([]);
 
   public favoriteVideoPlaylist: Item[] = [];
-  public favoriteVideoPlaylist$: BehaviorSubject<Item[]> = new BehaviorSubject<Item[]>([]);
+  public favoriteVideoPlaylist$: BehaviorSubject<Item[]> = new BehaviorSubject<
+    Item[]
+  >([]);
 
   public audioSearchList: Item[] = [];
-  public audioSearchList$: BehaviorSubject<Item[]> = new BehaviorSubject<Item[]>([]);
+  public audioSearchList$: BehaviorSubject<Item[]> = new BehaviorSubject<
+    Item[]
+  >([]);
 
   public videoSearchList: Item[] = [];
-  public videoSearchList$: BehaviorSubject<Item[]> = new BehaviorSubject<Item[]>([]);
+  public videoSearchList$: BehaviorSubject<Item[]> = new BehaviorSubject<
+    Item[]
+  >([]);
 
   public favoritePlayingType: PlayingType = 0;
-  public favoritePlayingType$: BehaviorSubject<PlayingType> = new BehaviorSubject<PlayingType>(0);
+  public favoritePlayingType$: BehaviorSubject<PlayingType> = new BehaviorSubject<PlayingType>(
+    0
+  );
 
   public documentPlayingType: PlayingType = 0;
-  public documentPlayingType$: BehaviorSubject<PlayingType> = new BehaviorSubject<PlayingType>(0);
+  public documentPlayingType$: BehaviorSubject<PlayingType> = new BehaviorSubject<PlayingType>(
+    0
+  );
 
   public allList: Item[] = [];
   public repeatList: Item[] = [];
@@ -114,9 +138,7 @@ export class PlayerService {
   public audioPlayerEvent$: Subject<PlayerEvent> = new Subject();
   public videoPlayerEvent$: Subject<PlayerEvent> = new Subject();
 
-  constructor(
-    private ga: GoogleAnalyticsService
-  ) {
+  constructor(private ga: GoogleAnalyticsService) {
     this.audioPlaylist$.subscribe((newPlaylist: Item[]) => {
       this.audioPlaylist = newPlaylist;
     });
@@ -129,12 +151,16 @@ export class PlayerService {
     this.videoSearchList$.subscribe((newSearchList: Item[]) => {
       this.videoSearchList = newSearchList;
     });
-    this.favoriteVideoPlaylist$.subscribe((newFavoriteVideoPlaylist: Item[]) => {
-      this.favoriteVideoPlaylist = newFavoriteVideoPlaylist;
-    });
-    this.favoriteAudioPlaylist$.subscribe((newFavoriteAudioPlaylist: Item[]) => {
-      this.favoriteAudioPlaylist = newFavoriteAudioPlaylist;
-    });
+    this.favoriteVideoPlaylist$.subscribe(
+      (newFavoriteVideoPlaylist: Item[]) => {
+        this.favoriteVideoPlaylist = newFavoriteVideoPlaylist;
+      }
+    );
+    this.favoriteAudioPlaylist$.subscribe(
+      (newFavoriteAudioPlaylist: Item[]) => {
+        this.favoriteAudioPlaylist = newFavoriteAudioPlaylist;
+      }
+    );
 
     this.videoPlayState$.subscribe((newVideoPlayState: PlayState) => {
       this.videoPlayState = { ...this.videoPlayState, ...newVideoPlayState };
@@ -196,18 +222,21 @@ export class PlayerService {
 
   setVideoPlaylist(itemList: Item[]) {
     this.videoPlaylist$.next(itemList);
-
   }
 
   setAudioPlaylist(itemList: Item[]) {
     this.allList = itemList;
-    this.shuffleList = itemList.map((x) => x).sort((a, b) => 0.5 - Math.random());
+    this.shuffleList = itemList
+      .map((x) => x)
+      .sort((a, b) => 0.5 - Math.random());
     this.setCurrentAudioPlayList();
   }
 
   setPlaybackMode(mode: PlaybackMode) {
     let nextModeIndex = mode + 1;
-    if (nextModeIndex >= 3) { nextModeIndex = 0; }
+    if (nextModeIndex >= 3) {
+      nextModeIndex = 0;
+    }
     this.playbackMode$.next(nextModeIndex);
     if (nextModeIndex !== 0) {
       this.setCurrentAudioPlayList();
@@ -223,13 +252,12 @@ export class PlayerService {
     this.audioPlaylist$.next(this.currentAudioPlayList);
   }
 
-  setFavoritePlayList(type: PlayingType, favoriteList: Item[]) {
+  setMyFavorite(type: PlayingType, favoriteList: Item[]) {
     if (type === 0) {
       this.favoriteVideoPlaylist$.next(favoriteList);
     } else if (type === 1) {
       this.favoriteAudioPlaylist$.next(favoriteList);
     }
-
   }
 
   playVideo(item: Item, source?: number) {
@@ -242,7 +270,10 @@ export class PlayerService {
       item: item,
     });
     this.setVideoControlsHidden(false);
-    this.ga.trackEvent('video_play', `${item.name} - from source: '${PlayingSource[source]}'`);
+    this.ga.trackEvent(
+      'video_play',
+      `${item.name} - from source: '${PlayingSource[source]}'`
+    );
   }
 
   playAudio(item: Item, source?: number) {
@@ -255,7 +286,10 @@ export class PlayerService {
       item: item,
     });
     this.setAudioControlsHidden(false);
-    this.ga.trackEvent('audio_play', `${item.name} - from source: '${PlayingSource[source]}'`);
+    this.ga.trackEvent(
+      'audio_play',
+      `${item.name} - from source: '${PlayingSource[source]}'`
+    );
   }
 
   setBackNForth(direction: number, isVideo: boolean) {
@@ -303,7 +337,10 @@ export class PlayerService {
       this.playbackRateIndex = PLAYBACK_RATE.length - 1;
     }
     this.playbackRate$.next(PLAYBACK_RATE[this.playbackRateIndex]);
-    this.ga.trackEvent('audio_playbackrate', `Set playback rate to: '${PLAYBACK_RATE[this.playbackRateIndex]}x'`);
+    this.ga.trackEvent(
+      'audio_playbackrate',
+      `Set playback rate to: '${PLAYBACK_RATE[this.playbackRateIndex]}x'`
+    );
   }
 
   videoPause() {
@@ -345,8 +382,6 @@ export class PlayerService {
   }
 
   public getItemIndex(item: Item, itemList: Item[]) {
-    return itemList.findIndex(
-      (searchItem: Item) => searchItem.id === item.id
-    );
+    return itemList.findIndex((searchItem: Item) => searchItem.id === item.id);
   }
 }

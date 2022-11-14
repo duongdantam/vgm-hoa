@@ -8,8 +8,8 @@
   },
   "tabs": {
     "home": "主頁",
-    "video": "视道",
-    "audio": "听道",
+    "video": "視道",
+    "audio": "聽道",
     "my": "我的",
     "favorite": "收藏",
     "download": "下载"
@@ -25,61 +25,61 @@
     "seeAll": "查看全部"
   },
   "audio": {
-    "topic": "[主题]",
+    "topic": "[主題]",
     "favorite": "收藏",
     "share": "分享",
     "download": "下裁"
   },
   "video": {
-    "topic": "[主题]"
+    "topic": "[主題]"
   },
   "msg": {
-    "notfound": "404 - 页面不存在",
+    "notfound": "404 - 頁面不存在",
     "share": "分享",
-    "copylink": "链接已复制",
-    "appendix": "更换目录",
+    "copylink": "鏈接已復制",
+    "appendix": "更換目錄",
     "chapter": "講",
     "time": "時長",
     "video": {
-      "add": "视频已保存到收藏夹",
-      "remove": "视频已删除",
-      "download": "视频已下载",
-      "delete": "视频已刪除",
-      "favorite-unfound": "没有视频收藏结果",
-      "download-unfound": "没有视频下裁结果"
+      "add": "視頻已保存到收藏夾",
+      "remove": "視頻已刪除",
+      "download": "視頻已下載",
+      "delete": "視頻已刪除",
+      "favorite-unfound": "沒有視頻收藏結果",
+      "download-unfound": "沒有視頻下裁結果"
     },
     "audio": {
       "favorite": "收藏",
       "share": "分享",
       "download": "下裁",
-      "add": "音频已保存到收藏夹",
-      "remove": "音频已删除",
-      "downloaded": "音频已下载",
-      "delete": "音频已刪除",
-      "favorite-unfound": "沒有音频收藏結果",
-      "download-unfound": "沒有音频下载結果"
+      "add": "音頻已保存到收藏夾",
+      "remove": "音頻已刪除",
+      "downloaded": "音頻已下載",
+      "delete": "音頻已刪除",
+      "favorite-unfound": "沒有音頻收藏結果",
+      "download-unfound": "沒有音頻下載結果"
     },
     "search": {
-      "result": "搜索结果",
-      "notfound": "搜索无结果"
+      "result": "搜索結果",
+      "notfound": "搜索無結果"
     },
     "favorite": {
-      "description": "介绍",
-      "note": "笔记",
+      "description": "介紹",
+      "note": "筆記",
       "add": "收藏",
       "download": "下裁",
       "downloaded": "已下裁",
       "share": "分享",
-      "delete": "媒体已删除"
+      "delete": "媒體已刪除"
     },
     "download": {
-      "description": "介绍",
-      "note": "笔记",
+      "description": "介紹",
+      "note": "筆記",
       "add": "收藏",
       "download": "下裁",
       "downloaded": "已下裁",
       "share": "分享",
-      "delete": "媒体已删除"
+      "delete": "媒體已刪除"
     }
   },
   "input": {

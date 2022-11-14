@@ -89,7 +89,7 @@ export class AudioPlayListComponent
     );
 
     const favoriteList = await this.dataFetchService.fetchFavorite('audio');
-    this.playerService.setFavoritePlayList(1, favoriteList);
+    this.playerService.setMyFavorite(1, favoriteList);
     await this.checkDownloaded();
 
     this.itemUrl$ = this.activatedRoute.queryParamMap.pipe(
@@ -419,7 +419,7 @@ export class AudioPlayListComponent
       this.presentToast(this.translateService.instant('msg.audio.add'));
     }
     const favoriteKey = 'favorite.audio';
-    this.playerService.setFavoritePlayList(1, this.favoriteList);
+    this.playerService.setMyFavorite(1, this.favoriteList);
     this.localForageService.set(favoriteKey, this.favoriteList);
   }
 
