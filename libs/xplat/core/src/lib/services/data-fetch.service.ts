@@ -28,6 +28,10 @@ const firebaseConfig = {
 })
 export class DataFetchService {
   // firebase config
+  public mobileVersion = {
+    android: '0.0.0',
+    ios: '0.0.0'
+  }
   public streamGateway: string;
   public downloadGateway: string;
   public cloudGateway: string;
@@ -71,6 +75,8 @@ export class DataFetchService {
     const remoteConfig = getRemoteConfig();
     await fetchAndActivate(remoteConfig)
       .then(() => {
+        this.mobileVersion['ios'] = getValue(remoteConfig, "IOS_VERSION").asString() || '';
+        this.mobileVersion['android'] = getValue(remoteConfig, "ANDROID_VERSION").asString() || '';
         this.streamGateway =
           getValue(remoteConfig, 'IPFS_STREAM_GATEWAY').asString() || '';
         this.downloadGateway =

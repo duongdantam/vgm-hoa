@@ -20,14 +20,12 @@ export interface TopMenuItem {
 
 export class TopMenuComponent extends BaseComponent implements OnInit, OnChanges {
   @ViewChild(IonSlides) slides: IonSlides
-  @Input() home: 'video' | 'audio' = 'video';
+  @Input() home = '';
   @Input() activeId: string;
   private _dataInit = false;
   public activeHref = '';
 
   public menuList: TopMenuItem[] = [];
-  public audioList: TopMenuItem[] = [];
-  public videoList: TopMenuItem[] = [];
   // topMenuActive = true;
   constructor(
     private router: Router,
@@ -86,27 +84,24 @@ export class TopMenuComponent extends BaseComponent implements OnInit, OnChanges
   }
 
   async dataInit() {
-    const videoList = await this.dataFetchService.fetchRoot('video');
-    this.videoList = await videoList.map((item) => ({
-      key: item.id,
-      value: item.name.replace(/[0-9]+\-/g, ''),
-      href: item.url,
-    }));
+    const fetchVideo = this.dataFetchService.fetchRoot('video').then(async list => {
+      return list.map((item) => ({
+        key: item.id,
+        value: item.name.replace(/[0-9]+\-/g, ''),
+        href: item.url,
+      }));
+    });
 
-    const audioList = await this.dataFetchService.fetchRoot('audio');
-    this.audioList = await audioList.map((item) => ({
-      key: item.id,
-      value: item.name.replace(/[0-9]+\-/g, ''),
-      href: item.url,
-    }));
-
-    if (this.home === 'video') {
-      this.menuList = this.videoList;
-      this.activeId = this.menuList[0].key;
-    } else {
-      this.menuList = this.audioList;
-      this.activeId = this.menuList[0].key;
-    }
+    const fetchAudio = this.dataFetchService.fetchRoot('audio').then(list => {
+      return list.map((item) => ({
+        key: item.id,
+        value: item.name.replace(/[0-9]+\-/g, ''),
+        href: item.url,
+      }));
+    });
+    const [vList, aList] = await Promise.all([fetchVideo, fetchAudio]);
+    this.menuList = this.home === 'video' ? vList : this.home === 'audio' ? aList : [];
+    this.activeId = this.menuList && this.menuList.length > 0 ? this.menuList[0].key : '';
     this._dataInit = true;
   }
 

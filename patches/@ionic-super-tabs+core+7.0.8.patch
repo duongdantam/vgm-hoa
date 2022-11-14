@@ -1,0 +1,13 @@
+diff --git a/node_modules/@ionic-super-tabs/core/dist/esm/utils-640d2cf5.js b/node_modules/@ionic-super-tabs/core/dist/esm/utils-640d2cf5.js
+index f810999..aeaabac 100644
+--- a/node_modules/@ionic-super-tabs/core/dist/esm/utils-640d2cf5.js
++++ b/node_modules/@ionic-super-tabs/core/dist/esm/utils-640d2cf5.js
+@@ -96,7 +96,7 @@ function debugLog(config, tag, vals) {
+         return;
+     }
+     // Some gorgeous logging, because apparently I have lots of free time to style console logs and write this comment
+-    console.log(`%csuper-tabs %c%s`, debugStyle1, debugStyle2, ' '.repeat(10 - tag.length) + tag, ...vals);
++    // console.log(`%csuper-tabs %c%s`, debugStyle1, debugStyle2, ' '.repeat(10 - tag.length) + tag, ...vals);
+ }
+ 
+ export { DEFAULT_CONFIG as D, getTs as a, checkGesture as c, debugLog as d, getNormalizedScrollX as g, pointerCoord as p, scrollEl as s };

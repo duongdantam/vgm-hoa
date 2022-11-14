@@ -49,7 +49,7 @@ export class AudioCardSliderComponent
   }
 
   ngOnInit(): void {
-    console.log('videoRandomList:::::', this.topic);
+    // console.log('audioRandomList:::::', this.topic);
     // this.topicList = await this.dataFetchService.fetchTopicList(this.topic.url).then((topic) => {
     //   return topic.children.map((item) => ({
     //     ...item,

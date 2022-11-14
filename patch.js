@@ -1,62 +1,62 @@
 const fs = require('fs');
-const f =
-  'node_modules/@angular-devkit/build-angular/src/webpack/configs/browser.js';
-fs.readFile(f, 'utf8', function (err, data) {
-  if (err) {
-    return console.log(err);
-  }
-  var result = data.replace(
-    /node: false/g,
-    'node: {crypto: true, stream: true, fs: "empty"}'
-  );
+// const f =
+//   'node_modules/@angular-devkit/build-angular/src/webpack/configs/browser.js';
+// fs.readFile(f, 'utf8', function (err, data) {
+//   if (err) {
+//     return console.log(err);
+//   }
+//   var result = data.replace(
+//     /node: false/g,
+//     'node: {crypto: true, stream: true, fs: "empty"}'
+//   );
 
-  fs.writeFile(f, result, 'utf8', function (err) {
-    if (err) return console.log(err);
-  });
-});
+//   fs.writeFile(f, result, 'utf8', function (err) {
+//     if (err) return console.log(err);
+//   });
+// });
 
-const sptabs = 'node_modules/@ionic-super-tabs/core/dist/esm/utils-640d2cf5.js';
-fs.readFile(sptabs, 'utf8', function (err, data) {
-  if (err) {
-    return console.log(err);
-  }
-  var result = data.replace(/console.log\(`%csuper-tabs.*/g, '');
+// const sptabs = 'node_modules/@ionic-super-tabs/core/dist/esm/utils-640d2cf5.js';
+// fs.readFile(sptabs, 'utf8', function (err, data) {
+//   if (err) {
+//     return console.log(err);
+//   }
+//   var result = data.replace(/console.log\(`%csuper-tabs.*/g, '');
 
-  fs.writeFile(sptabs, result, 'utf8', function (err) {
-    if (err) return console.log(err);
-  });
-});
+//   fs.writeFile(sptabs, result, 'utf8', function (err) {
+//     if (err) return console.log(err);
+//   });
+// });
 
-const ionMenu = 'node_modules/@ionic/core/dist/esm/ion-menu_3.entry.js';
-fs.readFile(ionMenu, 'utf8', function (err, data) {
-  if (err) {
-    return console.log(err);
-  }
-  var result = data
-    .replace(
-      /\'menu-pane-visible\'\:\sisPaneVisible/,
-      "'menu-pane-visible': true"
-    )
-    .replace(/console\.error/g, '// console.error');
+// const ionMenu = 'node_modules/@ionic/core/dist/esm/ion-menu_3.entry.js';
+// fs.readFile(ionMenu, 'utf8', function (err, data) {
+//   if (err) {
+//     return console.log(err);
+//   }
+//   var result = data
+//     .replace(
+//       /\'menu-pane-visible\'\:\sisPaneVisible/,
+//       "'menu-pane-visible': true"
+//     )
+//     .replace(/console\.error/g, '// console.error');
 
-  fs.writeFile(ionMenu, result, 'utf8', function (err) {
-    if (err) return console.log(err);
-  });
-});
+//   fs.writeFile(ionMenu, result, 'utf8', function (err) {
+//     if (err) return console.log(err);
+//   });
+// });
 
-const ionToast = 'node_modules/@ionic/core/dist/esm/ion-toast.entry.js';
-fs.readFile(ionToast, 'utf8', function (err, data) {
-  if (err) {
-    return console.log(err);
-  }
-  var toastResult = data
-    .replace(/(bottom\:0)/, 'bottom:-10px')
-    .replace(/(font-weight\:500)/g, 'font-weight:bold');
+// const ionToast = 'node_modules/@ionic/core/dist/esm/ion-toast.entry.js';
+// fs.readFile(ionToast, 'utf8', function (err, data) {
+//   if (err) {
+//     return console.log(err);
+//   }
+//   var toastResult = data
+//     .replace(/(bottom\:0)/, 'bottom:-10px')
+//     .replace(/(font-weight\:500)/g, 'font-weight:bold');
 
-  fs.writeFile(ionToast, toastResult, 'utf8', function (err) {
-    if (err) return console.log(err);
-  });
-});
+//   fs.writeFile(ionToast, toastResult, 'utf8', function (err) {
+//     if (err) return console.log(err);
+//   });
+// });
 
 const videoJS = 'node_modules/video.js/dist/video.es.js';
 fs.readFile(videoJS, 'utf8', function (err, data) {
@@ -66,6 +66,26 @@ fs.readFile(videoJS, 'utf8', function (err, data) {
   var videoJSResult = data.replace('passive: true', 'passive: false');
 
   fs.writeFile(videoJS, videoJSResult, 'utf8', function (err) {
+    if (err) return console.log(err);
+  });
+});
+
+const mobileVersion = 'apps/ionic-fy/src/app/pages/home/home.component.ts';
+fs.readFile(mobileVersion, 'utf8', function (err, data) {
+  if (err) {
+    return console.log(err);
+  }
+
+  var result = data.replace(
+    /android\:\s[\'\"](\d+)\.(\d+)\.(\d+)[\'\"]/,
+    `android: '1.0.1'`
+  );
+  result = result.replace(
+    /ios\:\s[\'\"](\d+)\.(\d+)\.(\d+)[\'\"]/,
+    `ios: '1.0.1'`
+  );
+
+  fs.writeFile(mobileVersion, result, 'utf8', function (err) {
     if (err) return console.log(err);
   });
 });

@@ -15,11 +15,7 @@
   <!-- <ion-item lines="inset" *ngIf="home !== 'video' && home !== 'audio'">
   </ion-item> -->
   <!-- <ion-title>Solid Buttons</ion-title> -->
-  <div
-    [ngStyle]="{
-      visibility: home !== 'video' && home !== 'audio' ? 'hidden' : 'visibile'
-    }"
-  >
+  <div>
     <ion-searchbar
       id="mobile-search-bar"
       [placeholder]="'input.search' | translate"
@@ -31,8 +27,14 @@
       (ionFocus)="searchOnFocus = true"
       (ionBlur)="setFocus(false)"
       class="{{ searchOnFocus ? 'on-focus' : '' }}"
-      [disabled]="home !== 'video' && home !== 'audio'"
     >
+      <ion-button
+        fill="solid"
+        class="search-btn {{ searchOnFocus ? 'isFocus' : '' }}"
+        (click)="isVideo = !isVideo"
+      >
+        <ion-icon [name]="isVideo ? 'videocam' : 'volume-medium'"></ion-icon>
+      </ion-button>
     </ion-searchbar>
   </div>
 
@@ -57,7 +59,7 @@
   </ion-buttons>
 </ion-toolbar>
 
-<ion-content *ngIf="searchOnFocus && home !== 'home'">
+<ion-content *ngIf="searchOnFocus">
   <ion-list *ngIf="searchResult.query && searchOnFocus">
     <ion-item
       lines="none"
@@ -79,7 +81,7 @@
         </ion-col>
         <ion-col style="max-width: 20%">
           <fy-video-thumb-card
-            *ngIf="home === 'video'; else audioThumb"
+            *ngIf="isVideo === true; else audioThumb"
             title=""
             [subtitle]="item.duration"
             [img]="item.thumb"

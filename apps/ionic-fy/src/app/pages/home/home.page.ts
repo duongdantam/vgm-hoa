@@ -14,15 +14,13 @@ export class HomePage implements OnInit {
   public audioRandomList;
   public videoConstantList;
   public audioConstantList;
-  private _dataInit = false;
+  // private _dataInit = false;
 
-  // img = `assets/imgs/${this.backgroundImgs[0].toString()}.jpg`;
-  // @Output() public onSlideTouch: EventEmitter<boolean> = new EventEmitter();
   constructor(
-    private router: Router,
+    // private router: Router,
     // private activatedRoute: ActivatedRoute,
     public dataFetchService: DataFetchService,
-    private playerService: PlayerService // private _electronService: ElectronService,
+    // private playerService: PlayerService // private _electronService: ElectronService,
   ) {
     // this.router.events.subscribe(async (event) => {
     //   if (
@@ -39,7 +37,8 @@ export class HomePage implements OnInit {
   }
 
   async init() {
-    this.videoConstantList = await this.dataFetchService
+    // Get constant video and audio list
+    const videoConstantList = this.dataFetchService
       .fetchTopicList(this.dataFetchService.videoConstantUrl)
       .then(async (topic) => {
         topic.children = await Promise.all(
@@ -53,30 +52,32 @@ export class HomePage implements OnInit {
         );
         return topic;
       });
-    this.audioConstantList = await this.dataFetchService.fetchTopicList(
+    const audioConstantList = this.dataFetchService.fetchTopicList(
       this.dataFetchService.audioConstantUrl
     );
+    const videoList = this.dataFetchService.fetchRoot('video');
+    const audioList = this.dataFetchService.fetchRoot('audio');
+    const [vConstantList, aConstantList, vList, aList] = await Promise.all([videoConstantList, audioConstantList, videoList, audioList]);
 
-    const videoList = await this.dataFetchService.fetchRoot('video');
-    const audioList = await this.dataFetchService.fetchRoot('audio');
+    this.videoConstantList = vConstantList;
+    this.audioConstantList = aConstantList;
+    console.log('constantList:::::', this.videoConstantList, this.audioConstantList);
+    // Get random video and audio list
+    const videoRandomIndex = Math.floor(Math.random() * vList.length);
+    const audioRandomIndex = Math.floor(Math.random() * aList.length);
 
-    const videoRandomIndex = Math.floor(Math.random() * videoList.length);
-    const audioRandomIndex = Math.floor(Math.random() * audioList.length);
-    this.videoRandomList = await this.getChildren(
-      videoList[videoRandomIndex].url
+    const videoRandom = this.getChildren(
+      vList[videoRandomIndex].url
     );
-    this.audioRandomList = await this.getChildren(
-      audioList[audioRandomIndex].url
+    const audioRandom = this.getChildren(
+      aList[audioRandomIndex].url
     );
+    const [vRandom, aRandom] = await Promise.all([videoRandom, audioRandom]);
+    this.videoRandomList = vRandom;
+    this.audioRandomList = aRandom;
+    console.log('randomList:::::', this.videoRandomList, this.audioRandomList);
 
-    console.log('videoRandomList:::::', this.audioConstantList);
-    // .then((list) => {
-    //   return list.map((item) => ({
-    //     key: item.id,
-    //     value: item.name.replace(/[0-9]+\-/g, ''),
-    //     href: item.url,
-    //   }));
-    // });
+
   }
 
   async getChildren(url: string) {

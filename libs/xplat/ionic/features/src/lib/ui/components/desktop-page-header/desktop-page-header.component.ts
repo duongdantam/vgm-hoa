@@ -1,4 +1,4 @@
-import { Component, Input, ViewChild } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import {
   BaseComponent,
@@ -21,31 +21,29 @@ export class DesktopPageHeaderComponent extends BaseComponent {
   searchResult: any = {};
   searchQuery: string = '';
   isSearch: boolean;
+  isVideo: boolean = true;
   constructor(
     private router: Router,
     private location: Location,
     private playerService: PlayerService,
     public dataFetchService: DataFetchService,
-    private queueService: QueueService
+    private queueService: QueueService,
   ) {
     super();
   }
 
-  async searchChange(e) {
+  async searchChange(e?) {
     const index = this.dataFetchService.searchClient.index('VGM');
     this.searchQuery = e.detail.value;
     try {
-      if (this.home.includes('video')) {
-        this.searchResult = await index.search(e.detail.value, {
-          filter: 'isVideo = true',
-          limit: 20,
-        });
-      } else if (this.home.includes('audio')) {
-        this.searchResult = await index.search(e.detail.value, {
-          filter: 'isVideo = false',
-          limit: 20,
-        });
-      }
+      this.searchResult = this.isVideo === true ? await index.search(e.detail.value, {
+        filter: 'isVideo = true',
+        limit: 20,
+      }) : await index.search(e.detail.value, {
+        filter: 'isVideo = false',
+        limit: 20,
+      });
+
 
       console.log(this.searchResult);
 
@@ -56,7 +54,7 @@ export class DesktopPageHeaderComponent extends BaseComponent {
         await Promise.all(
           this.searchResult.hits.map(async (item) => {
             item.value = item.name.replace(/[\-\_]+/g, ' ');
-            item.thumb = this.home.includes('video')
+            item.thumb = this.isVideo
               ? await this.getItemThumbnail(item)
               : null;
             item.pUrl = item.url.match(/.*(?=\.)/).toString();
@@ -88,19 +86,19 @@ export class DesktopPageHeaderComponent extends BaseComponent {
   selectItem(item) {
     console.log('item clicked', item);
     const itemUrl = item.url.replace(/.*\./, '');
-    this.router.navigate(['/tabs', this.home, 'playlist', item.pUrl], {
+    this.router.navigate(['/tabs', this.isVideo === true ? 'video' : 'audio', 'playlist', item.pUrl], {
       queryParams: { item: itemUrl },
     });
   }
 
   public searchMore(param) {
-    console.log(this.home, param);
+    // console.log(this.home, param);
 
-    if (!this.home.includes('favorite') && !this.home.includes('document')) {
-      this.router.navigate(['/tabs', this.home, 'search'], {
-        queryParams: { param: param },
-      });
-    }
+    // if (!this.home.includes('favorite') && !this.home.includes('document')) {
+    this.router.navigate(['/tabs', this.isVideo === true ? 'video' : 'audio', 'search'], {
+      queryParams: { param: param },
+    });
+    // }
     this.playerService.videoWidgetLocation$.next(2);
   }
 
@@ -122,11 +120,12 @@ export class DesktopPageHeaderComponent extends BaseComponent {
     return await this.dataFetchService.getThumbnailUrl(item); // 'https://stream.vgm.tv/VGMV/01_BaiGiang/CacDienGia/MSNHB_DeHiepMotTrongPhucVu/preview/01.jpg';
   }
 
+
   async preloadData(item: Item) {
     if (
       item.isLeaf === null &&
       this.dataFetchService.prefetchList.findIndex((elem) => elem === item.id) <
-        0
+      0
     ) {
       const playUrl = await this.dataFetchService.getPlayUrl(item, true);
       const dirUrl = path.dirname(playUrl);

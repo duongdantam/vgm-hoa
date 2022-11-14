@@ -1,9 +1,11 @@
 import { Component, OnInit, NgZone } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Platform, AlertController } from '@ionic/angular';
+import { TranslateService } from '@ngx-translate/core';
+import * as semverCompare from 'semver-compare';
 import {
   BaseComponent,
   DataFetchService,
-  LocalforageService,
 } from '@fy/xplat/core';
 
 @Component({
@@ -61,11 +63,21 @@ export class WelcomeComponent extends BaseComponent implements OnInit {
   timer = 0;
   dataReady = false;
   videoList = [];
+  mobileVersion = {
+    android: '1.0.1',
+    ios: '1.0.1'
+  }
+  storeUrl = {
+    android: 'market://details?id=com.fy.tv',
+    ios: 'itms-apps://itunes.apple.com/app/fy-tv/id1438483905'
+  }
   constructor(
     private router: Router,
-    // private activatedRoute: ActivatedRoute,
     private zone: NgZone,
-    public dataFetchService: DataFetchService // private localforageService: LocalforageService
+    public dataFetchService: DataFetchService,
+    private platform: Platform,
+    private translateService: TranslateService,
+    public alertController: AlertController
   ) {
     super();
   }
@@ -85,8 +97,12 @@ export class WelcomeComponent extends BaseComponent implements OnInit {
       }
     }, 50);
     await this.dataFetchService.init();
+    if (this.platform.is('capacitor')) {
+      if (this.platform.is('android')) await this.checkMobileVersion('android');
+      if (this.platform.is('ios')) await this.checkMobileVersion('ios');
+    }
     await this.dataFetchService.fetchAPIVersion();
-    await this.dataFetchService.fetchRoot('video').then(async (list) => {
+    const fetchVideo = this.dataFetchService.fetchRoot('video').then(async (list) => {
       if (list) {
         this.videoList = list;
         list.forEach(async (category) => {
@@ -102,14 +118,17 @@ export class WelcomeComponent extends BaseComponent implements OnInit {
       }
     });
 
-    await this.dataFetchService.fetchRoot('audio').then(async (list) => {
+    const fetchAudio = this.dataFetchService.fetchRoot('audio').then(async (list) => {
       if (list) {
         list.forEach(async (category) => {
           await this.dataFetchService.fetchTopicList(category.url);
         });
       }
     });
-    this.dataReady = true;
+
+    await Promise.all([fetchVideo, fetchAudio]).then(result => {
+      this.dataReady = true;
+    });
   }
 
   async handleEnter() {
@@ -119,4 +138,39 @@ export class WelcomeComponent extends BaseComponent implements OnInit {
     //   queryParams: { topicUrl: this.videoList[0].url },
     // });
   }
+
+  async checkMobileVersion(platform: string) {
+    console.log(this.mobileVersion[platform], this.dataFetchService.mobileVersion[platform], semverCompare(this.dataFetchService.mobileVersion[platform], this.mobileVersion[platform]));
+    if (/^(\d+)\.(\d+)\.(\d+)$/.test(this.mobileVersion[platform]) && /^(\d+)\.(\d+)\.(\d+)$/.test(this.dataFetchService.mobileVersion[platform])) {
+      if (semverCompare(this.dataFetchService.mobileVersion[platform], this.mobileVersion[platform]) > 0) await this.presentAlertConfirm(platform);
+    }
+  }
+
+
+  async presentAlertConfirm(platform: string) {
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: `${this.translateService.instant('msg.inform')}`,
+      message: `${this.translateService.instant('msg.newversion')}`,
+      buttons: [
+        {
+          text: `${this.translateService.instant('msg.later')}`,
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: (blah) => {
+            console.log('Confirm Cancel: blah');
+          },
+        },
+        {
+          text: `${this.translateService.instant('msg.update')}`,
+          handler: () => {
+            window.location.href = this.storeUrl[platform];
+            console.log('Confirm Okay');
+          },
+        },
+      ],
+    });
+    await alert.present();
+  }
+
 }

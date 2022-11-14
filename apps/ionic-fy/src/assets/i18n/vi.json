@@ -24,6 +24,10 @@
   },
   "msg": {
     "notfound": "404 - TRANG KHÔNG TỒN TẠI",
+    "newversion": "Đã có bản cập nhật mới!",
+    "inform": "Thông báo",
+    "update": "Cập nhật",
+    "later": "Để sau",
     "share": "Chia sẽ",
     "copylink": "Liên kết đã được sao chép",
     "video": {

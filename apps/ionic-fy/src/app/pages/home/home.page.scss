@@ -10,7 +10,7 @@ ion-content {
   --background: var(--ion-color-light);
   ion-slides {
     ion-slide {
-      height: 150px;
+      height: 200px;
       ion-img {
         width: 100%;
       }
@@ -26,6 +26,19 @@ ion-content {
     h6 {
       font-size: medium;
       font-weight: bold;
+    }
+  }
+}
+
+@media screen and (max-width: 991px) {
+  ion-content {
+    ion-slides {
+      ion-slide {
+        height: 150px;
+        // ion-img {
+        //   width: 100%;
+        // }
+      }
     }
   }
 }
