@@ -50,17 +50,12 @@ export enum WidgetLocation {
   providedIn: 'root',
 })
 export class PlayerService {
-  public audioIsHidden = true;
-  public audioIsHidden$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
 
-  public videoIsHidden = true;
-  public videoIsHidden$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
+  public isVideoPlaying = true;
+  public isVideoPlaying$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
 
-  public isOnVideoControl = true;
-  public isOnVideoControl$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
-
-  public videoWidgetLocation: WidgetLocation = 2;
-  public videoWidgetLocation$: BehaviorSubject<WidgetLocation> = new BehaviorSubject<WidgetLocation>(2);
+  public playerWidgetLocation: WidgetLocation = 2;
+  public playerWidgetLocation$: BehaviorSubject<WidgetLocation> = new BehaviorSubject<WidgetLocation>(2);
 
   public playbackMode: PlaybackMode;
   public playbackMode$: BehaviorSubject<PlaybackMode> = new BehaviorSubject<PlaybackMode>(
@@ -166,17 +161,11 @@ export class PlayerService {
         })
       )
       .subscribe();
-    this.audioIsHidden$.subscribe((newState: boolean) => {
-      this.audioIsHidden = newState;
+    this.isVideoPlaying$.subscribe((newState: boolean) => {
+      this.isVideoPlaying = newState;
     });
-    this.videoIsHidden$.subscribe((newState: boolean) => {
-      this.videoIsHidden = newState;
-    });
-    this.isOnVideoControl$.subscribe((newState: boolean) => {
-      this.isOnVideoControl = newState;
-    });
-    this.videoWidgetLocation$.subscribe((newState: WidgetLocation) => {
-      this.videoWidgetLocation = newState;
+    this.playerWidgetLocation$.subscribe((newState: WidgetLocation) => {
+      this.playerWidgetLocation = newState;
     });
     this.favoritePlayingType$.subscribe((newType: PlayingType) => {
       this.favoritePlayingType = newType;
@@ -241,7 +230,6 @@ export class PlayerService {
       playingTitle: item.name,
       item: item,
     });
-    this.setVideoControlsHidden(false);
     this.ga.trackEvent('video_play', `${item.name} - from source: '${PlayingSource[source]}'`);
   }
 
@@ -254,7 +242,6 @@ export class PlayerService {
       playingTitle: item.name,
       item: item,
     });
-    this.setAudioControlsHidden(false);
     this.ga.trackEvent('audio_play', `${item.name} - from source: '${PlayingSource[source]}'`);
   }
 
@@ -324,25 +311,6 @@ export class PlayerService {
     this.audioPlayState$.next({ ...this.audioPlayState, isPlaying: true });
   }
 
-  setAudioControlsHidden(flag: boolean) {
-    // Only when playing audio to show up controls
-    if (flag === false) {
-      this.audioIsHidden$.next(false);
-      this.setVideoControlsHidden(true);
-    } else {
-      this.audioIsHidden$.next(true);
-    }
-  }
-
-  setVideoControlsHidden(flag: boolean) {
-    // Only when playing audio to show up controls
-    if (flag === false) {
-      this.videoIsHidden$.next(false);
-      this.setAudioControlsHidden(true);
-    } else {
-      this.videoIsHidden$.next(true);
-    }
-  }
 
   public getItemIndex(item: Item, itemList: Item[]) {
     return itemList.findIndex(

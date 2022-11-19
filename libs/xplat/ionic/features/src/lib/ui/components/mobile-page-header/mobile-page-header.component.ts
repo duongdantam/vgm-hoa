@@ -26,6 +26,7 @@ export class MobilePageHeaderComponent extends BaseComponent implements OnInit {
   searchOnFocus = false;
   searchResult: any = {};
   searchQuery: string = '';
+  searchValue: string = '';
   widgetSub: any;
   storeUrl: string;
   platformOs: string;
@@ -53,7 +54,7 @@ export class MobilePageHeaderComponent extends BaseComponent implements OnInit {
       // options.uri = 'vgm://';
     }
 
-    this.widgetSub = this.playerService.videoWidgetLocation$.subscribe(
+    this.widgetSub = this.playerService.playerWidgetLocation$.subscribe(
       (location) => {
         if (location === 0) {
           this.searchOnFocus = false;
@@ -66,6 +67,10 @@ export class MobilePageHeaderComponent extends BaseComponent implements OnInit {
     this.audioRootList = await this.dataFetchService.fetchRoot('audio');
   }
 
+  searchModeChange() {
+    this.isVideo = !this.isVideo;
+    this.searchValue = '';
+  }
 
 
   async searchChange(e) {
@@ -95,8 +100,8 @@ export class MobilePageHeaderComponent extends BaseComponent implements OnInit {
   setFocus(focus) {
     if (focus) {
       this.searchOnFocus = focus;
-      if (this.playerService.videoWidgetLocation === 0) {
-        this.playerService.videoWidgetLocation$.next(1);
+      if (this.playerService.playerWidgetLocation === 0) {
+        this.playerService.playerWidgetLocation$.next(1);
       }
       setTimeout(() => {
         this.searchbar.setFocus();
@@ -138,7 +143,7 @@ export class MobilePageHeaderComponent extends BaseComponent implements OnInit {
     this.router.navigate(['/muc-luc', this.isVideo === true ? 'video' : 'audio', 'search'], {
       queryParams: { param: param },
     });
-    this.playerService.videoWidgetLocation$.next(2);
+    this.playerService.playerWidgetLocation$.next(2);
   }
 
   private async getParentName(pUrl) {

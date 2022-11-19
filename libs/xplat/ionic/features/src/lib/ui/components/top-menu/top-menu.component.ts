@@ -106,8 +106,8 @@ export class TopMenuComponent extends BaseComponent implements OnInit, OnChanges
   }
 
   itemClick() {
-    if (this.home === 'video' && this.playerService.videoWidgetLocation === 0) {
-      this.playerService.videoWidgetLocation$.next(1);
+    if (this.home === 'video' && this.playerService.playerWidgetLocation === 0) {
+      this.playerService.playerWidgetLocation$.next(1);
     }
   }
 

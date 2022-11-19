@@ -29,6 +29,7 @@
       inputmode="search"
       enterkeyhint="search"
       debounce="0"
+      [(ngModel)]="searchValue"
       (keypress)="searchKeyPress($event)"
       (ionChange)="searchChange($event)"
       (ionFocus)="searchOnFocus = true"
@@ -38,7 +39,7 @@
       <ion-button
         fill="fill"
         class="search-btn {{ searchOnFocus ? 'isFocus' : '' }}"
-        (click)="isVideo = !isVideo"
+        (click)="searchModeChange()"
       >
         <ion-icon [name]="isVideo ? 'videocam' : 'volume-medium'"></ion-icon>
         <ion-label>{{

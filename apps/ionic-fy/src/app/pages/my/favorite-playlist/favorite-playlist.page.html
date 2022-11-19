@@ -121,11 +121,12 @@
 
         <ion-grid class="ion-margin ion-margin-top">
           <fy-audio-play-list
-            [list]="favoriteAudioList"
+            *ngFor="let item of favoriteAudioList; index as i"
+            [ngStyle]="{ 'z-index': 100 - i }"
             parent="favorite"
-            (onItemPressed)="selectAudioItem($event)"
-          >
-          </fy-audio-play-list>
+            [item]="item"
+            (click)="selectAudioItem(item)"
+          ></fy-audio-play-list>
         </ion-grid>
 
         <ion-infinite-scroll

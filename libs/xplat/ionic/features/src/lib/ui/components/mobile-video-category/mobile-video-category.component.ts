@@ -74,7 +74,8 @@ export class MobileVideoCategoryComponent
     if (item.isLeaf === null) {
       this.playerService.setVideoPlaylist(this.itemList);
       this.playerService.playVideo(item, 0);
-      this.playerService.videoWidgetLocation$.next(0);
+      this.playerService.playerWidgetLocation$.next(0);
+      this.playerService.isVideoPlaying$.next(true);
     }
     if (item.isLeaf !== null) {
       this.router.navigate([
@@ -98,7 +99,7 @@ export class MobileVideoCategoryComponent
     if (
       item.isLeaf === null &&
       this.dataFetchService.prefetchList.findIndex((elem) => elem === item.id) <
-        0
+      0
     ) {
       const playUrl = await this.dataFetchService.getPlayUrl(item, true);
       const dirUrl = path.dirname(playUrl);

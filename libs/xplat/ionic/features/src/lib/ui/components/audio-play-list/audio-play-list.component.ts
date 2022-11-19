@@ -5,14 +5,12 @@ import {
   EventEmitter,
   OnInit,
   OnDestroy,
-  SimpleChanges,
 } from '@angular/core';
 import {
   PlayerService,
   BaseComponent,
   DataFetchService,
   Item,
-  ItemList,
   LocalforageService,
   OfflineService,
   QueueService,
@@ -41,22 +39,23 @@ import { File as nativeFile } from '@awesome-cordova-plugins/file/ngx';
 export class AudioPlayListComponent
   extends BaseComponent
   implements OnInit, OnDestroy {
-  @Input() public list: ItemList[] = [];
+  @Input() public item;
+  @Input() public parentThumb: string = '';
   @Input() public playingItem: Item = null;
   @Input() public parent = 'audio';
-  @Output() public onItemPressed: EventEmitter<Item> = new EventEmitter<Item>();
+  // @Output() public onItemPressed: EventEmitter<Item> = new EventEmitter<Item>();
+  isViewInit = false;
   public favoriteList: Item[] = [];
   private playSub: Subscription;
   private favoriteSub: Subscription;
   public currentPlayingState: any;
-  public itemLength = 40;
   public downloadingList = [];
   public downloadedList = [];
-  itemUrl$: Observable<string>;
-  itemUrl: string;
+  // itemUrl$: Observable<string>;
+  // itemUrl: string;
 
   constructor(
-    private playerService: PlayerService,
+    public playerService: PlayerService,
     private dataFetchService: DataFetchService,
     private localForageService: LocalforageService,
     public platform: Platform,
@@ -79,63 +78,65 @@ export class AudioPlayListComponent
     if (!this.dataFetchService.isInitialized) {
       await this.dataFetchService.init();
     }
-    this.playSub = this.playerService.audioPlayState$.subscribe((state) => {
-      this.currentPlayingState = state;
-    });
-    this.favoriteSub = this.playerService.favoriteAudioPlaylist$.subscribe(
-      (state) => {
-        this.favoriteList = state;
-      }
-    );
-
-    const favoriteList = await this.dataFetchService.fetchFavorite('audio');
-    this.playerService.setFavoritePlayList(1, favoriteList);
+    // this.playSub = this.playerService.audioPlayState$.subscribe((state) => {
+    //   this.currentPlayingState = state;
+    // });
+    // this.favoriteSub = this.playerService.favoriteAudioPlaylist$.subscribe(
+    //   (state) => {
+    //     this.favoriteList = state;
+    //   }
+    // );
     await this.checkDownloaded();
 
-    this.itemUrl$ = this.activatedRoute.queryParamMap.pipe(
-      map((params: ParamMap) => params.get('item'))
-    );
+    // this.itemUrl$ = this.activatedRoute.queryParamMap.pipe(
+    //   map((params: ParamMap) => params.get('item'))
+    // );
 
-    this.itemUrl$.subscribe(async (param) => {
-      if (param) {
-        console.log(
-          this.activatedRoute.snapshot.params.topicUrl,
-          this.router.url
-        );
+    // this.itemUrl$.subscribe(async (param) => {
+    //   if (param) {
+    //     console.log(
+    //       this.activatedRoute.snapshot.params.topicUrl,
+    //       this.router.url
+    //     );
 
-        const url = `${this.activatedRoute.snapshot.params.topicUrl}.${param}`;
-        const index = this.list.findIndex((list) => list.url === url);
-        if (index >= 0) this.itemPressed(this.list[index]);
-      }
-    });
+    //     const url = `${this.activatedRoute.snapshot.params.topicUrl}.${param}`;
+    //     // const index = this.list.findIndex((list) => list.url === url);
+    //     this.itemPressed(this.item);
+    //   }
+    // });
+    if (!this.item.thumb) {
+      const randomThumbUrl = `${this.dataFetchService.defaultImgs}/${Math.ceil(Math.random() * 50)}.webp`;
+      const thumbCheck = await fetch(randomThumbUrl)
+      this.item.thumb = thumbCheck.status === 200 ? randomThumbUrl : '/assets/imgs/default-image.svg';
+    }
   }
 
   ngOnDestroy(): void {
     (this.playSub && (this.favoriteSub as Subscription)).unsubscribe();
   }
 
-  loadMoreData(event) {
-    setTimeout(() => {
-      event.target.complete();
-      if (this.itemLength < this.list.length) {
-        this.itemLength += 20;
-      } else {
-        this.itemLength = this.list.length;
-        event.target.disabled = true;
-      }
-    }, 500);
-  }
+  // loadMoreData(event) {
+  //   setTimeout(() => {
+  //     event.target.complete();
+  //     if (this.itemLength < this.list.length) {
+  //       this.itemLength += 20;
+  //     } else {
+  //       this.itemLength = this.list.length;
+  //       event.target.disabled = true;
+  //     }
+  //   }, 500);
+  // }
 
   formatName(name: string) {
     return name.replace(/^([0-9]+)(_|-)?/g, '');
   }
 
-  itemPressed(item) {
-    this.onItemPressed.next(item);
-  }
+  // itemPressed(item) {
+  //   this.onItemPressed.next(item);
+  // }
 
   isFavorite(id) {
-    return this.favoriteList.findIndex((list) => list.id === id);
+    return this.playerService.favoriteVideoPlaylist.findIndex((list) => list.id === id);
   }
 
   updateMetaTag(title, url) {

@@ -17,7 +17,7 @@ import videojs from 'video.js';
 import '@videojs/http-streaming';
 import 'videojs-contrib-quality-levels';
 import 'videojs-hls-quality-selector';
-import { BaseComponent, DataFetchService, Item, LocalforageService, OfflineService, PlayerEvent, PlayerService, GoogleAnalyticsService, QueueService } from '@fy/xplat/core';
+import { BaseComponent, DataFetchService, Item, LocalforageService, OfflineService, PlayerEvent, PlayerService, GoogleAnalyticsService, QueueService, PlayState } from '@fy/xplat/core';
 import { Subscription } from 'rxjs';
 import { ScreenOrientation } from '@ionic-native/screen-orientation/ngx';
 import { File as nativeFile } from '@awesome-cordova-plugins/file/ngx';
@@ -63,47 +63,65 @@ export class VideoPlayerWidgetComponent extends BaseComponent implements OnChang
 	private _options: PlayerOptions;
 	player: videojs.Player;
 	_initialized: boolean;
-	thumbUrl: string;
-	videoName: string;
-	videoDuration: string;
-	videoId: string;
+	// Video Info
+	videoFavoriteList: Item[] = [];
+	videoSearchList: Item[] = [];
+	private videoWidget: any;
+	private videoPlayer: any;
+	private videoInfo: any;
+	private videoList: any;
+	private videoPlaylistSub: any;
+	videoItemList: any[] = [];
+	itemLength = 40;
+
+	// Audio Info
+	audioFavoriteList: Item[] = [];
+	audioSearchList: Item[] = [];
+	audioItemList: any[] = [];
+	private audioPlaylistSub: any;
+
+	isFavorite = false;
+	isDownloaded = false;
+	isDownloading = false;
+
+	// Player config
+	playingState: PlayState;
+	playingItem: Item;
+	playingThumbUrl: string;
+	playingItemName: string;
+	playingItemDuration: string;
+	playingItemId: string;
 	firstItemId: string;
 	touchStartPos: number;
 	movementPos: number;
-	itemList: any[] = [];
-	videoFavoriteList: Item[] = [];
-	videoSearchList: Item[] = [];
-	itemLength = 40;
 	windowHeight: number;
 	private _minimizeHeight = 100;
 	private _offsetHeight = 98;
 	downloadProgress = 0;
-	isFavorite = false;
-	isDownloaded = false;
-	isDownloading = false;
 	shareUrl: string;
 	downloadBtn = false;
 	isMuted = true;
 	private _safeTop: any;
 	private _safeBottom: any;
 	// private favoriteSub: any;
-	private playlistSub: any;
-	// private searchSub: any;
-	private videoWidget: any;
-	private videoPlayer: any;
-	private videoInfo: any;
-	private videoList: any;
 	private playerElem: any;
 	private minimizedControlBar: any;
 	private _seeking = false;
 
-	@Input() isPlaying = false;
+	@Input() isVideoPlaying = true;
+
+	@Input() videoIsPlaying = false;
 	@Input() audioIsPlaying = false;
 	// @Input() isFavoriteItem: boolean = false;
-	@Input() playingSource = 0;
-	@Input() playingItem: Item;
+	@Input() videoPlayingSource = 0;
+	@Input() videoPlayingItem: Item;
+
+	@Input() audioPlayingSource = 0;
+	@Input() audioPlayingItem: Item;
+
+
 	@Input() isHidden = true;
-	@Input() isVideoControl = true;
+	// @Input() isVideoControl = true;
 	@Input() widgetLocation = 2;
 	@Input() menuOpen = true;
 
@@ -114,7 +132,8 @@ export class VideoPlayerWidgetComponent extends BaseComponent implements OnChang
 	get options(): PlayerOptions {
 		return this._options;
 	}
-	@Output() public onPlayerEvent: EventEmitter<PlayerEvent> = new EventEmitter();
+	@Output() public onVideoPlayerEvent: EventEmitter<PlayerEvent> = new EventEmitter();
+	@Output() public onAudioPlayerEvent: EventEmitter<PlayerEvent> = new EventEmitter();
 
 	constructor(
 		private elementRef: ElementRef,
@@ -137,12 +156,20 @@ export class VideoPlayerWidgetComponent extends BaseComponent implements OnChang
 		private queueService: QueueService
 	) {
 		super();
-		this.playlistSub = this.playerService.videoPlaylist$.subscribe((list) => {
-			this.itemList = list;
-			this.itemList.map(async (item) => {
+		this.videoPlaylistSub = this.playerService.videoPlaylist$.subscribe((list) => {
+			this.videoItemList = list;
+			this.videoItemList.map(async (item) => {
 				item.value = item.name.replace(/[\-\_]+/g, ' ');
 				item.href = item.url
 				item.thumb = await this.getItemThumbnail(item);
+			});
+		});
+		this.audioPlaylistSub = this.playerService.audioPlaylist$.subscribe((list) => {
+			this.audioItemList = list;
+			this.audioItemList.map(async (item) => {
+				item.value = item.name.replace(/[\-\_]+/g, ' ');
+				item.href = item.url
+				// item.thumb = await this.getItemThumbnail(item);
 			});
 		});
 		this.screenOrientation.onChange().subscribe(
@@ -169,38 +196,38 @@ export class VideoPlayerWidgetComponent extends BaseComponent implements OnChang
 			}
 
 			if (this.platform.is('capacitor') && this.player) {
-				if ((changes as any).isPlaying.currentValue !== 0) {
+				if ((changes as any).videoIsPlaying.currentValue !== 0) {
 					this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT);
-				} else if ((changes as any).isPlaying.currentValue === 0 && this.screenOrientation.type === 'portrait-primary') {
+				} else if ((changes as any).videoIsPlaying.currentValue === 0 && this.screenOrientation.type === 'portrait-primary') {
 					this.screenOrientation.unlock();
 				}
 			}
 		}
 
-		if ('isPlaying' in changes && this.player) {
-			if (this._initialized) {
-				if ((changes as any).isPlaying.currentValue === true) {
-					if (this.player.paused()) {
-						this.player.play();
-					}
-					if (this.widgetLocation === 2) {
-						this.playerService.videoWidgetLocation$.next(0);
-					}
-					if (this.platform.is('capacitor') && this.isVideoControl === false) {
-						await this.createMusicControl();
-					}
-				} else {
-					if (!this.player.paused()) {
-						this.player.pause();
-					}
+		if ('videoIsPlaying' in changes && this.player && this.playerService.isVideoPlaying && this._initialized) {
+			if ((changes as any).videoIsPlaying.currentValue === true) {
+				if (this.player.paused()) {
+					this.player.play();
 				}
-
+				if (this.widgetLocation === 2) {
+					this.playerService.playerWidgetLocation$.next(0);
+				}
+				// if (this.platform.is('capacitor') && this.isVideoControl === false) {
+				// 	await this.createMusicControl();
+				// }
 			}
+			else {
+				if (!this.player.paused()) {
+					this.player.pause();
+				}
+			}
+
+
 		}
 
 		// if ('isMuted' in changes && this.player) {
 		//   if (this._initialized) {
-		//     if ((changes as any).isPlaying.currentValue === true) {
+		//     if ((changes as any).videoIsPlaying.currentValue === true) {
 		//       if (!this.player.muted()) {
 		//         this.player.muted(true);
 		//       }
@@ -212,32 +239,39 @@ export class VideoPlayerWidgetComponent extends BaseComponent implements OnChang
 		//   }
 		// }
 
-		if ('audioIsPlaying' in changes && this.player) {
+		if ('audioIsPlaying' in changes && this.player && !this.playerService.isVideoPlaying && this._initialized) {
 			if ((changes as any).audioIsPlaying.currentValue === true) {
+				if (this.player.paused()) {
+					this.player.play();
+				}
+				if (this.widgetLocation === 2) {
+					this.playerService.playerWidgetLocation$.next(0);
+				}
+				// if (this.platform.is('capacitor') && this.isVideoControl === false) {
+				// 	await this.createMusicControl();
+				// }
+			}
+			else {
 				if (!this.player.paused()) {
 					this.player.pause();
 				}
-
-				// if (this.platform.is('capacitor') && this.isVideoControl === false) {
-				//   await this.createMusicControl();
-				// }
 			}
+
 		}
 
 		if ('options' in changes && this.player) {
-			console.log('playingItem', this.playingItem);
-
+			this.itemLength = 40;
 			if (this.platform.is('desktop')) {
 				this.content.scrollToTop();
 			}
 			// const m3u8MasterName = path.basename(this.options.sources[0].src);
 			// const qualities = ['playlist', '480p', '720p', '1080p'];
-			// console.log('playingItem change', this.platform.platforms(), this.playingItem, m3u8MasterName);
+			// console.log('videoPlayingItem change', this.platform.platforms(), this.videoPlayingItem, m3u8MasterName);
 			try {
 				// if (this.platform.is('hybrid')) {
 				//   // // decrypt key into indexedDB
 				//   // handle m3u8
-				//   // const decryptedKey = getPlayHash(this.playingItem.url, this.playingItem.khash);
+				//   // const decryptedKey = getPlayHash(this.videoPlayingItem.url, this.videoPlayingItem.khash);
 				//   let m3u8Txt: string;
 				//   qualities.forEach(async quality => {
 				//     const m3u8Uri = this.options.sources[0].src.replace(m3u8MasterName, `${quality}.m3u8`);
@@ -265,7 +299,7 @@ export class VideoPlayerWidgetComponent extends BaseComponent implements OnChang
 				//   await this.file.writeExistingFile(this.file.cacheDirectory, 'video/key.vgmk', new Blob([encryptedAB]));
 				//   console.log('xor-key:', secretCode, '\n', new Uint8Array(keyAB), '\n', encryptedAB);
 
-				//   // await this.offlineService.db.data.put({ uri: m3u8Uri, data: m3u8Buff, segNum: -1, id: this.playingItem.id });
+				//   // await this.offlineService.db.data.put({ uri: m3u8Uri, data: m3u8Buff, segNum: -1, id: this.videoPlayingItem.id });
 				//   // const keyDB = await this.offlineService.db.data.get({ uri: m3u8Uri });
 
 				//   // const m3u8LocalURL = window.URL.createObjectURL(new Blob([m3u8Buff], { type: 'application/x-mpegURL' }));
@@ -288,13 +322,13 @@ export class VideoPlayerWidgetComponent extends BaseComponent implements OnChang
 				//   //   const keyAB = await (await fetch(keyUri)).arrayBuffer();
 				//   //   const encryptedAB = bitwise.buffer.xor(Buffer.from(keyAB), Buffer.from(`VGM-${secretCode}`), false);
 				//   //   console.log('xor-key:', secretCode, '\n', new Uint8Array(keyAB), '\n', encryptedAB);
-				//   //   await this.offlineService.db.data.put({ uri: keyUri, data: encryptedAB, segNum: -1, id: this.playingItem.id });
+				//   //   await this.offlineService.db.data.put({ uri: keyUri, data: encryptedAB, segNum: -1, id: this.videoPlayingItem.id });
 				//   //   const keyDB = await this.offlineService.db.data.get({ uri: keyUri });
 				//   //   const keyLocalURL = window.URL.createObjectURL(new Blob([keyDB.data], { type: 'mimeType' }));
 				//   //   console.log('got key local URL::::', keyLocalURL);
 
 
-				//   //   // const key = getPlayHash(this.playingItem.url, this.playingItem.khash);
+				//   //   // const key = getPlayHash(this.videoPlayingItem.url, this.videoPlayingItem.khash);
 				//   //   // modified key filepath
 				//   //   videojs.Vhs.xhr.beforeRequest = function (options) {
 				//   //     if (/(key\.vgmk)$/.test(options.uri)) {
@@ -315,32 +349,32 @@ export class VideoPlayerWidgetComponent extends BaseComponent implements OnChang
 				//   'download.body.clientHeight', document.body.clientHeight, '\n',
 				// );
 				await this.getPlayingInfo();
-
+				console.log('playingItem::', this.playingItem);
 				// if (this.widgetLocation !== 0 || !this.platform.is('capacitor')) {
-				//   await this.getItemList();
+				//   await this.getvideoItemList();
 				// }
 				// console.log(this.options.sources);
-				if (this.playingSource === 3) {
-					const offlineInfo = await this.offlineService.db.manifest.get({ id: this.playingItem.id });
-					const offlineQuality = offlineInfo.quality;
-					this.options.sources[0].src = this.platform.is('ios') ? `http://localhost:9999/${this.playingItem.url}/${offlineQuality}.m3u8` : `${path.dirname(this.options.sources[0].src)}/${offlineQuality}.m3u8`;
-				}
+				// if (this.videoPlayingSource === 3) {
+				// 	const offlineInfo = await this.offlineService.db.manifest.get({ id: this.videoPlayingItem.id });
+				// 	const offlineQuality = offlineInfo.quality;
+				// 	this.options.sources[0].src = this.platform.is('ios') ? `http://localhost:9999/${this.videoPlayingItem.url}/${offlineQuality}.m3u8` : `${path.dirname(this.options.sources[0].src)}/${offlineQuality}.m3u8`;
+				// }
 				// console.log(this.options.sources);
-				await this.player.poster(this.thumbUrl);
+				await this.player.poster(this.playingThumbUrl);
 				// if (this.platform.is('capacitor')) {
 				//   await this.player.src(`http://localhost:9999/video/${m3u8MasterName}`)
 				// } else {
 				await this.player.src(this.options.sources[0].src) //m3u8LocalURL  // this.options.sources[0].src // 'http://localhost:9999/480p.m3u8' // this.options.sources[0].src
 				// };
 				console.log('playing SRC::', this.player.src());
-				await this.checkFavorite(this.playingItem.id);
+				await this.checkFavorite(this.playerService.isVideoPlaying ? this.videoPlayingItem.id : this.audioPlayingItem.id);
 				await this.checkDownloaded();
 				// this.player.muted(this.isMuted);
-				// console.log('asdfasdfasdf', this.playingItem, this.isMuted);
+				// console.log('asdfasdfasdf', this.videoPlayingItem, this.isMuted);
 
 				this.player.play();
 				this.updateMetaTag();
-				document.title = `${this.playingItem.name} - FUYIN TV`;
+				document.title = `${this.playerService.isVideoPlaying ? this.videoPlayingItem.name : this.audioPlayingItem.name} - FUYIN TV`;
 				if (this.platform.is('capacitor')) {
 					await this.createMusicControl();
 				};
@@ -511,7 +545,7 @@ export class VideoPlayerWidgetComponent extends BaseComponent implements OnChang
 		this.player.getChild("controlBar").addChild("NextButton", {}, 3);
 		this.player.getChild("controlBar").addChild("ForwardButton", {}, 4);
 		this.player.getChild("controlBar").addChild("RewindButton", {}, 5);
-		// await this.player.poster(this.thumbUrl);
+		// await this.player.poster(this.videoThumbUrl);
 		// await this.player.src(this.options.sources);
 		// await this.player.play();
 		// this.player.on('sourceset', () => {
@@ -522,12 +556,9 @@ export class VideoPlayerWidgetComponent extends BaseComponent implements OnChang
 		this.player.on('play', () => {
 
 			this._seeking = false;
-			this.isPlaying = true;
-			if (this.playerService.audioPlayState.isPlaying) {
-				this.playerService.audioPause();
-			}
-			// if (!this.playerService.videoPlayState.isPlaying && !this._seeking) {
-			//   this.playerService.videoResume();
+			if (this.playerService.isVideoPlaying) this.videoIsPlaying = true; else this.audioIsPlaying = true;
+			// if (!this.playingState.isPlaying && !this._seeking) {
+			if (this.playerService.isVideoPlaying) this.playerService.videoResume(); else this.playerService.audioResume();
 			// }
 			// if (this.platform.is('capacitor') && this.isHidden === false) {
 			//   CapacitorMusicControls.updateIsPlaying({
@@ -535,14 +566,14 @@ export class VideoPlayerWidgetComponent extends BaseComponent implements OnChang
 			//     elapsed: 10 // affects iOS Only
 			//   });
 			// }
-			console.log('onplay', this.playerService.videoPlayState.isPlaying);
+			console.log('onplay', this.playingState.isPlaying);
 			// console.log('on play');
 			// const playingQuality = this.player.qualityLevels().levels_[this.player.qualityLevels().selectedIndex_];
 			// if (typeof playingQuality != 'undefined') {
 			//   for (let i = 0; i < 4; i++) {
 			//     (async () => {
 			//       await queue.add(async () => {
-			//         const url = `${path.dirname(path.dirname(this.thumbUrl))}/${playingQuality.height}p/data${Math.round((this.player.currentTime() / 10)) + i}.vgmx`;
+			//         const url = `${path.dirname(path.dirname(this.videoThumbUrl))}/${playingQuality.height}p/data${Math.round((this.player.currentTime() / 10)) + i}.vgmx`;
 			//         console.log(url);
 			//         fetch(url);
 			//       });
@@ -555,11 +586,10 @@ export class VideoPlayerWidgetComponent extends BaseComponent implements OnChang
 			this.player.hlsQualitySelector({ displayCurrentQuality: true });
 		})
 		this.player.on('pause', () => {
-			this.isPlaying = false;
-
-			if (this.playerService.videoPlayState.isPlaying && !this._seeking) {
+			if (this.playerService.isVideoPlaying) this.videoIsPlaying = false; else this.audioIsPlaying = false;
+			if (this.playingState.isPlaying && !this._seeking) {
 				// console.log('video isplaying', this.playerService.videoPlayState.isPlaying);
-				this.playerService.videoPause();
+				if (this.playerService.isVideoPlaying) this.playerService.videoPause(); else this.playerService.audioPause();
 			}
 			if (this.platform.is('capacitor') && this.isHidden === false) {
 				CapacitorMusicControls.updateIsPlaying({
@@ -567,7 +597,7 @@ export class VideoPlayerWidgetComponent extends BaseComponent implements OnChang
 					elapsed: 0 // affects iOS Only
 				});
 			}
-			console.log('onpause', this.playerService.videoPlayState.isPlaying);
+			console.log('onpause', this.playingState.isPlaying);
 		})
 
 		this.player.on('loadeddata', () => {
@@ -579,8 +609,8 @@ export class VideoPlayerWidgetComponent extends BaseComponent implements OnChang
 		this.player.on('canplaythrough', async () => {
 			console.log('on canplaythrough');
 			// this.player.controlBar.show();
-			if (!this.playerService.videoPlayState.isPlaying && !this._seeking) {
-				this.playerService.videoResume();
+			if (!this.playingState.isPlaying && !this._seeking) {
+				if (this.playerService.isVideoPlaying) this.playerService.videoResume(); else this.playerService.audioResume();
 			}
 			if (this.platform.is('capacitor') && this.isHidden === false) {
 				CapacitorMusicControls.updateIsPlaying({
@@ -597,8 +627,8 @@ export class VideoPlayerWidgetComponent extends BaseComponent implements OnChang
 		})
 
 		this.player.on('ended', () => {
-			console.log('video ended');
-			this.handlePlayerEvent('ended', this.videoName);
+			console.log('playing Item Ended');
+			this.handlePlayerEvent('ended', this.playingItemName);
 		});
 
 		this.player.on('loadedmetadata', () => {
@@ -608,7 +638,7 @@ export class VideoPlayerWidgetComponent extends BaseComponent implements OnChang
 			this.videoInfo.style.opacity = '1';
 			this.videoList.style.opacity = '1';
 			this.minimizedControlBar.style.opacity = '0';
-			// if (this.playingSource !== 3) {
+			// if (this.videoPlayingSource !== 3) {
 			//   this.player.hlsQualitySelector.setQuality(480);
 			//   setTimeout(() => {
 			//     this.player.hlsQualitySelector.setQuality('auto');
@@ -644,7 +674,7 @@ export class VideoPlayerWidgetComponent extends BaseComponent implements OnChang
 			// for (let i = 0; i < 5; i++) {
 			//   (async () => {
 			//     await queue.add(async () => {
-			//       const url = `${path.dirname(path.dirname(this.thumbUrl))}/${playingQuality}p/data${Math.round((this.player.currentTime() / 10)) - 1 + i}.vgmx`;
+			//       const url = `${path.dirname(path.dirname(this.videoThumbUrl))}/${playingQuality}p/data${Math.round((this.player.currentTime() / 10)) - 1 + i}.vgmx`;
 			//       console.log(url);
 
 			//       fetch(url);
@@ -741,10 +771,10 @@ export class VideoPlayerWidgetComponent extends BaseComponent implements OnChang
 	createMusicControl() {
 		CapacitorMusicControls.removeAllListeners();
 		CapacitorMusicControls.create({
-			track: this.playingItem.name,		// optional, default : ''
+			track: this.videoPlayingItem.name,		// optional, default : ''
 			artist: '',						// optional, default : ''
 			album: '',     // optional, default: ''
-			cover: this.playingItem.thumb,			// optional, default : nothing
+			cover: this.videoPlayingItem.thumb,			// optional, default : nothing
 			// cover can be a local path (use fullpath 'file:///storage/emulated/...', or only 'my_image.jpg' if my_image.jpg is in the www folder of your app)
 			//			 or a remote url ('http://...', 'https://...', 'ftp://...')
 
@@ -754,7 +784,7 @@ export class VideoPlayerWidgetComponent extends BaseComponent implements OnChang
 			hasClose: true,		// show close button, optional, default: false
 
 			// iOS only, optional
-			duration: this.playingItem.duration, // optional, default: 0
+			duration: this.videoPlayingItem.duration, // optional, default: 0
 			elapsed: 10, // optional, default: 0
 			hasSkipForward: false, //optional, default: false. true value overrides hasNext.
 			hasSkipBackward: false, //optional, default: false. true value overrides hasPrev.
@@ -783,7 +813,7 @@ export class VideoPlayerWidgetComponent extends BaseComponent implements OnChang
 			console.log(info);
 			this.handleControlsEvent(info);
 		});
-		this.playerService.isOnVideoControl$.next(true);
+		// this.playerService.isOnVideoControl$.next(true);
 	}
 
 	handleControlsEvent(action) {
@@ -860,18 +890,17 @@ export class VideoPlayerWidgetComponent extends BaseComponent implements OnChang
 	}
 
 	async getPlayingInfo() {
-		if (this.playingItem) {
-
-			this.thumbUrl = this.playingItem.thumb;
-			this.videoDuration = this.playingItem.duration;
-			this.videoName = this.playingItem.name;
-			this.videoId = this.playingItem.id;
-		}
+		this.playingState = this.playerService.isVideoPlaying ? this.playerService.videoPlayState : this.playerService.audioPlayState;
+		this.playingItem = this.playerService.isVideoPlaying ? this.videoPlayingItem : this.audioPlayingItem;
+		this.playingThumbUrl = this.playingItem.thumb || 'assets/imgs/default-image.svg';
+		this.playingItemDuration = this.playingItem.duration || '';
+		this.playingItemName = this.playingItem.name || '';
+		this.playingItemId = this.playingItem.id || '';
 	}
 
 
 	getListTitle() {
-		switch (this.playingSource) {
+		switch (this.videoPlayingSource) {
 			case 0:
 				return `${this.translateService.instant('download.play')}${this.translateService.instant('download.document')}`;
 				break;
@@ -893,7 +922,7 @@ export class VideoPlayerWidgetComponent extends BaseComponent implements OnChang
 	updateMetaTag() {
 		const pUrl = this.playingItem.url.match(/.*(?=\.)/).toString();
 		const itemUrl = this.playingItem.url.replace(/.*\./, '');
-		const playingUrl = `tabs/video/playlist/${pUrl}?item=${itemUrl}`;
+		const playingUrl = `tabs/${this.playingItem.isVideo ? 'video' : 'audio'}/playlist/${pUrl}?item=${itemUrl}`;
 		this.location.go(playingUrl);
 		this.shareUrl = `${this.dataFetchService.webDomain}/${playingUrl}`
 		this.titleService.setTitle(`${this.playingItem.name} - FUYIN TV`);
@@ -903,28 +932,34 @@ export class VideoPlayerWidgetComponent extends BaseComponent implements OnChang
 		this.meta.updateTag({ property: 'og:description', content: `${this.playingItem.name} - description` });
 	}
 
-	// async getItemList() {
-	//   if (this.playingSource === 0) {
-	//     const allItemUrl = this.playingItem.url.match(/.*(?=\.)/).toString();
-	//     const itemList = await this.dataFetchService.fetchItemList(allItemUrl);
-	//     this.itemList = itemList.children.map((item) => ({
+	// async getvideoItemList() {
+	//   if (this.videoPlayingSource === 0) {
+	//     const allItemUrl = this.videoPlayingItem.url.match(/.*(?=\.)/).toString();
+	//     const videoItemList = await this.dataFetchService.fetchvideoItemList(allItemUrl);
+	//     this.videoItemList = videoItemList.children.map((item) => ({
 	//       ...item,
 	//       key: item.id,
 	//       value: item.name.replace(/[0-9]+\-/g, ''),
 	//       thumb: this.getItemThumbnail(item)
 	//     }));
-	//   } else if (this.playingSource === 1) {
-	//     this.itemList = this.videoFavoriteList;
-	//   } else if (this.playingSource === 2) {
-	//     this.itemList = this.videoSearchList;
+	//   } else if (this.videoPlayingSource === 1) {
+	//     this.videoItemList = this.videoFavoriteList;
+	//   } else if (this.videoPlayingSource === 2) {
+	//     this.videoItemList = this.videoSearchList;
 	//   }
-	//   this.firstItemId = this.itemList[0].id;
-	//   this.playerService.setVideoPlaylist(this.itemList);
+	//   this.firstItemId = this.videoItemList[0].id;
+	//   this.playerService.setVideoPlaylist(this.videoItemList);
 	// }
 
 	public selectItem(item) {
-		this.playerService.playVideo(item);
-		this.playerService.videoWidgetLocation$.next(0);
+		if (item.isVideo) {
+			this.playerService.playVideo(item);
+			this.playerService.isVideoPlaying$.next(true);
+		} else {
+			this.playerService.playAudio(item);
+			this.playerService.isVideoPlaying$.next(false);
+		}
+		this.playerService.playerWidgetLocation$.next(0);
 	}
 
 	async onShare(item) {
@@ -960,7 +995,7 @@ export class VideoPlayerWidgetComponent extends BaseComponent implements OnChang
 
 	async onDownloadSelector(item, event: string) {
 		if (event === 'focus' && !this.downloadBtn) {
-			const getKey = await this.offlineService.db.manifest.get({ id: this.playingItem.id });
+			const getKey = await this.offlineService.db.manifest.get({ id: this.videoPlayingItem.id });
 			// console.log(playUrl, getKey);
 			if (!getKey) {
 				this.downloadBtn = true;
@@ -1012,14 +1047,14 @@ export class VideoPlayerWidgetComponent extends BaseComponent implements OnChang
 			console.log();
 
 			const itemDir = path.dirname(playUrl);
-			// const getKey = await this.offlineService.db.manifest.get({ id: this.playingItem.id });
+			// const getKey = await this.offlineService.db.manifest.get({ id: this.videoPlayingItem.id });
 			// // console.log(playUrl, getKey);
 			// if (!getKey) {
 			if (!this.isDownloading) {
 				this.downloadProgress = 0.5;
 				this.isDownloading = true;
 				const reader = new M3U8FileParser();
-				const pUrl = this.playingItem.url.match(/.*(?=\.)/).toString();
+				const pUrl = this.videoPlayingItem.url.match(/.*(?=\.)/).toString();
 				const pItem = await this.dataFetchService.fetchSingleTopic(pUrl);
 				item.pid = pItem.id;
 				item.pname = pItem.name;
@@ -1170,7 +1205,7 @@ export class VideoPlayerWidgetComponent extends BaseComponent implements OnChang
 
 
 	toggleMinimized(pos) {
-		this.playerService.videoWidgetLocation$.next(pos);
+		this.playerService.playerWidgetLocation$.next(pos);
 		if (pos === 2) {
 			this.collapsePlayer()
 		}
@@ -1187,24 +1222,24 @@ export class VideoPlayerWidgetComponent extends BaseComponent implements OnChang
 	}
 
 	async addToFavorite(item: Item) {
-		const favoriteList = await this.dataFetchService.fetchFavorite('video');
+		const favoriteList = this.playerService.isVideoPlaying ? await this.dataFetchService.fetchFavorite('video') : await this.dataFetchService.fetchFavorite('audio');
 		const itemIndex = favoriteList.findIndex(list => list.id === item.id);
 		if (itemIndex >= 0) {
 			favoriteList.splice(itemIndex, 1);
 			this.isFavorite = false;
-			this.presentToast(this.translateService.instant('msg.video.remove'))
+			this.presentToast(this.translateService.instant(this.playerService.isVideoPlaying ? 'msg.video.remove' : 'msg.audio.remove'))
 		} else {
 			favoriteList.push(item);
 			this.isFavorite = true;
-			this.presentToast(this.translateService.instant('msg.video.add'))
+			this.presentToast(this.translateService.instant(this.playerService.isVideoPlaying ? 'msg.video.add' : 'msg.audio.add'))
 		}
-		const favoriteKey = 'favorite.video';
+		const favoriteKey = this.playerService.isVideoPlaying ? 'favorite.video' : 'favorite.audio';
 		this.localForageService.set(favoriteKey, favoriteList);
-		this.playerService.setFavoritePlayList(0, favoriteList);
+		this.playerService.setFavoritePlayList(this.playerService.isVideoPlaying ? 0 : 1, favoriteList);
 	}
 
 	async checkFavorite(id) {
-		const favoriteList = await this.dataFetchService.fetchFavorite('video');
+		const favoriteList = this.playerService.isVideoPlaying ? await this.dataFetchService.fetchFavorite('video') : await this.dataFetchService.fetchFavorite('audio');
 		const itemIndex = favoriteList.findIndex(list => list.id === id);
 		if (itemIndex >= 0) {
 			this.isFavorite = true;
@@ -1214,32 +1249,36 @@ export class VideoPlayerWidgetComponent extends BaseComponent implements OnChang
 	}
 
 	loadMoreData(event) {
+		const itemListLength = this.playerService.isVideoPlaying ? this.videoItemList.length : this.audioItemList.length
 		setTimeout(() => {
 			event.target.complete();
-			if (this.itemLength < this.itemList.length) {
+			if (this.itemLength < itemListLength) {
 				this.itemLength += 20;
 			} else {
-				this.itemLength = this.itemList.length;
+				this.itemLength = itemListLength;
 			}
 		}, 500);
 	}
 
 	collapsePlayer() {
-		this.playerService.videoWidgetLocation$.next(2);
+		this.playerService.playerWidgetLocation$.next(2);
 		this.player.pause();
-		this.playerService.videoPause();
-
+		if (this.playerService.isVideoPlaying) {
+			this.playerService.videoPause();
+		} else {
+			this.playerService.audioPause();
+		}
 	}
 
 	controlBarTap() {
-		this.playerService.videoWidgetLocation$.next(0);
+		this.playerService.playerWidgetLocation$.next(0);
 	}
 
 	handleTogglePlayPause() {
-		if (this.playerService.videoPlayState.isPlaying) {
-			this.playerService.videoPause();
+		if (this.playingState.isPlaying) {
+			if (this.playerService.isVideoPlaying) this.playerService.videoPause(); else this.playerService.audioPause();
 		} else {
-			this.playerService.videoResume();
+			if (this.playerService.isVideoPlaying) this.playerService.videoResume(); else this.playerService.audioResume();
 		}
 	}
 
@@ -1258,7 +1297,7 @@ export class VideoPlayerWidgetComponent extends BaseComponent implements OnChang
 	}
 
 	handlePlayerEvent(eventName: string, data?: any) {
-		this.onPlayerEvent.next({ eventName, data });
+		if (this.playerService.isVideoPlaying) this.onVideoPlayerEvent.next({ eventName, data }); else this.onAudioPlayerEvent.next({ eventName, data });
 	}
 
 	onDoubleTap(event) {
@@ -1360,7 +1399,7 @@ export class VideoPlayerWidgetComponent extends BaseComponent implements OnChang
 			if (this.widgetLocation === 1) {
 				this.videoPlayer.style.paddingTop = `${56.25 * (this._minimizeHeight + this._offsetHeight) / this.windowHeight}%`;
 				if (this.movementPos < 0 && Math.abs(this.movementPos) > ((this.windowHeight / 2) - 100)) {
-					this.playerService.videoWidgetLocation$.next(0);
+					this.playerService.playerWidgetLocation$.next(0);
 				} else if (this.movementPos > 50) {
 					this.collapsePlayer();
 				}
@@ -1369,7 +1408,7 @@ export class VideoPlayerWidgetComponent extends BaseComponent implements OnChang
 				// console.log(this.movementPos, ((this.windowHeight / 2) - 100));
 
 				if (this.movementPos > ((this.windowHeight / 2) - 100)) {
-					this.playerService.videoWidgetLocation$.next(1);
+					this.playerService.playerWidgetLocation$.next(1);
 				}
 			}
 		}
@@ -1384,6 +1423,6 @@ export class VideoPlayerWidgetComponent extends BaseComponent implements OnChang
 		if (this.player) {
 			this.player.dispose();
 		}
-		(this.playlistSub as Subscription).unsubscribe();
+		(this.videoPlaylistSub as Subscription).unsubscribe();
 	}
 }

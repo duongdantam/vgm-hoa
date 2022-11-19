@@ -20,6 +20,7 @@ export class DesktopPageHeaderComponent extends BaseComponent {
   searchOnFocus = false;
   searchResult: any = {};
   searchQuery: string = '';
+  searchValue: string = '';
   isSearch: boolean;
   isVideo: boolean = true;
   constructor(
@@ -30,6 +31,11 @@ export class DesktopPageHeaderComponent extends BaseComponent {
     private queueService: QueueService,
   ) {
     super();
+  }
+
+  searchModeChange() {
+    this.isVideo = !this.isVideo;
+    this.searchValue = '';
   }
 
   async searchChange(e?) {
@@ -61,8 +67,8 @@ export class DesktopPageHeaderComponent extends BaseComponent {
             item.pName = await this.getParentName(item.pUrl);
           })
         );
-        if (this.playerService.videoWidgetLocation === 0) {
-          this.playerService.videoWidgetLocation$.next(1);
+        if (this.playerService.playerWidgetLocation === 0) {
+          this.playerService.playerWidgetLocation$.next(1);
         }
       }
     } catch (error) {
@@ -99,7 +105,7 @@ export class DesktopPageHeaderComponent extends BaseComponent {
       queryParams: { param: param },
     });
     // }
-    this.playerService.videoWidgetLocation$.next(2);
+    this.playerService.playerWidgetLocation$.next(2);
   }
 
   backNav() {

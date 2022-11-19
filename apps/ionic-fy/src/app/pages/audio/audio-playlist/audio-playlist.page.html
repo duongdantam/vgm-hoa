@@ -48,12 +48,22 @@
           <ion-label color="primary">{{topicCategory.description}}</ion-label>
         </div>
       </ion-col>
-      <ion-col size="12" sizeLg="8">
+      <ion-col size="12" sizeLg="8" *ngIf="topicCategory.children.length > 0">
         <fy-audio-play-list
-          [list]="topicCategory.children"
+          *ngFor="let item of topicCategory.children | slice: 0:itemLength; index as i"
+          [ngStyle]="{ 'z-index': 100 - i }"
+          [item]="item"
+          [parentThumb]="topicCategory.thumb || ''"
           parent="audio"
-          (onItemPressed)="selectItem($event)"
+          (click)="selectItem(item)"
         ></fy-audio-play-list>
+        <ion-infinite-scroll
+          threshold="100px"
+          (ionInfinite)="loadMoreData($event)"
+        >
+          <ion-infinite-scroll-content loadingSpinner="bubbles">
+          </ion-infinite-scroll-content>
+        </ion-infinite-scroll>
       </ion-col>
     </ion-row>
   </ion-grid>

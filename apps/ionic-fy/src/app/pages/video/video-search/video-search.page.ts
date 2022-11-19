@@ -75,7 +75,8 @@ export class VideoSearchPage implements OnInit {
   public selectItem(item) {
     this.playerService.setVideoPlaylist(this.itemList);
     this.playerService.playVideo(item, 2);
-    this.playerService.videoWidgetLocation$.next(0);
+    this.playerService.playerWidgetLocation$.next(0);
+    this.playerService.isVideoPlaying$.next(true);
   }
 
   private async getItemThumbnail(item: any) {

@@ -16,8 +16,7 @@ import { Subscription } from 'rxjs';
 })
 export class TabsPage implements OnInit, OnDestroy {
   public menuOpen: boolean = true;
-  public audioPlayUrl: string = '';
-  public videoPlayUrl: string = '';
+  public playUrl: string = '';
   public type: string = 'application/x-mpegURL';
 
   public audioIsHidden = true;
@@ -49,11 +48,11 @@ export class TabsPage implements OnInit, OnDestroy {
     this.videoSub = this.playerService.videoPlayState$.subscribe(
       async (state) => {
         if (state.isPlaying) {
-          this.videoPlayUrl = await this.dataFetchService.getPlayUrl(
+          this.playUrl = await this.dataFetchService.getPlayUrl(
             state.item,
             true
           );
-          console.log('playing video URL:', this.videoPlayUrl);
+          console.log('playing video URL:', this.playUrl);
         }
       }
     );
@@ -62,11 +61,11 @@ export class TabsPage implements OnInit, OnDestroy {
     this.audioSub = this.playerService.audioPlayState$.subscribe(
       async (state) => {
         if (state.isPlaying) {
-          this.audioPlayUrl = await this.dataFetchService.getPlayUrl(
+          this.playUrl = await this.dataFetchService.getPlayUrl(
             state.item,
             false
           );
-          console.log('playing audio URL:', this.audioPlayUrl);
+          console.log('playing audio URL:', this.playUrl);
         }
       }
     );
@@ -74,8 +73,8 @@ export class TabsPage implements OnInit, OnDestroy {
 
   async ngOnInit() {
     // await this.dataFetchService.fetchAPIVersion();
-    this.videoRootList = await this.dataFetchService.fetchRoot('video');
-    this.audioRootList = await this.dataFetchService
+    const videoList = this.dataFetchService.fetchRoot('video');
+    const audioList = this.dataFetchService
       .fetchRoot('audio')
       .then(async (list) => {
         if (list) {
@@ -85,6 +84,14 @@ export class TabsPage implements OnInit, OnDestroy {
           return list;
         }
       });
+
+    const videoFavoriteList = await this.dataFetchService.fetchFavorite('video');
+    const audioFavoriteList = await this.dataFetchService.fetchFavorite('audio');
+    const [vList, aList, vfList, afList] = await Promise.all([videoList, audioList, videoFavoriteList, audioFavoriteList]);
+    this.videoRootList = vList;
+    this.audioRootList = aList;
+    this.playerService.setFavoritePlayList(0, vfList);
+    this.playerService.setFavoritePlayList(1, afList);
     // await this.detectService.swCheck();
 
     // this.menuTab('video');
@@ -107,7 +114,7 @@ export class TabsPage implements OnInit, OnDestroy {
         }
       }
       if (menu === 'video') {
-        this.playerService.setVideoControlsHidden(false);
+        // this.playerService.setVideoControlsHidden(false);
         if (this.menuActivation.video === false) {
           this.menuActivation.video = true;
           this.router.navigate(['/tabs', menu, 'catalog'], {
@@ -116,7 +123,7 @@ export class TabsPage implements OnInit, OnDestroy {
         }
       }
       if (menu === 'audio') {
-        this.playerService.setAudioControlsHidden(false);
+        // this.playerService.setAudioControlsHidden(false);
         if (this.menuActivation.audio === false) {
           this.menuActivation.audio = true;
           this.router.navigate(['/tabs', menu, 'catalog'], {
@@ -136,8 +143,8 @@ export class TabsPage implements OnInit, OnDestroy {
       // // thís code is for mobile
       // if (menu === 'favorite') {
       //   if (this.playerService.favoritePlayingType === 0) {
-      //     if (this.playerService.videoWidgetLocation === 0) {
-      //       this.playerService.videoWidgetLocation$.next(1);
+      //     if (this.playerService.playerWidgetLocation === 0) {
+      //       this.playerService.playerWidgetLocation$.next(1);
       //       // if (this.playerService.videoIsHidden) {
       //       //   this.playerService.setVideoControlsHidden(false);
       //       // }
@@ -163,8 +170,8 @@ export class TabsPage implements OnInit, OnDestroy {
       // }
       // if (menu === 'download') {
       //   if (this.playerService.downloadPlayingType === 0) {
-      //     if (this.playerService.videoWidgetLocation === 0) {
-      //       this.playerService.videoWidgetLocation$.next(1);
+      //     if (this.playerService.playerWidgetLocation === 0) {
+      //       this.playerService.playerWidgetLocation$.next(1);
       //       // if (this.playerService.videoIsHidden) {
       //       //   this.playerService.setVideoControlsHidden(false);
       //       // }
@@ -194,8 +201,8 @@ export class TabsPage implements OnInit, OnDestroy {
 
   onTabsWillChange({ tab }: any) {
     console.log(tab);
-    if (this.playerService.videoWidgetLocation === 0) {
-      this.playerService.videoWidgetLocation$.next(1);
+    if (this.playerService.playerWidgetLocation === 0) {
+      this.playerService.playerWidgetLocation$.next(1);
     }
   }
 

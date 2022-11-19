@@ -15,8 +15,10 @@
     </div>
 
     <fy-audio-play-list
-      [list]="itemList"
-      (onItemPressed)="selectItem($event)"
+      *ngFor="let item of itemList; index as i"
+      [ngStyle]="{ 'z-index': 100 - i }"
+      [item]="item"
+      (click)="selectItem(item)"
     ></fy-audio-play-list>
   </ion-grid>
 </ion-content>

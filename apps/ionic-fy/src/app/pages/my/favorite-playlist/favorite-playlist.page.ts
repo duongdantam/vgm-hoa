@@ -44,10 +44,11 @@ export class FavoritePlaylistPage implements OnInit {
   }
 
   async ngOnInit() {
-    const favoriteVideoList = await this.dataFetchService.fetchFavorite('video');
-    this.playerService.setFavoritePlayList(0, favoriteVideoList);
-    const favoriteAudioList = await this.dataFetchService.fetchFavorite('audio');
-    this.playerService.setFavoritePlayList(1, favoriteAudioList);
+    const favoriteVideoList = this.dataFetchService.fetchFavorite('video');
+    const favoriteAudioList = this.dataFetchService.fetchFavorite('audio');
+    const [vfList, afList] = await Promise.all([favoriteVideoList, favoriteAudioList]);
+    this.playerService.setFavoritePlayList(0, vfList);
+    this.playerService.setFavoritePlayList(1, afList);
 
 
 
@@ -81,23 +82,21 @@ export class FavoritePlaylistPage implements OnInit {
   onTabChange(ev: CustomEvent<SuperTabChangeEventDetail>) {
     const index = ev.detail.index;
     this.playerService.favoritePlayingType$.next(index)
-    if (index === 0) {
-      this.playerService.setVideoControlsHidden(false);
-    } else if (index === 1) {
-      this.playerService.setAudioControlsHidden(false);
-    }
-
   }
 
   public selectVideoItem(item: Item) {
     this.playerService.setVideoPlaylist(this.favoriteVideoList);
     this.playerService.playVideo(item, 1);
+    this.playerService.isVideoPlaying$.next(true);
+    this.playerService.playerWidgetLocation$.next(0);
 
   }
 
   public selectAudioItem(item: Item) {
     this.playerService.setAudioPlaylist(this.favoriteAudioList);
     this.playerService.playAudio(item, 1);
+    this.playerService.isVideoPlaying$.next(false);
+    this.playerService.playerWidgetLocation$.next(0);
 
   }
 

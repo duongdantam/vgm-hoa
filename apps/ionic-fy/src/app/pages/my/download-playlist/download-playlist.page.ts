@@ -75,25 +75,21 @@ export class DownloadPlaylistPage implements OnInit {
 		const index = ev.detail.index;
 		// set player widget hidden
 		this.playerService.documentPlayingType$.next(index)
-		if (index === 0) {
-			this.playerService.setVideoControlsHidden(false);
-		} else if (index === 1) {
-			this.playerService.setAudioControlsHidden(false);
-		}
-
 	}
 
 	public selectVideoItem(item: Item) {
 		console.log('play video', item);
-
 		this.playerService.setVideoPlaylist(this.offlineService.offlineVideoPlaylist);
 		this.playerService.playVideo(item, 3);
-
+		this.playerService.isVideoPlaying$.next(true);
+		this.playerService.playerWidgetLocation$.next(0);
 	}
 
 	public selectAudioItem(item: Item) {
 		this.playerService.setAudioPlaylist(this.offlineService.offlineAudioPlaylist);
 		this.playerService.playAudio(item, 3);
+		this.playerService.isVideoPlaying$.next(false);
+		this.playerService.playerWidgetLocation$.next(0);
 	}
 
 

@@ -47,9 +47,9 @@ export class DataFetchService {
   // blockchain config
   private vgmCore: any;
   private _isInitialized: boolean = false;
-  private kardiaClient = new KardiaClient.default({
-    endpoint: 'https://rpc.kardiachain.io',
-  });
+  // private kardiaClient = new KardiaClient.default({
+  //   endpoint: 'https://rpc.kardiachain.io',
+  // });
 
   public whenInitialized$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
     false
@@ -61,8 +61,8 @@ export class DataFetchService {
   public downloading = false;
   public prefetchList = [];
   constructor(private localforageService: LocalforageService) {
-    this.kardiaClient.contract.updateAbi(ABI);
-    this.kardiaClient.contract.updateByteCode(bytesCode);
+    // this.kardiaClient.contract.updateAbi(ABI);
+    // this.kardiaClient.contract.updateByteCode(bytesCode);
   }
 
   /**
@@ -122,26 +122,26 @@ export class DataFetchService {
         console.log('firebase init error', err);
       });
 
-    const deployedContract = this.kardiaClient.contract.invokeContract(
-      'getAll',
-      [1]
-    );
-    const defaultInvokePayload = deployedContract.getDefaultTxPayload();
-    const estimatedGasForInvoke = await deployedContract.estimateGas(
-      defaultInvokePayload
-    );
-    const instructor = await deployedContract.call(
-      '0x450B468C834d684dD0482CCD6e2360e10c8D6C18',
-      {
-        gas: estimatedGasForInvoke * 10,
-      },
-      'latest'
-    );
-    console.log(`transaction hash:`, instructor);
+    // const deployedContract = this.kardiaClient.contract.invokeContract(
+    //   'getAll',
+    //   [1]
+    // );
+    // const defaultInvokePayload = deployedContract.getDefaultTxPayload();
+    // const estimatedGasForInvoke = await deployedContract.estimateGas(
+    //   defaultInvokePayload
+    // );
+    // const instructor = await deployedContract.call(
+    //   '0x450B468C834d684dD0482CCD6e2360e10c8D6C18',
+    //   {
+    //     gas: estimatedGasForInvoke * 10,
+    //   },
+    //   'latest'
+    // );
+    // console.log(`transaction hash:`, instructor);
     return new Promise((resolve) => {
       this.vgmCore = core(
         {
-          preferGateways: instructor.gateway,
+          preferGateways: [this.streamGateway],
           exclude: ['06'],
           storage: {
             set: this.localforageService.set,
@@ -149,9 +149,9 @@ export class DataFetchService {
           },
           config: {
             api: this.apiGateway, // instructor.api,
-            gateway: instructor.gateway,
-            api_version: instructor.api_version,
-            thumbnails: instructor.thumbnails,
+            gateway: this.streamGateway,
+            api_version: 221119,
+            thumbnails: '',
           },
         },
         async () => {
