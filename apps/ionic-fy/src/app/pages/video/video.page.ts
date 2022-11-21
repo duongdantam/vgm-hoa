@@ -99,8 +99,8 @@ export class VideoPage implements OnInit {
 
   itemClick() {
     // this.playerService.setVideoControlsHidden(true);
-    if (this.playerService.videoWidgetLocation === 0) {
-      this.playerService.videoWidgetLocation$.next(1);
+    if (this.playerService.playerWidgetLocation === 0) {
+      this.playerService.playerWidgetLocation$.next(1);
     }
     this.playerService.videoPause();
   }

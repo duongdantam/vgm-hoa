@@ -77,7 +77,6 @@ export class HomePage implements OnInit {
     this.audioRandomList = aRandom;
     console.log('randomList:::::', this.videoRandomList, this.audioRandomList);
 
-
   }
 
   async getChildren(url: string) {
@@ -153,13 +152,6 @@ export class HomePage implements OnInit {
     // }
   }
 
-  // itemClick() {
-  //   // this.playerService.setHomeControlsHidden(true);
-  //   if (this.playerService.videoWidgetLocation === 0) {
-  //     this.playerService.videoWidgetLocation$.next(1);
-  //   }
-  //   this.playerService.videoPause();
-  // }
 
   private getNonLeaf(item: any) {
     return new Promise(async (resolve) => {

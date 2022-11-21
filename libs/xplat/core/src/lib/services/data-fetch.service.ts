@@ -30,8 +30,8 @@ export class DataFetchService {
   // firebase config
   public mobileVersion = {
     android: '0.0.0',
-    ios: '0.0.0'
-  }
+    ios: '0.0.0',
+  };
   public streamGateway: string;
   public downloadGateway: string;
   public cloudGateway: string;
@@ -75,8 +75,10 @@ export class DataFetchService {
     const remoteConfig = getRemoteConfig();
     await fetchAndActivate(remoteConfig)
       .then(() => {
-        this.mobileVersion['ios'] = getValue(remoteConfig, "IOS_VERSION").asString() || '';
-        this.mobileVersion['android'] = getValue(remoteConfig, "ANDROID_VERSION").asString() || '';
+        this.mobileVersion['ios'] =
+          getValue(remoteConfig, 'IOS_VERSION').asString() || '';
+        this.mobileVersion['android'] =
+          getValue(remoteConfig, 'ANDROID_VERSION').asString() || '';
         this.streamGateway =
           getValue(remoteConfig, 'IPFS_STREAM_GATEWAY').asString() || '';
         this.downloadGateway =
@@ -141,7 +143,7 @@ export class DataFetchService {
     return new Promise((resolve) => {
       this.vgmCore = core(
         {
-          preferGateways: [this.streamGateway], //instructor.gateway,
+          preferGateways: [this.streamGateway],
           exclude: ['06'],
           storage: {
             set: this.localforageService.set,
@@ -149,9 +151,9 @@ export class DataFetchService {
           },
           config: {
             api: this.apiGateway, // instructor.api,
-            gateway: this.streamGateway, // instructor.gateway,
-            api_version: 221108, //instructor.api_version,
-            thumbnails: '', //instructor.thumbnails,
+            gateway: this.streamGateway,
+            api_version: 221119,
+            thumbnails: '',
           },
         },
         async () => {

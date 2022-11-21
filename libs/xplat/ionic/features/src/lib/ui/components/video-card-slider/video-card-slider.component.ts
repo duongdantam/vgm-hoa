@@ -73,7 +73,8 @@ export class VideoCardSliderComponent
     if (item.isLeaf === null) {
       this.playerService.setVideoPlaylist(this.topic.children);
       this.playerService.playVideo(item, 0);
-      this.playerService.videoWidgetLocation$.next(0);
+      this.playerService.playerWidgetLocation$.next(0);
+      this.playerService.isVideoPlaying$.next(true);
     }
     if (item.isLeaf !== null) {
       this.router.navigate([

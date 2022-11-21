@@ -353,7 +353,7 @@ export class AudioPlayerWidgetComponent
 			console.log(info);
 			this.handleControlsEvent(info);
 		});
-		this.playerService.isOnVideoControl$.next(false);
+		// this.playerService.isOnVideoControl$.next(false);
 	}
 
 	handleControlsEvent(action) {

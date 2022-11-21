@@ -25,7 +25,7 @@ export class VideoPlaylistPage implements OnInit {
     private playerService: PlayerService,
     private router: Router,
     private queueService: QueueService
-  ) {}
+  ) { }
 
   async ngOnInit() {
     if (!this.dataFetchService.isInitialized) {
@@ -96,10 +96,11 @@ export class VideoPlaylistPage implements OnInit {
   }
 
   public selectItem(item) {
+    console.log(item);
     this.playerService.setVideoPlaylist(this.itemCategory.children);
     this.playerService.playVideo(item, 0);
-    this.playerService.videoWidgetLocation$.next(0);
-    console.log(item);
+    this.playerService.playerWidgetLocation$.next(0);
+    this.playerService.isVideoPlaying$.next(true);
   }
 
   private async getItemThumbnail(item: any) {
@@ -118,7 +119,7 @@ export class VideoPlaylistPage implements OnInit {
     if (
       item.isLeaf === null &&
       this.dataFetchService.prefetchList.findIndex((elem) => elem === item.id) <
-        0
+      0
     ) {
       const playUrl = await this.dataFetchService.getPlayUrl(item, true);
       const dirUrl = path.dirname(playUrl);

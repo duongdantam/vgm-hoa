@@ -6,7 +6,7 @@ import { Directive, Input, ElementRef, HostListener } from '@angular/core';
 export class ImgFallbackDirective {
   @Input() appImgFallback: string;
   size: string = '240x135';
-  defaultFallbackUrl: string = 'assets/imgs/default-image.svg'; // 'https://picsum.photos/240/135?grayscale'
+  defaultFallbackUrl: string = 'assets/imgs/fy-default-image.svg'; // 'https://picsum.photos/240/135?grayscale'
 
   constructor(private eRef: ElementRef) {
     eRef.nativeElement.src = this.defaultFallbackUrl;

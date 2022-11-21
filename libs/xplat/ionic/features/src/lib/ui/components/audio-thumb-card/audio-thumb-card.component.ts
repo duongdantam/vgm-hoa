@@ -36,7 +36,7 @@ export class AudioThumbCardComponent extends BaseComponent implements OnInit {
     switch (type) {
       case 'error':
         // console.log('img error');
-        this.img = 'assets/imgs/default-image.svg';
+        this.img = 'assets/imgs/fy-default-image.svg';
         this.imgLoading = false;
         break;
       case 'loaded':

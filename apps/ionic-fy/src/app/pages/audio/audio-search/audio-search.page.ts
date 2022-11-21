@@ -64,5 +64,7 @@ export class AudioSearchPage implements OnInit {
   public selectItem(item: Item) {
     this.playerService.setAudioPlaylist(this.itemList);
     this.playerService.playAudio(item);
+    this.playerService.isVideoPlaying$.next(false);
+    this.playerService.playerWidgetLocation$.next(0);
   }
 }

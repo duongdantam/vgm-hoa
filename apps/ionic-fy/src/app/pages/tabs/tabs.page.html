@@ -2,32 +2,36 @@
   (ionTabsWillChange)="onTabsWillChange($event)"
   [ngClass]="menuOpen ? 'menuOpen' : 'menuCollapse'"
 >
-  <fy-audio-player-widget
-    [title]="(playerService.audioPlayState$ | async).playingTitle || ''"
+  <!-- <fy-audio-player-widget
     [isHidden]="playerService.audioIsHidden"
+    [menuOpen]="menuOpen"
     [isVideoControl]="playerService.isOnVideoControl"
+    [title]="(playerService.audioPlayState$ | async).playingTitle || ''"
     [options]="{ autoplay: true, controls: false, sources: [{ src: audioPlayUrl, type: type }]}"
     [playbackRate]="playerService.playbackRate$ | async"
     [playingSource]="(playerService.audioPlayState$ | async).playingSource"
+
     [isPlaying]="(playerService.audioPlayState$ | async).isPlaying"
+
     [playingType]="(playerService.audioPlayState$ | async).playingType"
     [playingItem]="(playerService.audioPlayState$ | async).item"
     [playbackMode]="(playerService.playbackMode$ | async)"
     (onPlayerEvent)="handleAudioPlayerEvent($event)"
-    [menuOpen]="menuOpen"
-  ></fy-audio-player-widget>
+  ></fy-audio-player-widget> -->
 
   <fy-video-player-widget
-    [isHidden]="playerService.videoIsHidden"
-    [isVideoControl]="playerService.isOnVideoControl"
-    [widgetLocation]="playerService.videoWidgetLocation"
-    [isPlaying]="(playerService.videoPlayState$ | async).isPlaying"
-    [audioIsPlaying]="(playerService.audioPlayState$ | async).isPlaying"
-    [playingItem]="(playerService.videoPlayState$ | async).item"
-    [playingSource]="(playerService.videoPlayState$ | async).playingSource"
-    [options]="{autoplay: true, controls: true, sources: [{ src: videoPlayUrl, type: type}]}"
-    (onPlayerEvent)="handleVideoPlayerEvent($event)"
     [menuOpen]="menuOpen"
+    [options]="{autoplay: true, controls: true, sources: [{ src: playUrl, type: type}]}"
+    [widgetLocation]="playerService.playerWidgetLocation"
+    [isVideoPlaying]="playerService.isVideoPlaying"
+    [videoIsPlaying]="(playerService.videoPlayState$ | async).isPlaying"
+    [audioIsPlaying]="(playerService.audioPlayState$ | async).isPlaying"
+    [videoPlayingItem]="(playerService.videoPlayState$ | async).item"
+    [videoPlayingSource]="(playerService.videoPlayState$ | async).playingSource"
+    [audioPlayingSource]="(playerService.audioPlayState$ | async).playingSource"
+    [audioPlayingItem]="(playerService.audioPlayState$ | async).item"
+    (onVideoPlayerEvent)="handleVideoPlayerEvent($event)"
+    (onAudioPlayerEvent)="handleAudioPlayerEvent($event)"
   >
   </fy-video-player-widget>
 
