@@ -427,7 +427,7 @@ export class AudioPlayListComponent
       this.presentToast(this.translateService.instant('msg.audio.add'));
     }
     const favoriteKey = 'favorite.audio';
-    this.playerService.setMyFavorite(1, this.favoriteList);
+    this.playerService.setFavoritePlayList(1, this.favoriteList);
     this.localForageService.set(favoriteKey, this.favoriteList);
   }
 

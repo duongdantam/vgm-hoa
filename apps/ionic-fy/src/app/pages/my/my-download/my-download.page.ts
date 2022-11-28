@@ -76,16 +76,16 @@ export class MyDownloadPage implements OnInit {
     }, 10);
   }
 
-  onTabChange(ev: CustomEvent<SuperTabChangeEventDetail>) {
-    const index = ev.detail.index;
-    // set player widget hidden
-    this.playerService.documentPlayingType$.next(index);
-    if (index === 0) {
-      this.playerService.setVideoControlsHidden(false);
-    } else if (index === 1) {
-      this.playerService.setAudioControlsHidden(false);
-    }
-  }
+  // onTabChange(ev: CustomEvent<SuperTabChangeEventDetail>) {
+  //   const index = ev.detail.index;
+  //   // set player widget hidden
+  //   this.playerService.documentPlayingType$.next(index);
+  //   if (index === 0) {
+  //     this.playerService.setVideoControlsHidden(false);
+  //   } else if (index === 1) {
+  //     this.playerService.setAudioControlsHidden(false);
+  //   }
+  // }
 
   public selectVideoItem(item: Item) {
     console.log('play video', item);

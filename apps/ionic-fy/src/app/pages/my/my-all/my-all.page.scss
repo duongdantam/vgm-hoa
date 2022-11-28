@@ -9,9 +9,9 @@ ion-list {
     // --background: var(--ion-color-light);
     --background-focused: white;
     --background-hover: white;
-    --color-hover: var(--ion-color-primary);
+    --color-hover: var(--ion-color-secondary-shade);
     font-size: medium;
-    color: var(--ion-color-primary);
+    color: var(--ion-color-secondary-shade);
     margin: 0 10px;
     &.header {
       margin: 0 20px 0 10px;
@@ -27,7 +27,10 @@ ion-list {
     //   color: var(--ion-color-primary);
     // }
   }
-
+  ion-item:not(.header):hover {
+    --background: var(--ion-color-secondary-tint);
+    --color: var(--ion-color-secondary-shade);
+  }
   .ion-item-active {
     --background: white;
     font-weight: bold;

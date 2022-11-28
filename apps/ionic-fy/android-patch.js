@@ -41,7 +41,7 @@ fs.readFile(permission, 'utf8', function (err, data) {
 });
 
 const mainActivity =
-  'android/app/src/main/java/mobi/vgm/nextgen/MainActivity.java';
+  'android/app/src/main/java/com/fuyin/media/MainActivity.java';
 fs.readFile(mainActivity, 'utf8', function (err, data) {
   if (err) {
     return console.log(err);

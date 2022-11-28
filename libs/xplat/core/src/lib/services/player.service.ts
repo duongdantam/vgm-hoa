@@ -236,7 +236,7 @@ export class PlayerService {
     this.audioPlaylist$.next(this.currentAudioPlayList);
   }
 
-  setMyFavorite(type: PlayingType, favoriteList: Item[]) {
+  setFavoritePlayList(type: PlayingType, favoriteList: Item[]) {
     if (type === 0) {
       this.favoriteVideoPlaylist$.next(favoriteList);
     } else if (type === 1) {

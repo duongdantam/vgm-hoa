@@ -3,7 +3,7 @@
   // position: absolute;
   // right: calc(0px + var(--sar));
   top: calc(0px + var(--sat));
-  background-color: white;
+  background-color: var(--ion-color-secondary-contrast);
   width: calc(100% - 270px);
 }
 ion-content {
@@ -14,32 +14,32 @@ ion-content {
   }
 }
 ion-split-pane {
-  background-color: white;
+  background-color: var(--ion-color-secondary-contrast);
   --side-min-width: 270px;
   --side-max-width: 270px;
   --border: none;
 }
 .activated {
-  background-color: var(--ion-color-primary-contrast);
+  background-color: var(--ion-color-secondary-tint);
   border-radius: 15px 0px 0px 15px;
 }
 
 ion-item {
   --background: var(--ion-color-light);
-  --background-focused: white;
-  --background-hover: white;
-  --color-activated: white;
-  --color-hover: var(--ion-color-primary);
+  --background-focused: var(--ion-color-secondary-contrast);
+  --background-hover: var(--ion-color-secondary-contrast);
+  --color-activated: var(--ion-color-secondary-contrast);
+  --color-hover: var(--ion-color-secondary-shade);
   font-size: medium;
-  color: var(--ion-color-primary);
+  color: var(--ion-color-secondary-shade);
 }
 
 ion-item:not(.header):hover {
-  --background: white;
+  --background: var(--ion-color-secondary-tint);
 }
 
 .ion-item-active {
-  --background: white;
+  --background: var(--ion-color-secondary-contrast);
   font-weight: bold;
 }
 
@@ -50,7 +50,7 @@ ion-item:not(.header):hover {
     --inner-border-width: 0;
     --border-radius: 15px 0px 0px 15px;
     &.active {
-      background-color: #fff;
+      background-color: var(--ion-color-secondary-contrast);
     }
   }
 }
