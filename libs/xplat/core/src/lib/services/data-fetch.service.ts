@@ -44,6 +44,7 @@ export class DataFetchService {
   public videoConstantUrl: string;
   public defaultImgs: string;
   public searchClient;
+  public searchDatabase: string = 'VGM-HOA';
   // blockchain config
   private vgmCore: any;
   private _isInitialized: boolean = false;

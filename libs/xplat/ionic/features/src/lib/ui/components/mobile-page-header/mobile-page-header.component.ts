@@ -72,18 +72,21 @@ export class MobilePageHeaderComponent extends BaseComponent implements OnInit {
     this.searchValue = '';
   }
 
-
   async searchChange(e) {
-    const index = this.dataFetchService.searchClient.index('VGM');
+    const index = this.dataFetchService.searchClient.index(
+      this.dataFetchService.searchDatabase
+    );
     this.searchQuery = e.detail.value;
-    this.searchResult = this.isVideo === true ? await index.search(e.detail.value, {
-      filter: 'isVideo = true',
-      limit: 20,
-    }) : await index.search(e.detail.value, {
-      filter: 'isVideo = false',
-      limit: 20,
-    });
-
+    this.searchResult =
+      this.isVideo === true
+        ? await index.search(e.detail.value, {
+            filter: 'isVideo = true',
+            limit: 20,
+          })
+        : await index.search(e.detail.value, {
+            filter: 'isVideo = false',
+            limit: 20,
+          });
 
     await Promise.all(
       this.searchResult.hits.map(async (item) => {
@@ -103,13 +106,13 @@ export class MobilePageHeaderComponent extends BaseComponent implements OnInit {
       if (this.playerService.playerWidgetLocation === 0) {
         this.playerService.playerWidgetLocation$.next(1);
       }
-      setTimeout(() => {
-        this.searchbar.setFocus();
-      }, 150);
-    } else {
-      setTimeout(() => {
-        this.searchOnFocus = focus;
-      }, 150);
+      // setTimeout(() => {
+      //   this.searchbar.setFocus();
+      // }, 150);
+      // } else {
+      //   setTimeout(() => {
+      //     this.searchOnFocus = focus;
+      //   }, 150);
     }
   }
 
@@ -134,15 +137,26 @@ export class MobilePageHeaderComponent extends BaseComponent implements OnInit {
   selectItem(item) {
     console.log('item clicked', item);
     const itemUrl = item.url.replace(/.*\./, '');
-    this.router.navigate(['/muc-luc', this.isVideo === true ? 'video' : 'audio', 'playlist', item.pUrl], {
-      queryParams: { item: itemUrl },
-    });
+    this.router.navigate(
+      [
+        '/muc-luc',
+        this.isVideo === true ? 'video' : 'audio',
+        'playlist',
+        item.pUrl,
+      ],
+      {
+        queryParams: { item: itemUrl },
+      }
+    );
   }
 
   public searchMore(param) {
-    this.router.navigate(['/muc-luc', this.isVideo === true ? 'video' : 'audio', 'search'], {
-      queryParams: { param: param },
-    });
+    this.router.navigate(
+      ['/muc-luc', this.isVideo === true ? 'video' : 'audio', 'search'],
+      {
+        queryParams: { param: param },
+      }
+    );
     this.playerService.playerWidgetLocation$.next(2);
   }
 
@@ -160,7 +174,7 @@ export class MobilePageHeaderComponent extends BaseComponent implements OnInit {
     if (
       item.isLeaf === null &&
       this.dataFetchService.prefetchList.findIndex((elem) => elem === item.id) <
-      0
+        0
     ) {
       const playUrl = await this.dataFetchService.getPlayUrl(item, true);
       const dirUrl = path.dirname(playUrl);
@@ -186,11 +200,14 @@ export class MobilePageHeaderComponent extends BaseComponent implements OnInit {
       this.isVideo === true
         ? this.videoRootList[0].url
         : this.isVideo === false
-          ? this.audioRootList[0].url
-          : '';
-    this.router.navigate(['/muc-luc', this.isVideo === true ? 'video' : 'audio', 'catalog'], {
-      queryParams: { topicUrl: param },
-    });
+        ? this.audioRootList[0].url
+        : '';
+    this.router.navigate(
+      ['/muc-luc', this.isVideo === true ? 'video' : 'audio', 'catalog'],
+      {
+        queryParams: { topicUrl: param },
+      }
+    );
   }
 
   async handleApp() {

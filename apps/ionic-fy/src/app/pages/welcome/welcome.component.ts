@@ -3,10 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Platform, AlertController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import * as semverCompare from 'semver-compare';
-import {
-  BaseComponent,
-  DataFetchService,
-} from '@fy/xplat/core';
+import { BaseComponent, DataFetchService } from '@fy/xplat/core';
 
 @Component({
   selector: 'page-welcome',
@@ -65,12 +62,12 @@ export class WelcomeComponent extends BaseComponent implements OnInit {
   videoList = [];
   mobileVersion = {
     android: '1.0.1',
-    ios: '1.0.1'
-  }
+    ios: '1.0.1',
+  };
   storeUrl = {
     android: 'market://details?id=com.fy.tv',
-    ios: 'itms-apps://itunes.apple.com/app/fy-tv/id1438483905'
-  }
+    ios: 'itms-apps://itunes.apple.com/app/fy-tv/id1438483905',
+  };
   constructor(
     private router: Router,
     private zone: NgZone,
@@ -102,31 +99,35 @@ export class WelcomeComponent extends BaseComponent implements OnInit {
       if (this.platform.is('ios')) await this.checkMobileVersion('ios');
     }
     await this.dataFetchService.fetchAPIVersion();
-    const fetchVideo = this.dataFetchService.fetchRoot('video').then(async (list) => {
-      if (list) {
-        this.videoList = list;
-        list.forEach(async (category) => {
-          const topicList = await this.dataFetchService.fetchTopicList(
-            category.url
-          );
-          if (topicList) {
-            topicList.children.forEach(async (childTopic) => {
-              await this.dataFetchService.fetchTopicList(childTopic.url);
-            });
-          }
-        });
-      }
-    });
+    const fetchVideo = this.dataFetchService
+      .fetchRoot('video')
+      .then(async (list) => {
+        if (list) {
+          this.videoList = list;
+          list.forEach(async (category) => {
+            const topicList = await this.dataFetchService.fetchTopicList(
+              category.url
+            );
+            if (topicList) {
+              topicList.children.forEach(async (childTopic) => {
+                await this.dataFetchService.fetchTopicList(childTopic.url);
+              });
+            }
+          });
+        }
+      });
 
-    const fetchAudio = this.dataFetchService.fetchRoot('audio').then(async (list) => {
-      if (list) {
-        list.forEach(async (category) => {
-          await this.dataFetchService.fetchTopicList(category.url);
-        });
-      }
-    });
+    const fetchAudio = this.dataFetchService
+      .fetchRoot('audio')
+      .then(async (list) => {
+        if (list) {
+          list.forEach(async (category) => {
+            await this.dataFetchService.fetchTopicList(category.url);
+          });
+        }
+      });
 
-    await Promise.all([fetchVideo, fetchAudio]).then(result => {
+    await Promise.all([fetchVideo, fetchAudio]).then((result) => {
       this.dataReady = true;
     });
   }
@@ -140,12 +141,29 @@ export class WelcomeComponent extends BaseComponent implements OnInit {
   }
 
   async checkMobileVersion(platform: string) {
-    console.log(this.mobileVersion[platform], this.dataFetchService.mobileVersion[platform], semverCompare(this.dataFetchService.mobileVersion[platform], this.mobileVersion[platform]));
-    if (/^(\d+)\.(\d+)\.(\d+)$/.test(this.mobileVersion[platform]) && /^(\d+)\.(\d+)\.(\d+)$/.test(this.dataFetchService.mobileVersion[platform])) {
-      if (semverCompare(this.dataFetchService.mobileVersion[platform], this.mobileVersion[platform]) > 0) await this.presentAlertConfirm(platform);
+    console.log(
+      this.mobileVersion[platform],
+      this.dataFetchService.mobileVersion[platform],
+      semverCompare(
+        this.dataFetchService.mobileVersion[platform],
+        this.mobileVersion[platform]
+      )
+    );
+    if (
+      /^(\d+)\.(\d+)\.(\d+)$/.test(this.mobileVersion[platform]) &&
+      /^(\d+)\.(\d+)\.(\d+)$/.test(
+        this.dataFetchService.mobileVersion[platform]
+      )
+    ) {
+      if (
+        semverCompare(
+          this.dataFetchService.mobileVersion[platform],
+          this.mobileVersion[platform]
+        ) > 0
+      )
+        await this.presentAlertConfirm(platform);
     }
   }
-
 
   async presentAlertConfirm(platform: string) {
     const alert = await this.alertController.create({
@@ -172,5 +190,4 @@ export class WelcomeComponent extends BaseComponent implements OnInit {
     });
     await alert.present();
   }
-
 }

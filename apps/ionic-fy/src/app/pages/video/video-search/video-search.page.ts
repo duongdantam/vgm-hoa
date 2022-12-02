@@ -24,7 +24,9 @@ export class VideoSearchPage implements OnInit {
     private playerService: PlayerService,
     private router: Router
   ) {
-    this.index = this.dataFetchService.searchClient.index('VGM');
+    this.index = this.dataFetchService.searchClient.index(
+      this.dataFetchService.searchDatabase
+    );
   }
 
   async ngOnInit() {

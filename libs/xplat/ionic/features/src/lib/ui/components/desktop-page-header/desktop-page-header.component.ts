@@ -28,7 +28,7 @@ export class DesktopPageHeaderComponent extends BaseComponent {
     private location: Location,
     private playerService: PlayerService,
     public dataFetchService: DataFetchService,
-    private queueService: QueueService,
+    private queueService: QueueService
   ) {
     super();
   }
@@ -39,17 +39,21 @@ export class DesktopPageHeaderComponent extends BaseComponent {
   }
 
   async searchChange(e?) {
-    const index = this.dataFetchService.searchClient.index('VGM');
+    const index = this.dataFetchService.searchClient.index(
+      this.dataFetchService.searchDatabase
+    );
     this.searchQuery = e.detail.value;
     try {
-      this.searchResult = this.isVideo === true ? await index.search(e.detail.value, {
-        filter: 'isVideo = true',
-        limit: 20,
-      }) : await index.search(e.detail.value, {
-        filter: 'isVideo = false',
-        limit: 20,
-      });
-
+      this.searchResult =
+        this.isVideo === true
+          ? await index.search(e.detail.value, {
+              filter: 'isVideo = true',
+              limit: 20,
+            })
+          : await index.search(e.detail.value, {
+              filter: 'isVideo = false',
+              limit: 20,
+            });
 
       console.log(this.searchResult);
 
@@ -92,18 +96,29 @@ export class DesktopPageHeaderComponent extends BaseComponent {
   selectItem(item) {
     console.log('item clicked', item);
     const itemUrl = item.url.replace(/.*\./, '');
-    this.router.navigate(['/tabs', this.isVideo === true ? 'video' : 'audio', 'playlist', item.pUrl], {
-      queryParams: { item: itemUrl },
-    });
+    this.router.navigate(
+      [
+        '/tabs',
+        this.isVideo === true ? 'video' : 'audio',
+        'playlist',
+        item.pUrl,
+      ],
+      {
+        queryParams: { item: itemUrl },
+      }
+    );
   }
 
   public searchMore(param) {
     // console.log(this.home, param);
 
     // if (!this.home.includes('favorite') && !this.home.includes('document')) {
-    this.router.navigate(['/tabs', this.isVideo === true ? 'video' : 'audio', 'search'], {
-      queryParams: { param: param },
-    });
+    this.router.navigate(
+      ['/tabs', this.isVideo === true ? 'video' : 'audio', 'search'],
+      {
+        queryParams: { param: param },
+      }
+    );
     // }
     this.playerService.playerWidgetLocation$.next(2);
   }
@@ -126,12 +141,11 @@ export class DesktopPageHeaderComponent extends BaseComponent {
     return await this.dataFetchService.getThumbnailUrl(item); // 'https://stream.vgm.tv/VGMV/01_BaiGiang/CacDienGia/MSNHB_DeHiepMotTrongPhucVu/preview/01.jpg';
   }
 
-
   async preloadData(item: Item) {
     if (
       item.isLeaf === null &&
       this.dataFetchService.prefetchList.findIndex((elem) => elem === item.id) <
-      0
+        0
     ) {
       const playUrl = await this.dataFetchService.getPlayUrl(item, true);
       const dirUrl = path.dirname(playUrl);

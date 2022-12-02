@@ -1,6 +1,6 @@
 {
   "appId": "com.fuyin.media",
-  "appName": "福音灵粮",
+  "appName": "福音靈糧",
   "bundledWebRuntime": false,
   "linuxAndroidStudioPath": "/snap/android-studio/current/android-studio/bin/studio.sh",
   "webDir": "www",

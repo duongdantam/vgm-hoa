@@ -1,9 +1,9 @@
 <ion-toolbar>
   <ion-buttons slot="start">
-    <ion-icon name="fy-logo"></ion-icon>
-    <ion-label *ngIf="home !== 'video' && home !== 'audio'">
+    <ion-icon name="fy-play-logo-white"></ion-icon>
+    <!-- <ion-label *ngIf="home !== 'video' && home !== 'audio'">
       {{ 'intro.title' | translate }}
-    </ion-label>
+    </ion-label> -->
     <!-- <ion-button color="primary" fill="outline" (click)="backNav()">
       <ion-icon name="arrow-back-outline"></ion-icon>
     </ion-button>
@@ -34,7 +34,10 @@
         class="search-btn {{ searchOnFocus ? 'isFocus' : '' }}"
         (click)="searchModeChange()"
       >
-        <ion-icon [name]="isVideo ? 'videocam' : 'volume-medium'"></ion-icon>
+        <ion-icon
+          color="primary"
+          [name]="isVideo ? 'videocam' : 'volume-medium'"
+        ></ion-icon>
       </ion-button>
     </ion-searchbar>
   </div>
@@ -54,8 +57,8 @@
       {{ 'app.open' | translate }}
       <!-- {{ dataFetchService.appInstalled ? 'Mở App' : 'Tải App' }} -->
     </ion-button>
-    <ion-button color="primary">
-      <ion-icon name="notifications-outline"></ion-icon>
+    <ion-button>
+      <ion-icon name="fy-notification-outline"></ion-icon>
     </ion-button>
   </ion-buttons>
 </ion-toolbar>
