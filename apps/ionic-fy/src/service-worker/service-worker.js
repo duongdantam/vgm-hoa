@@ -27,8 +27,8 @@ self.addEventListener('notificationclick', (event) => {
 self.addEventListener('fetch', async function (event) {
   // If the request in GET, let the network handle things,
   if (
-    event.request.method !== 'GET' ||
-    /(\.jpg)$|(\.jpeg)$|(\.webp)$/.test(event.request.url)
+    event.request.method !== 'GET'
+    // || /(\.jpg)$|(\.jpeg)$|(\.webp)$/.test(event.request.url)
   ) {
     return;
   }
@@ -53,7 +53,7 @@ self.addEventListener('fetch', async function (event) {
         )
       ) {
         const ab = await abFromIDB(event.request.url);
-        // console.log('fetching img', event.request.url, ab);
+        console.log('getting IMG from IDB::', event.request.url, ab);
         if (ab) return new Response(ab.data, { status: 200, statusText: 'Ok' });
       }
 
@@ -85,7 +85,7 @@ self.addEventListener('fetch', async function (event) {
       }
 
       if (/(\.jpg)$|(\.jpeg)$|(\.webp)$/.test(event.request.url)) {
-        // console.log('webp response:', fetchResponse);
+        console.log('Fetching IMG::', fetchResponse);
         let imgBuff;
         if (fetchResponse.status === 200) {
           imgBuff = await fetchResponse.clone().arrayBuffer();
@@ -114,6 +114,7 @@ self.addEventListener('fetch', async function (event) {
 });
 
 const abFromIDB = async function (key) {
+  console.log('abFromIDB called::', key);
   let request = await indexedDB.open('OfflineDB', 10);
   return new Promise(async (resolve) => {
     // request.onerror = async (e) => {
@@ -136,6 +137,7 @@ const abFromIDB = async function (key) {
 };
 // Function to store image data to IDB
 const abToIDB = async function (key, data) {
+  console.log('abToIDB called::', key);
   let request = await indexedDB.open('OfflineDB', 10);
   return new Promise(async (resolve) => {
     // request.onerror = async (e) => {

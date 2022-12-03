@@ -1,4 +1,4 @@
-<ion-item
+<!-- <ion-item
   slot="start"
   button
   detail="false"
@@ -9,7 +9,7 @@
   <ion-label>
     {{('tabs.my' | translate) + ('tabs.download' | translate) }}
   </ion-label>
-</ion-item>
+</ion-item> -->
 <super-tabs
   #superTabs
   [config]="{ 
@@ -146,7 +146,7 @@
               [ngStyle]="{ 'z-index': 100 - i }"
               parent="download"
               [item]="item"
-              (click)="selectAudioItem(item)"
+              (onSelectItem)="selectAudioItem(item)"
             ></fy-audio-play-list>
           </ion-row>
         </ion-grid>

@@ -14,7 +14,7 @@
 
 ion-refresher {
   z-index: 99;
-  margin-top: calc(100px + var(--sat));
+  margin-top: calc(50px + var(--sat));
 }
 ion-content {
   --background: var(--ion-color-light);
@@ -27,7 +27,7 @@ ion-content {
   }
   ion-grid {
     margin: 0 5px;
-    padding: calc(110px + var(--sat)) 0 20px 0;
+    padding: calc(50px + var(--sat)) 0 20px 0;
     ion-row {
       padding-top: 5px;
     }
@@ -52,7 +52,7 @@ ion-content {
   // }
   ion-content {
     ion-grid {
-      padding-top: calc(100px + var(--sat));
+      padding-top: calc(50px + var(--sat));
       ion-col {
         padding-top: 5px;
       }

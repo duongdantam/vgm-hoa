@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { Platform } from '@ionic/angular';
 import { DataFetchService, DetectService } from '@fy/xplat/core';
 import {

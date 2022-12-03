@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
 import {
   BaseComponent,
   DataFetchService,
@@ -9,11 +9,7 @@ import {
 } from '@fy/xplat/core';
 import { PlayerService } from 'libs/xplat/core/src/lib/services/player.service';
 import { IonSearchbar, Platform, AlertController } from '@ionic/angular';
-// import { GoogleAnalytics } from '@ionic-native/google-analytics/ngx';
-// import { AppLauncher, AppLauncherOptions } from '@ionic-native/app-launcher/ngx';
-// const options: AppLauncherOptions = {};
 import * as path from 'path';
-import { MeiliSearch } from 'meilisearch';
 
 @Component({
   selector: 'fy-mobile-page-header',
@@ -31,6 +27,7 @@ export class MobilePageHeaderComponent extends BaseComponent implements OnInit {
   storeUrl: string;
   platformOs: string;
   isVideo = true;
+  isMy = ''
   private audioRootList = [];
   private videoRootList = [];
   constructor(
@@ -43,6 +40,17 @@ export class MobilePageHeaderComponent extends BaseComponent implements OnInit {
     private queueService: QueueService // public toastController: ToastController, // private appLauncher: AppLauncher,
   ) {
     super();
+    this.router.events.subscribe(async (event) => {
+      if (
+        event instanceof NavigationEnd && event.url.split('/')[3] &&
+        (event.url.split('/')[3].startsWith('favorite') || event.url.split('/')[3].startsWith('download'))
+      ) {
+        this.isMy = event.url.split('/')[3].split('?')[0];
+        console.log("hello:", this.isMy, event.url.split('/')[3]);
+      } else {
+        this.isMy = ''
+      }
+    });
 
     if (this.platform.is('android')) {
       this.storeUrl = 'market://details?id=mobi.vgm.nextgen';
@@ -80,18 +88,18 @@ export class MobilePageHeaderComponent extends BaseComponent implements OnInit {
     this.searchResult =
       this.isVideo === true
         ? await index.search(e.detail.value, {
-            filter: 'isVideo = true',
-            limit: 20,
-          })
+          filter: 'isVideo = true',
+          limit: 20,
+        })
         : await index.search(e.detail.value, {
-            filter: 'isVideo = false',
-            limit: 20,
-          });
+          filter: 'isVideo = false',
+          limit: 20,
+        });
 
     await Promise.all(
       this.searchResult.hits.map(async (item) => {
         item.value = item.name.replace(/[\-\_]+/g, ' ');
-        item.thumb = this.home.includes('video')
+        item.thumb = this.isVideo
           ? await this.getItemThumbnail(item)
           : null;
         item.pUrl = item.url.match(/.*(?=\.)/).toString();
@@ -106,13 +114,13 @@ export class MobilePageHeaderComponent extends BaseComponent implements OnInit {
       if (this.playerService.playerWidgetLocation === 0) {
         this.playerService.playerWidgetLocation$.next(1);
       }
-      // setTimeout(() => {
-      //   this.searchbar.setFocus();
-      // }, 150);
-      // } else {
-      //   setTimeout(() => {
-      //     this.searchOnFocus = focus;
-      //   }, 150);
+      setTimeout(() => {
+        this.searchbar.setFocus();
+      }, 150);
+    } else {
+      setTimeout(() => {
+        this.searchOnFocus = focus;
+      }, 150);
     }
   }
 
@@ -174,7 +182,7 @@ export class MobilePageHeaderComponent extends BaseComponent implements OnInit {
     if (
       item.isLeaf === null &&
       this.dataFetchService.prefetchList.findIndex((elem) => elem === item.id) <
-        0
+      0
     ) {
       const playUrl = await this.dataFetchService.getPlayUrl(item, true);
       const dirUrl = path.dirname(playUrl);
@@ -200,8 +208,8 @@ export class MobilePageHeaderComponent extends BaseComponent implements OnInit {
       this.isVideo === true
         ? this.videoRootList[0].url
         : this.isVideo === false
-        ? this.audioRootList[0].url
-        : '';
+          ? this.audioRootList[0].url
+          : '';
     this.router.navigate(
       ['/muc-luc', this.isVideo === true ? 'video' : 'audio', 'catalog'],
       {

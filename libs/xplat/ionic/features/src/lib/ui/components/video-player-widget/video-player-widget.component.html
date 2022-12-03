@@ -310,7 +310,7 @@
               [ngStyle]="{ 'z-index': 100 - i }"
               [item]="item"
               parent="audio"
-              (click)="selectItem(item)"
+              (onSelectItem)="selectItem(item)"
             ></fy-audio-play-list>
             <ion-infinite-scroll
               threshold="100px"

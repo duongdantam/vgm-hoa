@@ -70,7 +70,7 @@ export class AudioCardSliderComponent
   // }
 
   public selectItem(item: Item) {
-    console.log('kjjkhhkhkljlk', this.topic, item);
+    // console.log('kjjkhhkhkljlk', this.topic, item);
 
     if (item.isLeaf === null) {
       this.router.navigate(['/tabs', 'audio', 'playlist', this.topic.url], {

@@ -77,7 +77,7 @@
         </ion-col>
         <ion-col style="max-width: 20%">
           <fy-video-thumb-card
-            *ngIf="home === 'video'; else audioThumb"
+            *ngIf="isVideo; else audioThumb"
             title=""
             [subtitle]="item.duration"
             [img]="item.thumb"

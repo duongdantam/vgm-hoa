@@ -1,4 +1,4 @@
-<ion-toolbar>
+<ion-toolbar *ngIf="!isMy">
   <ion-buttons slot="start">
     <ion-icon name="fy-play-logo-white"></ion-icon>
     <!-- <ion-label *ngIf="home !== 'video' && home !== 'audio'">
@@ -63,7 +63,25 @@
   </ion-buttons>
 </ion-toolbar>
 
-<ion-content *ngIf="searchOnFocus">
+<ion-toolbar *ngIf="isMy">
+  <ion-buttons style="margin: 4px 0px">
+    <ion-button [routerLink]="['/tabs', 'my', 'all']" routerDirection="back">
+      <ion-icon color="light" name="arrow-back-outline"></ion-icon>
+    </ion-button>
+    <ion-label style="font-size: 18px">
+      {{
+        ('tabs.my' | translate) +
+          (isMy === 'favorite'
+            ? ('tabs.favorite' | translate)
+            : isMy === 'download'
+            ? ('tabs.download' | translate)
+            : '')
+      }}
+    </ion-label>
+  </ion-buttons>
+</ion-toolbar>
+
+<ion-content *ngIf="!isMy && searchOnFocus">
   <ion-list *ngIf="searchResult.query && searchOnFocus">
     <ion-item
       lines="none"
@@ -93,7 +111,6 @@
             [isLeaf]="item.isLeaf"
             [isPlaylist]="true"
             [isSearch]="true"
-            (mouseover)="preloadData(item)"
           ></fy-video-thumb-card>
           <ng-template #audioThumb>
             <ion-thumbnail>

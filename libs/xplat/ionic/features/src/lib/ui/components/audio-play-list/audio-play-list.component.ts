@@ -43,11 +43,12 @@ export class AudioPlayListComponent
   @Input() public parentThumb: string = '';
   @Input() public playingItem: Item = null;
   @Input() public parent = 'audio';
+  @Output() public onSelectItem: EventEmitter<Item> = new EventEmitter<Item>();
   // @Output() public onItemPressed: EventEmitter<Item> = new EventEmitter<Item>();
   isViewInit = false;
   public favoriteList: Item[] = [];
-  private playSub: Subscription;
-  private favoriteSub: Subscription;
+  // private playSub: Subscription;
+  // private favoriteSub: Subscription;
   public currentPlayingState: any;
   public downloadingList = [];
   public downloadedList = [];
@@ -116,9 +117,9 @@ export class AudioPlayListComponent
     }
   }
 
-  ngOnDestroy(): void {
-    (this.playSub && (this.favoriteSub as Subscription)).unsubscribe();
-  }
+  // ngOnDestroy(): void {
+  //   (this.playSub && (this.favoriteSub as Subscription)).unsubscribe();
+  // }
 
   // loadMoreData(event) {
   //   setTimeout(() => {
@@ -131,6 +132,10 @@ export class AudioPlayListComponent
   //     }
   //   }, 500);
   // }
+
+  selectItem(item: Item) {
+    this.onSelectItem.emit(item)
+  }
 
   formatName(name: string) {
     return name.replace(/^([0-9]+)(_|-)?/g, '');

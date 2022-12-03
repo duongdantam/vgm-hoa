@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { NavigationEnd, Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import {
   BaseComponent,
   DataFetchService,
@@ -25,6 +25,7 @@ export class DesktopPageHeaderComponent extends BaseComponent {
   isVideo: boolean = true;
   constructor(
     private router: Router,
+    private activatedRoute: ActivatedRoute,
     private location: Location,
     private playerService: PlayerService,
     public dataFetchService: DataFetchService,
@@ -47,13 +48,13 @@ export class DesktopPageHeaderComponent extends BaseComponent {
       this.searchResult =
         this.isVideo === true
           ? await index.search(e.detail.value, {
-              filter: 'isVideo = true',
-              limit: 20,
-            })
+            filter: 'isVideo = true',
+            limit: 20,
+          })
           : await index.search(e.detail.value, {
-              filter: 'isVideo = false',
-              limit: 20,
-            });
+            filter: 'isVideo = false',
+            limit: 20,
+          });
 
       console.log(this.searchResult);
 
@@ -145,7 +146,7 @@ export class DesktopPageHeaderComponent extends BaseComponent {
     if (
       item.isLeaf === null &&
       this.dataFetchService.prefetchList.findIndex((elem) => elem === item.id) <
-        0
+      0
     ) {
       const playUrl = await this.dataFetchService.getPlayUrl(item, true);
       const dirUrl = path.dirname(playUrl);

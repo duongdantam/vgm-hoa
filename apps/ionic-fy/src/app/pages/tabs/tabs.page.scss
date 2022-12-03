@@ -9,6 +9,19 @@ ion-img {
   height: 32px;
 }
 
+.desktop-header {
+  align-self: flex-end;
+  width: calc(100% - 60px);
+  &.menuOpen {
+    width: calc(100% - 160px);
+  }
+}
+
+// .mobile-header {
+//   &.isMy {
+//     visibility: hidden;
+//   }
+// }
 ion-tabs {
   box-shadow: 0px -1px 0px #eaedf1;
 }

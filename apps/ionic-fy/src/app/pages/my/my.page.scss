@@ -1,15 +1,15 @@
-// super tabs css
-.desktop-header {
-  // position: absolute;
-  // right: calc(0px + var(--sar));
-  top: calc(0px + var(--sat));
-  background-color: var(--ion-color-secondary-contrast);
-  width: calc(100% - 270px);
-}
+// // super tabs css
+// .desktop-header {
+//   // position: absolute;
+//   // right: calc(0px + var(--sar));
+//   top: calc(0px + var(--sat));
+//   background-color: var(--ion-color-secondary-contrast);
+//   width: calc(100% - 270px);
+// }
 ion-content {
   --background: var(--ion-color-light);
   ion-list {
-    margin-top: 125px;
+    margin-top: 75px;
     background-color: transparent;
   }
 }

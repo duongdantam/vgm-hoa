@@ -18,7 +18,7 @@
       *ngFor="let item of itemList; index as i"
       [ngStyle]="{ 'z-index': 100 - i }"
       [item]="item"
-      (click)="selectItem(item)"
+      (onSelectItem)="selectItem(item)"
     ></fy-audio-play-list>
   </ion-grid>
 </ion-content>

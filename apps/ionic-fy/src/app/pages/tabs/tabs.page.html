@@ -2,6 +2,15 @@
   (ionTabsWillChange)="onTabsWillChange($event)"
   [ngClass]="menuOpen ? 'menuOpen' : 'menuCollapse'"
 >
+  <ion-header
+    [ngClass]="menuOpen ? 'menuOpen' : 'menuCollapse'"
+    class="desktop-header ion-hide-lg-down"
+  >
+    <fy-desktop-page-header></fy-desktop-page-header>
+  </ion-header>
+  <ion-header class="mobile-header ion-hide-lg-up">
+    <fy-mobile-page-header></fy-mobile-page-header>
+  </ion-header>
   <!-- <fy-audio-player-widget
     [isHidden]="playerService.audioIsHidden"
     [menuOpen]="menuOpen"
@@ -20,6 +29,7 @@
   ></fy-audio-player-widget> -->
 
   <fy-video-player-widget
+    style="z-index: 10"
     [menuOpen]="menuOpen"
     [options]="{autoplay: true, controls: true, sources: [{ src: playUrl, type: type}]}"
     [widgetLocation]="playerService.playerWidgetLocation"
