@@ -208,7 +208,7 @@
                 <ion-icon
                   slot="icon-only"
                   name="{{
-                    isDownloaded ? 'fy-download-solid' : 'fy-download-outline'
+                    isDownloaded ? 'fy-downloaded' : 'fy-download-outline'
                   }}"
                 >
                 </ion-icon>
@@ -246,7 +246,7 @@
             style="
               font-weight: bold;
               font-size: medium;
-              color: var(--ion-color-primary);
+              color: var(--ion-color-primary-shade);
             "
             >{{ getListTitle() }}
           </ion-label>
@@ -257,7 +257,8 @@
             *ngFor="let item of videoItemList | slice: 0:itemLength"
             (click)="selectItem(item)"
             (mouseover)="preloadData(item)"
-            [ngClass]="item.id === videoId ? 'selected-item' : ''"
+            class="video-item"
+            [ngClass]="item.id === playingItemId ? 'selected-item' : ''"
           >
             <ion-thumbnail #thumbnail slot="start">
               <div class="thumbnail-loading">
@@ -270,23 +271,17 @@
                 [src]="
                   item.thumb !== ''
                     ? item.thumb
-                    : 'assets/imgs/default-image.svg'
+                    : 'assets/imgs/fy-default-image.svg'
                 "
-                (ionError)="item.thumb = 'assets/imgs/default-image.svg'"
+                (ionError)="item.thumb = 'assets/imgs/fy-default-image.svg'"
                 (ionImgDidLoad)="imgOnLoad('loaded', thumbnail, item)"
               ></ion-img>
             </ion-thumbnail>
-            <div style="flex-direction: column">
-              <div style="font-size: small; font-weight: bold">
-                {{ item.value }}
+            <div class="title" style="flex-direction: column">
+              <div>
+                {{ item.name }}
               </div>
-              <div
-                style="
-                  font-size: small;
-                  color: var(--ion-color-dark-tint);
-                  padding: 5px 0 5px 0;
-                "
-              >
+              <div>
                 {{ item.duration }}
               </div>
             </div>

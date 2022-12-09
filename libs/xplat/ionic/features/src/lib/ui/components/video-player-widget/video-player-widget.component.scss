@@ -782,8 +782,29 @@ video {
   transform: translateY(100vh) !important;
 }
 
+.video-item {
+  .title {
+    div:first-child {
+      color: var(--ion-color-dark-shade);
+      font-size: 15px;
+    }
+    div:last-child {
+      color: var(--ion-color-dark-shade);
+      font-size: 13px;
+      padding: 5px 0 5px 0;
+    }
+  }
+}
+
 .selected-item {
-  --background: var(--ion-color-light-tint);
+  .title {
+    div:first-child {
+      color: var(--ion-color-primary);
+    }
+    div:last-child {
+      color: var(--ion-color-primary);
+    }
+  }
 }
 
 .download-progress {
