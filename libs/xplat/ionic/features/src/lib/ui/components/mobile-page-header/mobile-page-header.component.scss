@@ -29,10 +29,11 @@ ion-toolbar {
     --icon-color: --ion-color-primary;
     justify-content: center;
     flex-direction: row-reverse;
+    margin: 0;
+    padding: 0 0 0 10px;
     &.sc-ion-searchbar-ios-h {
       --border-radius: 0px;
       --background: rgba(var(--ion-color-dark-contrast), 0.1);
-      padding-top: 15px;
     }
     ion-button {
       --background: var(--ion-color-primary-contrast);
@@ -60,26 +61,25 @@ ion-toolbar {
         border-color: var(--ion-color-tertiary-tint);
       }
     }
-
-    .search-btn {
-      // --background-activated: var(--ion-color-primary-contrast);
-      // --background-focused: var(--ion-color-primary-contrast);
-      // --color: white;
-      --background: var(--ion-color-primary-contrast);
-      --color-activated: var(--ion-color-contrast);
-      --color-focused: var(--ion-color-primary-contrast);
-      --padding-start: 10px;
-      --padding-end: 10px;
-      --border-radius: 0px 20px 20px 0px;
-      padding: 0;
-      margin: 0;
-      height: 30px;
-      --border-color: var(--ion-color-medium);
-      --border-style: solid;
-      --border-width: 1px 1px 1px 0px;
-      &.isFocus {
-        --border-color: var(--ion-color-tertiary-tint) !important;
-      }
+  }
+  .search-btn {
+    // --background-activated: var(--ion-color-primary-contrast);
+    // --background-focused: var(--ion-color-primary-contrast);
+    // --color: white;
+    --background: var(--ion-color-primary-contrast);
+    --color-activated: var(--ion-color-contrast);
+    --color-focused: var(--ion-color-primary-contrast);
+    --padding-start: 10px;
+    --padding-end: 10px;
+    --border-radius: 0px 20px 20px 0px;
+    padding: 0 10px 0 0;
+    margin: 0;
+    height: 30px;
+    --border-color: var(--ion-color-medium);
+    --border-style: solid;
+    --border-width: 1px 1px 1px 0px;
+    &.isFocus {
+      --border-color: var(--ion-color-tertiary-tint) !important;
     }
   }
 }
@@ -132,10 +132,9 @@ ion-content {
 ion-content {
   position: absolute;
   z-index: 1001;
-  height: 100vh;
-  --offset-top: -50px !important;
+  top: calc(var(--sat) + 50px);
+  height: calc(100vh - var(--sat) - 50px);
   --padding-bottom: 100px !important;
-  top: var(--sat);
   left: var(--sal);
   animation: fadeIn 0.2s ease-in-out;
   // ion-searchbar {

@@ -15,7 +15,7 @@
   <!-- <ion-item lines="inset" *ngIf="home !== 'video' && home !== 'audio'">
   </ion-item> -->
   <!-- <ion-title>Solid Buttons</ion-title> -->
-  <div>
+  <div style="display: flex; align-items: center">
     <ion-searchbar
       id="mobile-search-bar"
       [placeholder]="'input.search' | translate"
@@ -29,17 +29,17 @@
       (ionBlur)="setFocus(false)"
       class="{{ searchOnFocus ? 'on-focus' : '' }}"
     >
-      <ion-button
-        fill="solid"
-        class="search-btn {{ searchOnFocus ? 'isFocus' : '' }}"
-        (click)="searchModeChange()"
-      >
-        <ion-icon
-          color="primary"
-          [name]="isVideo ? 'videocam' : 'volume-medium'"
-        ></ion-icon>
-      </ion-button>
     </ion-searchbar>
+    <ion-button
+      fill="solid"
+      class="search-btn {{ searchOnFocus ? 'isFocus' : '' }}"
+      (click)="searchModeChange()"
+    >
+      <ion-icon
+        color="primary"
+        [name]="isVideo ? 'videocam' : 'volume-medium'"
+      ></ion-icon>
+    </ion-button>
   </div>
 
   <ion-buttons slot="end">

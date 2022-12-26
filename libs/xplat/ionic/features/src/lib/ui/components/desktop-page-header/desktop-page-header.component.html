@@ -22,20 +22,22 @@
     </ion-button> -->
   </ion-buttons>
   <!-- <ion-title>Solid Buttons</ion-title> -->
-  <div>
-    <ion-searchbar
-      id="search-bar"
-      [placeholder]="'input.search' | translate"
-      inputmode="search"
-      enterkeyhint="search"
-      debounce="0"
-      [(ngModel)]="searchValue"
-      (keypress)="searchKeyPress($event)"
-      (ionChange)="searchChange($event)"
-      (ionFocus)="searchOnFocus = true"
-      (ionBlur)="setFocus(false)"
-      class="{{ searchOnFocus ? 'on-focus' : '' }}"
-    >
+  <div style="display: flex; justify-content: center">
+    <div style="display: flex; align-items: center; width: 60%">
+      <ion-searchbar
+        id="search-bar"
+        [placeholder]="'input.search' | translate"
+        inputmode="search"
+        enterkeyhint="search"
+        debounce="0"
+        [(ngModel)]="searchValue"
+        (keypress)="searchKeyPress($event)"
+        (ionChange)="searchChange($event)"
+        (ionFocus)="searchOnFocus = true"
+        (ionBlur)="setFocus(false)"
+        class="{{ searchOnFocus ? 'on-focus' : '' }}"
+      >
+      </ion-searchbar>
       <ion-button
         fill="fill"
         class="search-btn {{ searchOnFocus ? 'isFocus' : '' }}"
@@ -46,7 +48,7 @@
           isVideo ? ('tabs.video' | translate) : ('tabs.audio' | translate)
         }}</ion-label>
       </ion-button>
-    </ion-searchbar>
+    </div>
   </div>
 
   <ion-buttons slot="end">
