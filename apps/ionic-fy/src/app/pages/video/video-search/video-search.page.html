@@ -3,9 +3,9 @@
     <ion-row>
       <div class="loading">
         <!-- <ion-spinner name="dots" style="color: var(--ion-color-primary-shade)"></ion-spinner> -->
-        <ion-label color="primary"
-          >{{ 'msg.search.result' | translate}}
-          <span style="font-weight: bold">"{{searchKeyWord}}"</span></ion-label
+        <ion-label color="primary">
+          <span style="font-weight: bold">"{{searchKeyWord}}"</span>
+          {{ 'msg.search.result' | translate}}</ion-label
         >
       </div>
     </ion-row>
@@ -38,9 +38,9 @@
 <ion-content *ngIf="!itemList">
   <div class="loading">
     <!-- <ion-spinner name="dots" style="color: var(--ion-color-primary-shade)"></ion-spinner> -->
-    <ion-label color="primary"
-      >{{ 'msg.search.notfound' | translate}}
-      <span style="font-weight: bold">"{{searchKeyWord}}"</span></ion-label
-    >
+    <ion-label color="primary">
+      <span style="font-weight: bold">"{{searchKeyWord}}"</span>{{
+      'msg.search.notfound' | translate}}
+    </ion-label>
   </div>
 </ion-content>

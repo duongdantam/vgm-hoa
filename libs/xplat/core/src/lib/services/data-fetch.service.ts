@@ -42,6 +42,8 @@ export class DataFetchService {
   public searchAPIKey: string;
   public audioConstantUrl: string;
   public videoConstantUrl: string;
+  public audioRandomUrl: string;
+  public videoRandomUrl: string;
   public defaultImgs: string;
   public searchClient;
   public searchDatabase: string = 'VGM-HOA';

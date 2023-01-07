@@ -3,16 +3,16 @@
     <ion-row>
       <div class="loading">
         <!-- <ion-spinner name="dots" style="color: var(--ion-color-primary-shade)"></ion-spinner> -->
-        <ion-label color="primary"
-          >Kết quả tìm kiếm cho từ khóa
-          <span style="font-weight: bold">"{{searchKeyWord}}"</span></ion-label
+        <ion-label color="primary">
+          <span style="font-weight: bold">"{{searchKeyWord}}"</span>
+          {{ 'msg.search.result' | translate}}</ion-label
         >
       </div>
     </ion-row>
-    <div style="padding-top: 10px">
+    <!-- <div style="padding-top: 10px">
       <ion-label># TIÊU ĐỀ </ion-label>
       <ion-label style="float: right">Thời gian </ion-label>
-    </div>
+    </div> -->
 
     <fy-audio-play-list
       *ngFor="let item of itemList; index as i"
@@ -25,9 +25,9 @@
 <ion-content *ngIf="!itemList">
   <div class="loading">
     <!-- <ion-spinner name="dots" style="color: var(--ion-color-primary-shade)"></ion-spinner> -->
-    <ion-label color="primary"
-      >{{ 'msg.search.notfound' | translate}}
-      <span style="font-weight: bold">"{{searchKeyWord}}"</span></ion-label
-    >
+    <ion-label color="primary">
+      <span style="font-weight: bold">"{{searchKeyWord}}"</span>{{
+      'msg.search.notfound' | translate}}
+    </ion-label>
   </div>
 </ion-content>

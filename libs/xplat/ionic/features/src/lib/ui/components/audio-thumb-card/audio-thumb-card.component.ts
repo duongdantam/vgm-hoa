@@ -25,7 +25,7 @@ export class AudioThumbCardComponent extends BaseComponent implements OnInit {
 
   async ngOnInit() {
     if (!this.img) {
-      const random = Math.ceil(Math.random() * 50);
+      const random = Math.ceil(Math.random() * 130);
       // this.img = this.dataFetchService.defaultImgs + '/' + random + '.webp';
       this.img = `${this.dataFetchService.defaultImgs}/${random}.webp`;
     }

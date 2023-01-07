@@ -187,19 +187,19 @@ export class VideoPlayerWidgetComponent
         });
       }
     );
-    this.screenOrientation.onChange().subscribe(() => {
-      if (
-        this.platform.is('capacitor') &&
-        document.fullscreenEnabled &&
-        this.widgetLocation === 0
-      ) {
-        if (this.screenOrientation.type === 'landscape-primary') {
-          this.player.requestFullscreen();
-        } else if (this.screenOrientation.type === 'portrait-primary') {
-          this.player.exitFullscreen();
-        }
-      }
-    });
+    // this.screenOrientation.onChange().subscribe(() => {
+    //   if (
+    //     this.platform.is('capacitor') &&
+    //     document.fullscreenEnabled &&
+    //     this.widgetLocation === 0
+    //   ) {
+    //     if (this.screenOrientation.type === 'landscape-primary') {
+    //       this.player.requestFullscreen();
+    //     } else if (this.screenOrientation.type === 'portrait-primary') {
+    //       this.player.exitFullscreen();
+    //     }
+    //   }
+    // });
   }
 
   async ngOnChanges(changes: SimpleChanges) {
@@ -215,18 +215,18 @@ export class VideoPlayerWidgetComponent
         }%`;
       }
 
-      if (this.platform.is('capacitor') && this.player) {
-        if ((changes as any).videoIsPlaying.currentValue !== 0) {
-          this.screenOrientation.lock(
-            this.screenOrientation.ORIENTATIONS.PORTRAIT
-          );
-        } else if (
-          (changes as any).videoIsPlaying.currentValue === 0 &&
-          this.screenOrientation.type === 'portrait-primary'
-        ) {
-          this.screenOrientation.unlock();
-        }
-      }
+      // if (this.platform.is('capacitor') && this.player) {
+      //   if ((changes as any).videoIsPlaying.currentValue !== 0) {
+      //     this.screenOrientation.lock(
+      //       this.screenOrientation.ORIENTATIONS.PORTRAIT
+      //     );
+      //   } else if (
+      //     (changes as any).videoIsPlaying.currentValue === 0 &&
+      //     this.screenOrientation.type === 'portrait-primary'
+      //   ) {
+      //     this.screenOrientation.unlock();
+      //   }
+      // }
     }
 
     if (
@@ -756,21 +756,21 @@ export class VideoPlayerWidgetComponent
     this.player.on('fullscreenchange', () => {
       console.log('fullscreenchange', this.player.isFullscreen());
       if (this.player.isFullscreen()) {
-        this.playerElem.classList.add('is-fullscreen');
-        this.player.controlBar.addClass('is-fullscreen');
         if (this.platform.is('capacitor')) {
           this.screenOrientation.lock(
             this.screenOrientation.ORIENTATIONS.LANDSCAPE
           );
         }
+        this.playerElem.classList.add('is-fullscreen');
+        this.player.controlBar.addClass('is-fullscreen');
       } else {
         this.player.controlBar.removeClass('is-fullscreen');
         this.playerElem.classList.remove('is-fullscreen');
         if (this.platform.is('capacitor')) {
+          this.screenOrientation.unlock();
           this.screenOrientation.lock(
             this.screenOrientation.ORIENTATIONS.PORTRAIT
           );
-          this.screenOrientation.unlock();
         }
       }
     });

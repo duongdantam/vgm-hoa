@@ -1,7 +1,7 @@
 // super tabs css
 :host {
   --st-scrollable-toolbar-padding-left: 0;
-  --st-base-color-inactive: rgba(var(--ion-color-primary-rgb), 0.6);
+  --st-base-color-inactive: var(--ion-color-primary);
   --st-base-color-active: var(--ion-color-primary);
   --st-label-font-weight: 600;
   --st-icon-color-active: var(--ion-color-secondary-tint);

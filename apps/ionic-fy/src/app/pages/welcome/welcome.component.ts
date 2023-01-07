@@ -114,6 +114,7 @@ export class WelcomeComponent extends BaseComponent implements OnInit {
               });
             }
           });
+          return list;
         }
       });
 
@@ -124,12 +125,28 @@ export class WelcomeComponent extends BaseComponent implements OnInit {
           list.forEach(async (category) => {
             await this.dataFetchService.fetchTopicList(category.url);
           });
+          return list;
         }
       });
 
-    await Promise.all([fetchVideo, fetchAudio]).then((result) => {
-      this.dataReady = true;
-    });
+    const [vList, aList] = await Promise.all([fetchVideo, fetchAudio]);
+
+    // Get random video and audio list
+    const videoRandomIndex = Math.floor(Math.random() * vList.length);
+    const audioRandomIndex = Math.floor(Math.random() * aList.length);
+
+    const videoRandom = this.getChildren(vList[videoRandomIndex].url);
+    const audioRandom = this.getChildren(aList[audioRandomIndex].url);
+    const [vRandom, aRandom] = await Promise.all([videoRandom, audioRandom]);
+    this.dataFetchService.videoRandomUrl = vRandom as string;
+    this.dataFetchService.audioRandomUrl = aRandom as string;
+    console.log(
+      'randomList:::::',
+      this.dataFetchService.videoRandomUrl,
+      this.dataFetchService.audioRandomUrl
+    );
+
+    this.dataReady = true;
   }
 
   async handleEnter() {
@@ -189,5 +206,73 @@ export class WelcomeComponent extends BaseComponent implements OnInit {
       ],
     });
     await alert.present();
+  }
+
+  async getChildren(url: string) {
+    return new Promise(async (resolve, reject) => {
+      const recurse = async (url: string) => {
+        const itemInfo = await this.dataFetchService.fetchTopicList(url);
+
+        if (
+          itemInfo.children &&
+          itemInfo.children.length > 0 &&
+          itemInfo.children[0].isLeaf === null
+        ) {
+          // itemInfo.children = await Promise.all(
+          //   itemInfo.children.map(async (item) => {
+          //     const thumb = item.isVideo
+          //       ? await this.getItemThumbnail(item)
+          //       : '';
+          //     return {
+          //       ...item,
+          //       thumb: thumb,
+          //     };
+          //   })
+          // );
+
+          resolve(itemInfo.url);
+        }
+        if (
+          itemInfo.children &&
+          itemInfo.children.length > 0 &&
+          itemInfo.children[0].isLeaf !== null
+        ) {
+          const randomIndex = Math.floor(
+            Math.random() * itemInfo.children.length
+          );
+          await recurse(itemInfo.children[randomIndex].url);
+        }
+        if (!itemInfo.children) {
+          reject();
+        }
+      };
+
+      recurse(url);
+    });
+  }
+
+  private async getItemThumbnail(item: any) {
+    if (item.isLeaf === null) {
+      return await this.dataFetchService.getThumbnailUrl(item);
+    }
+    const firstItem = await this.getNonLeaf(item);
+    return await this.dataFetchService.getThumbnailUrl(firstItem);
+    // 'https://stream.vgm.tv/VGMV/01_BaiGiang/CacDienGia/MSNHB_DeHiepMotTrongPhucVu/preview/01.jpg';
+  }
+
+  private getNonLeaf(item: any) {
+    return new Promise(async (resolve) => {
+      const recurse = async (item) => {
+        if (item.isLeaf === null) {
+          resolve(item);
+        }
+        if (item.isLeaf === true || item.isLeaf === false) {
+          await this.dataFetchService.fetchTopicList(item.url).then((list) => {
+            if (list.children[0]) recurse(list.children[0]);
+          });
+        }
+      };
+      recurse(item);
+    });
   }
 }

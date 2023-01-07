@@ -19,8 +19,7 @@ export class HomePage implements OnInit {
   constructor(
     // private router: Router,
     // private activatedRoute: ActivatedRoute,
-    public dataFetchService: DataFetchService,
-    // private playerService: PlayerService // private _electronService: ElectronService,
+    public dataFetchService: DataFetchService // private playerService: PlayerService // private _electronService: ElectronService,
   ) {
     // this.router.events.subscribe(async (event) => {
     //   if (
@@ -55,72 +54,105 @@ export class HomePage implements OnInit {
     const audioConstantList = this.dataFetchService.fetchTopicList(
       this.dataFetchService.audioConstantUrl
     );
-    const videoList = this.dataFetchService.fetchRoot('video');
-    const audioList = this.dataFetchService.fetchRoot('audio');
-    const [vConstantList, aConstantList, vList, aList] = await Promise.all([videoConstantList, audioConstantList, videoList, audioList]);
+    const videoRandomList = this.dataFetchService
+      .fetchTopicList(this.dataFetchService.videoRandomUrl)
+      .then(async (topic) => {
+        topic.children = await Promise.all(
+          topic.children.map(async (item) => {
+            const thumb = await this.getItemThumbnail(item);
+            return {
+              ...item,
+              thumb: thumb,
+            };
+          })
+        );
+        return topic;
+      });
+    const audioRandomList = this.dataFetchService.fetchTopicList(
+      this.dataFetchService.audioRandomUrl
+    );
+    const [
+      vConstantList,
+      aConstantList,
+      vRandomList,
+      aRandomList,
+    ] = await Promise.all([
+      videoConstantList,
+      audioConstantList,
+      videoRandomList,
+      audioRandomList,
+    ]);
 
     this.videoConstantList = vConstantList;
     this.audioConstantList = aConstantList;
-    console.log('constantList:::::', this.videoConstantList, this.audioConstantList);
-    // Get random video and audio list
-    const videoRandomIndex = Math.floor(Math.random() * vList.length);
-    const audioRandomIndex = Math.floor(Math.random() * aList.length);
-
-    const videoRandom = this.getChildren(
-      vList[videoRandomIndex].url
+    this.videoRandomList = vRandomList;
+    this.audioRandomList = aRandomList;
+    console.log(
+      'constantList:::::',
+      this.videoConstantList,
+      this.audioConstantList,
+      'randomList:::::',
+      this.videoRandomList,
+      this.audioRandomList
     );
-    const audioRandom = this.getChildren(
-      aList[audioRandomIndex].url
-    );
-    const [vRandom, aRandom] = await Promise.all([videoRandom, audioRandom]);
-    this.videoRandomList = vRandom;
-    this.audioRandomList = aRandom;
-    console.log('randomList:::::', this.videoRandomList, this.audioRandomList);
+    // // Get random video and audio list
+    // const videoRandomIndex = Math.floor(Math.random() * vList.length);
+    // const audioRandomIndex = Math.floor(Math.random() * aList.length);
 
+    // const videoRandom = this.getChildren(
+    //   vList[videoRandomIndex].url
+    // );
+    // const audioRandom = this.getChildren(
+    //   aList[audioRandomIndex].url
+    // );
+    // const [vRandom, aRandom] = await Promise.all([videoRandom, audioRandom]);
+    // this.videoRandomList = vRandom;
+    // this.audioRandomList = aRandom;
+    // console.log('randomList:::::', this.videoRandomList, this.audioRandomList);
   }
 
-  async getChildren(url: string) {
-    return new Promise(async (resolve, reject) => {
-      const recurse = async (url: string) => {
-        const itemInfo = await this.dataFetchService.fetchTopicList(url);
+  // async getChildren(url: string) {
+  //   return new Promise(async (resolve, reject) => {
+  //     const recurse = async (url: string) => {
+  //       const itemInfo = await this.dataFetchService.fetchTopicList(url);
 
-        if (
-          itemInfo.children &&
-          itemInfo.children.length > 0 &&
-          itemInfo.children[0].isLeaf === null
-        ) {
-          itemInfo.children = await Promise.all(
-            itemInfo.children.map(async (item) => {
-              const thumb = item.isVideo
-                ? await this.getItemThumbnail(item)
-                : '';
-              return {
-                ...item,
-                thumb: thumb,
-              };
-            })
-          );
+  //       if (
+  //         itemInfo.children &&
+  //         itemInfo.children.length > 0 &&
+  //         itemInfo.children[0].isLeaf === null
+  //       ) {
+  //         itemInfo.children = await Promise.all(
+  //           itemInfo.children.map(async (item) => {
+  //             const thumb = item.isVideo
+  //               ? await this.getItemThumbnail(item)
+  //               : '';
+  //             return {
+  //               ...item,
+  //               thumb: thumb,
+  //             };
+  //           })
+  //         );
 
-          resolve(itemInfo);
-        }
-        if (
-          itemInfo.children &&
-          itemInfo.children.length > 0 &&
-          itemInfo.children[0].isLeaf !== null
-        ) {
-          const randomIndex = Math.floor(
-            Math.random() * itemInfo.children.length
-          );
-          await recurse(itemInfo.children[randomIndex].url);
-        }
-        if (!itemInfo.children) {
-          reject();
-        }
-      };
+  //         resolve(itemInfo);
+  //       }
+  //       if (
+  //         itemInfo.children &&
+  //         itemInfo.children.length > 0 &&
+  //         itemInfo.children[0].isLeaf !== null
+  //       ) {
+  //         const randomIndex = Math.floor(
+  //           Math.random() * itemInfo.children.length
+  //         );
+  //         await recurse(itemInfo.children[randomIndex].url);
+  //       }
+  //       if (!itemInfo.children) {
+  //         reject();
+  //       }
+  //     };
 
-      recurse(url);
-    });
-  }
+  //     recurse(url);
+  //   });
+  // }
 
   async ngOnInit() {
     if (!this.dataFetchService.isInitialized) {
@@ -151,7 +183,6 @@ export class HomePage implements OnInit {
     //   return;
     // }
   }
-
 
   private getNonLeaf(item: any) {
     return new Promise(async (resolve) => {
