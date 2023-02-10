@@ -54,7 +54,7 @@
     >
     <ion-card-subtitle class="card-subtitle">
       {{
-        isLeaf != null
+        isLeaf != null && !isCardSlider
           ? subtitle + ('msg.chapter' | translate)
           : ('tabs.video' | translate)
       }}
