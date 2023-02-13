@@ -1,5 +1,5 @@
 diff --git a/node_modules/@firebase/util/dist/util-public.d.ts b/node_modules/@firebase/util/dist/util-public.d.ts
-index 099f078..07938a8 100644
+index 755602a..4b033c1 100644
 --- a/node_modules/@firebase/util/dist/util-public.d.ts
 +++ b/node_modules/@firebase/util/dist/util-public.d.ts
 @@ -36,27 +36,27 @@ export declare function async(fn: Function, onError?: ErrorFn): Function;
@@ -191,7 +191,7 @@ index 099f078..07938a8 100644
  };
  
  /**
-@@ -405,49 +405,49 @@ export declare function extractQuerystring(url: string): string;
+@@ -405,54 +405,54 @@ export declare function extractQuerystring(url: string): string;
   * @public
   */
  export declare interface FirebaseDefaults {
@@ -199,11 +199,21 @@ index 099f078..07938a8 100644
 -    emulatorHosts?: Record<string, string>;
 -    _authTokenSyncURL?: string;
 -    _authIdTokenMaxAge?: number;
+-    /**
+-     * Override Firebase's runtime environment detection and
+-     * force the SDK to act as if it were in the specified environment.
+-     */
+-    forceEnvironment?: 'browser' | 'node';
 -    [key: string]: unknown;
 +	config?: Record<string, string>;
 +	emulatorHosts?: Record<string, string>;
 +	_authTokenSyncURL?: string;
 +	_authIdTokenMaxAge?: number;
++	/**
++	 * Override Firebase's runtime environment detection and
++	 * force the SDK to act as if it were in the specified environment.
++	 */
++	forceEnvironment?: 'browser' | 'node';
 +	[key: string]: unknown;
  }
  
@@ -278,7 +288,7 @@ index 099f078..07938a8 100644
  }
  
  /**
-@@ -495,7 +495,7 @@ export declare const getDefaultEmulatorHostnameAndPort: (productName: string) =>
+@@ -509,7 +509,7 @@ export declare const getDefaults: () => FirebaseDefaults | undefined;
   * prefixed by "_")
   * @public
   */
@@ -286,8 +296,8 @@ index 099f078..07938a8 100644
 +export declare const getExperimentalSetting: <T extends ExperimentalKey>(name: T) => FirebaseDefaults[];
  
  /**
-  * Polyfill for `globalThis` object.
-@@ -646,12 +646,12 @@ export declare const isValidTimestamp: (token: string) => boolean;
+  * @license
+@@ -677,12 +677,12 @@ export declare const isValidTimestamp: (token: string) => boolean;
  export declare function jsonEval(str: string): unknown;
  
  export declare function map<K extends string, V, U>(obj: {
@@ -304,7 +314,7 @@ index 099f078..07938a8 100644
  
  /**
   * The maximum milliseconds to increase to.
-@@ -679,13 +679,13 @@ export declare const MAX_VALUE_MILLIS: number;
+@@ -710,13 +710,13 @@ export declare const MAX_VALUE_MILLIS: number;
  export declare type NextFn<T> = (value: T) => void;
  
  export declare interface Observable<T> {
@@ -322,7 +332,7 @@ index 099f078..07938a8 100644
  }
  
  /**
-@@ -735,7 +735,7 @@ export declare type PartialObserver<T> = Partial<Observer<T>>;
+@@ -766,7 +766,7 @@ export declare type PartialObserver<T> = Partial<Observer<T>>;
   * Note: You must prepend it with ? when adding it to a URL.
   */
  export declare function querystring(querystringParams: {
@@ -331,7 +341,7 @@ index 099f078..07938a8 100644
  }): string;
  
  /**
-@@ -796,49 +796,49 @@ export declare function safeGet<T extends object, K extends keyof T>(obj: T, key
+@@ -827,49 +827,49 @@ export declare function safeGet<T extends object, K extends keyof T>(obj: T, key
   * @struct
   */
  export declare class Sha1 {
@@ -424,7 +434,7 @@ index 099f078..07938a8 100644
  }
  
  /**
-@@ -856,7 +856,7 @@ export declare function stringify(data: unknown): string;
+@@ -887,7 +887,7 @@ export declare function stringify(data: unknown): string;
  export declare const stringLength: (str: string) => number;
  
  export declare interface StringLike {
@@ -433,7 +443,7 @@ index 099f078..07938a8 100644
  }
  
  /**
-@@ -870,8 +870,8 @@ export declare const stringToByteArray: (str: string) => number[];
+@@ -901,8 +901,8 @@ export declare const stringToByteArray: (str: string) => number[];
   * callbacks, or a object interface with callback properties.
   */
  export declare interface Subscribe<T> {

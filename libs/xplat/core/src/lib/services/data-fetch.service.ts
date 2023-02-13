@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { core } from '../base/core';
 import { BehaviorSubject } from 'rxjs';
 import { LocalforageService } from './localforage.service';
-import * as KardiaClient from 'kardia-js-sdk';
-import { ABI, bytesCode } from './smc';
+// import * as KardiaClient from 'kardia-js-sdk';
+// import { ABI, bytesCode } from './smc';
 
 import { initializeApp } from 'firebase/app';
 import { getRemoteConfig } from 'firebase/remote-config';
@@ -42,6 +42,8 @@ export class DataFetchService {
 	public searchAPIKey: string;
 	public audioConstantUrl: string;
 	public videoConstantUrl: string;
+	public audioRandomUrl: string;
+	public videoRandomUrl: string;
 	public defaultImgs: string;
 	public searchClient;
 	public searchDatabase: string = 'VGM-HOA';
@@ -444,3 +446,4 @@ export class DataFetchService {
 		); // change this.iosCloudGateway to this.cloudGateway
 	}
 }
+

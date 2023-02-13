@@ -39,7 +39,7 @@
     "build.api.prod": "nx build api --configuration=production",
     "docker.api": "npm run build.api.prod && docker-compose -f docker-compose-api.yml build",
     "docker.ionic.fy": "npm run prepare.ionic.fy && docker-compose -f docker-compose-fy.yml build",
-    "prepare.ionic.fy": "npm run clean && npm run clean.ionic.fy && npm run build.ionic.fy.prod",
+    "prepare.ionic.fy": "npm run clean && npm run clean.ionic.fy && npm run patch-package && npm run build.ionic.fy.prod",
     "prepare.ionic.fy.ios": "npm run prepare.ionic.fy && cd apps/ionic-fy && npx rimraf -- ios && npm run cap.add.ios && node ios-patch.js && npm run icon.ios && npx cap sync ios",
     "prepare.ionic.fy.android": "npm run prepare.ionic.fy && cd apps/ionic-fy && npx rimraf -- android && npm run cap.add.android && node android-patch.js && npm run icon.android && npx cap sync android",
     "sync.ionic.fy.ios": "cd apps/ionic-fy && npx cap sync ios",

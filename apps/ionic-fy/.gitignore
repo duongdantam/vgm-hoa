@@ -19,7 +19,9 @@ npm-debug.log*
 .versions/
 coverage/
 www/
-android/
+android/*
+resources/android/*
+!resources/android/icon-*.png
 ios/
 node_modules/
 tmp/
