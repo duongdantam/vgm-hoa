@@ -33,6 +33,19 @@
   "video": {
     "topic": "[主題]"
   },
+  "button": {
+    "time": "時間: ",
+    "share": "分享",
+    "delete": "刪除",
+    "done": "完成",
+    "download": "下載",
+    "downloaded": "已下載",
+    "downloading": "下載中",
+    "download_media": "下載",
+    "download_list": "下載課程",
+    "downloaded_list": "課程已下載",
+    "choose_quality": "選擇下載質量"
+  },
   "msg": {
     "notfound": "404 - 頁面不存在",
     "share": "分享",
@@ -44,6 +57,26 @@
     "inform": "Thông báo",
     "update": "Cập nhật",
     "later": "Để sau",
+    "notification": "Thông báo",
+    "confirm": "Xác nhận",
+    "setting_confirm": "Thay đổi với các danh mục đã chọn",
+    "cancel": "取消",
+    "on": "Đã bật",
+    "off": "Đã tắt",
+    "offline_for_better": "Chọn danh mục offline để có trải nghiệm tốt hơn",
+    "default_quality": "Chất lượng offline mặc định",
+    "total_size": "Dung lượng đã tải",
+    "download_mac_x64": "MacOS x64",
+    "download_mac_arm": "MacOS ARM",
+    "download_desktop_app": "Tải APP desktop",
+    "version": "Phiên bản",
+    "url_not_ready": "Liên kết chưa sẵn sàng, vui lòng thử lại sau",
+    "ok": "OK",
+    "no_data": "Không tìm thấy dữ liệu",
+    "delete_list": "刪除系列",
+    "deleted_list": "已刪除系列: ",
+    "media_list": "Loạt bài",
+    "autostart": "Khởi động app cùng windows",
     "video": {
       "add": "視頻已保存到收藏夾",
       "remove": "視頻已刪除",
@@ -88,5 +121,11 @@
   },
   "input": {
     "search": "快速搜索"
+  },
+  "modal": {
+    "share": "分享",
+    "notification": "信息",
+    "no_notification": "暫沒有新信息",
+    "new_update_available": "Đã có bản APP desktop, tải ngay!"
   }
 }

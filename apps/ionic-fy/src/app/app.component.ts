@@ -104,17 +104,15 @@ export class AppComponent {
 	//   console.log('onDidDismiss resolved with role', role);
 	// }
 
-	initializeApp() {
-
-
+	async initializeApp() {
+		await this.dataFetchService.initPlatform();
 		// add google analytics
-
 		this.ga.startTrackerWithId(this.googleTrackerID); // G-FG1Z70K8SM G-T6WF46T2D9
 		this.platform.ready().then(async () => {
-			console.log('platforms:', this.platform.platforms())
+			const platform = `${this.windowMode}: ${this.dataFetchService.isTauri ? 'Desktop App' : this.platform.is('capacitor') ? 'Mobile App' : 'Browser'} - ${this.dataFetchService.os} - ${this.platform.platforms().toString()}`
 			await SplashScreen.hide();
-			this.ga.trackPlatform(`${this.windowMode}: ${this.platform.platforms().toString()}`);
-			console.log(this.windowMode, ':', this.platform.platforms().toString());
+			this.ga.trackPlatform(platform);
+			console.log('platforms::', platform)
 			// this.trackView('testhahah', 'asdfksadfh');
 			// this.ga.startTrackerWithId('G-FG1Z70K8SM').then(() => { // tracking id: 'UA-56312406-1'
 			//   console.log('Google analytics is ready now');

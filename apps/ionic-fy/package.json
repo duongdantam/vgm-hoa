@@ -5,6 +5,7 @@
   "author": "FY Developer",
   "description": "Fuyin Media",
   "scripts": {
+    "tauri": "tauri",
     "cap.add.ios": "npx cap add ios",
     "cap.add.android": "npx cap add android",
     "cap.ios": "npx cap open ios",
@@ -12,7 +13,8 @@
     "cap.copy": "npx cap copy",
     "cap.update": "npx cap update",
     "icon.ios": "npx cordova-res ios --skip-config --copy",
-    "icon.android": "npx cordova-res android --skip-config --copy"
+    "icon.android": "npx cordova-res android --skip-config --copy",
+    "icon.tauri": "npm run tauri icon src-tauri/icons/icon.png"
   },
   "dependencies": {
     "@capacitor/android": "3.3.4",
@@ -20,6 +22,7 @@
     "@capacitor/ios": "~3.3.4",
     "@capacitor/share": "^1.0.7",
     "@capacitor/splash-screen": "^1.2.1",
+    "@tauri-apps/api": "^1.2.0",
     "capacitor-music-controls-plugin": "^1.0.1",
     "cordova-android": "8.0.0",
     "cordova-ios": "5.0.0",
@@ -30,6 +33,8 @@
   },
   "devDependencies": {
     "@angular/cli": "12.0.5",
-    "@capacitor/cli": "~3.3.4"
+    "@capacitor/cli": "~3.3.4",
+    "@tauri-apps/cli": "^1.2.2",
+    "@types/node": "^12.12.38"
   }
 }

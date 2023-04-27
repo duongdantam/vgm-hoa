@@ -15,7 +15,7 @@
   <!-- <ion-item lines="inset" *ngIf="home !== 'video' && home !== 'audio'">
   </ion-item> -->
   <!-- <ion-title>Solid Buttons</ion-title> -->
-  <div style="display: flex; align-items: center">
+  <div style="display: flex; align-items: center; transition: width 0.3s">
     <ion-searchbar
       id="mobile-search-bar"
       [placeholder]="'input.search' | translate"
@@ -30,6 +30,7 @@
       class="{{ searchOnFocus ? 'on-focus' : '' }}"
     >
     </ion-searchbar>
+
     <ion-button
       fill="solid"
       class="search-btn {{ searchOnFocus ? 'isFocus' : '' }}"
@@ -57,8 +58,29 @@
       {{ 'app.open' | translate }}
       <!-- {{ dataFetchService.appInstalled ? 'Mở App' : 'Tải App' }} -->
     </ion-button>
-    <ion-button>
-      <ion-icon name="fy-notification-outline"></ion-icon>
+    <div class="downloading" *ngIf="queueService.downloadingList.length > 0">
+      <ion-icon color="light" name="download-outline"></ion-icon>
+      <ion-text
+        color="light"
+        style="padding: 0 5px"
+        *ngIf="
+          queueService.downloadingList[0] &&
+          queueService.downloadingList[0].name
+        "
+      >
+        {{ (queueService.downloadProgress | number: '2.0-0') + '%' }}</ion-text
+      >
+    </div>
+
+    <ion-button (click)="openNotification()">
+      <ion-icon
+        color="light"
+        [name]="
+          !dataFetchService.notificationList
+            ? 'fy-notification-outline'
+            : 'notifications'
+        "
+      ></ion-icon>
     </ion-button>
   </ion-buttons>
 </ion-toolbar>

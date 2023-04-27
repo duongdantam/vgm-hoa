@@ -84,7 +84,7 @@
           </ion-fab-button>
 
           <ion-fab-button
-            (click)="onDownload(item)"
+            (click)="onDownloadSingleSelector(item)"
             color="{{ downloadedList.indexOf(item.id) >= 0 ? '' : '' }}"
             ><ion-icon
               name="{{

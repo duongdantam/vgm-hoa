@@ -97,7 +97,7 @@
               <ion-icon
                 slot="icon-only"
                 name="{{
-                  videoIsPlaying
+                  playingState && playingState.isPlaying
                     ? 'pause-circle-outline'
                     : 'play-circle-outline'
                 }}"
@@ -134,14 +134,14 @@
               <div class="quality-download-selector" *ngIf="downloadBtn">
                 <ion-button
                   *ngFor="let quality of ['1080p', '720p', '480p']"
-                  (click)="onDownload(videoPlayingItem, quality)"
+                  (click)="onDownload(playingItem, quality)"
                   >{{ quality }}</ion-button
                 >
               </div>
               <ion-button
                 expand="block"
                 fill="clear"
-                (click)="addToFavorite(videoPlayingItem)"
+                (click)="addToFavorite(playingItem)"
               >
                 <ion-icon
                   slot="icon-only"
@@ -157,7 +157,7 @@
                 expand="block"
                 fill="clear"
                 size="small"
-                (click)="addToFavorite(videoPlayingItem)"
+                (click)="addToFavorite(playingItem)"
               >
                 <ion-icon slot="icon-only" name="fy-description"> </ion-icon>
               </ion-button>
@@ -171,7 +171,7 @@
                 fill="clear"
                 strong
                 size="small"
-                (click)="onShare(videoPlayingItem)"
+                (click)="onShare(playingItem)"
               >
                 <ion-icon slot="icon-only" name="fy-share-outline"> </ion-icon>
               </ion-button>
@@ -183,7 +183,7 @@
                 expand="block"
                 fill="clear"
                 size="small"
-                (click)="addToFavorite(videoPlayingItem)"
+                (click)="addToFavorite(playingItem)"
               >
                 <ion-icon
                   slot="icon-only"
@@ -201,8 +201,7 @@
                 size="small"
                 fill="clear"
                 strong
-                (click)="onDownloadSelector(videoPlayingItem, 'focus')"
-                (ionBlur)="onDownloadSelector(videoPlayingItem, 'blur')"
+                (click)="onDownloadSingleSelector(playingItem)"
               >
                 <div class="download-progress" *ngIf="isDownloading"></div>
                 <ion-icon
@@ -222,13 +221,13 @@
                     : ('msg.favorite.downloaded' | translate)
                 }}</ion-label
               >
-              <div class="quality-download-selector" *ngIf="downloadBtn">
+              <!-- <div class="quality-download-selector" *ngIf="downloadBtn">
                 <ion-button
                   *ngFor="let quality of ['1080p', '720p', '480p']"
-                  (click)="onDownload(videoPlayingItem, quality)"
+                  (click)="onDownload(playingItem, quality)"
                   >{{ quality }}</ion-button
                 >
-              </div>
+              </div> -->
             </ion-col>
           </ion-row>
         </ion-row>

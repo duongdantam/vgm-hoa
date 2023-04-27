@@ -1,0 +1,59 @@
+<ion-content>
+  <ion-grid>
+    <ion-item
+      lines="none"
+      style="--border-style: none; align-items: flex-start; height: 30px"
+    >
+      <ion-label
+        color="primary"
+        style="font-weight: bold; text-align: center; margin: 0"
+      >
+        {{ 'modal.notification' | translate }}
+      </ion-label>
+    </ion-item>
+
+    <ion-item
+      *ngIf="
+        !desktopAppUpdateUrl && !notificationArr.length;
+        else notificationList
+      "
+      lines="none"
+      style="width: 100%; --padding-start: 10px"
+    >
+      <ion-icon
+        name="notifications"
+        color="primary"
+        slot="start"
+        size="small"
+      ></ion-icon>
+      <ion-text color="primary">
+        {{ 'modal.no_notification' | translate }}
+      </ion-text>
+    </ion-item>
+
+    <ng-template #notificationList>
+      <ion-list>
+        <!-- New update notification here -->
+        <ion-item
+          *ngIf="platform.is('desktop') && desktopAppUpdateUrl"
+          style="width: 100%; --padding-start: 10px"
+          lines="none"
+          button
+          detail="false"
+          (click)="downloadDesktopApp()"
+        >
+          <ion-icon
+            name="notifications"
+            color="success"
+            slot="start"
+            size="small"
+          ></ion-icon>
+          <ion-text color="primary">
+            {{ 'modal.new_update_available' | translate }}
+          </ion-text>
+        </ion-item>
+        <!-- New media notification here -->
+      </ion-list>
+    </ng-template>
+  </ion-grid>
+</ion-content>
