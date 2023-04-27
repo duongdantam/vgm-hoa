@@ -1,5 +1,5 @@
 diff --git a/node_modules/@firebase/util/dist/util-public.d.ts b/node_modules/@firebase/util/dist/util-public.d.ts
-index 755602a..4b033c1 100644
+index d7f0f35..67e828b 100644
 --- a/node_modules/@firebase/util/dist/util-public.d.ts
 +++ b/node_modules/@firebase/util/dist/util-public.d.ts
 @@ -36,27 +36,27 @@ export declare function async(fn: Function, onError?: ErrorFn): Function;
@@ -100,8 +100,13 @@ index 755602a..4b033c1 100644
  };
  
  /**
-@@ -190,17 +190,17 @@ export declare function createSubscribe<T>(executor: Executor<T>, onNoObservers?
- export declare const decode: (token: string) => DecodedToken;
+@@ -193,21 +193,21 @@ export declare const decode: (token: string) => DecodedToken;
+  * An error encountered while decoding base64 string.
+  */
+ export declare class DecodeBase64StringError extends Error {
+-    readonly name = "DecodeBase64StringError";
++	readonly name = "DecodeBase64StringError";
+ }
  
  declare interface DecodedToken {
 -    header: object;
@@ -126,7 +131,7 @@ index 755602a..4b033c1 100644
  }
  
  /**
-@@ -262,36 +262,36 @@ export declare function deepExtend(target: unknown, source: unknown): unknown;
+@@ -269,36 +269,36 @@ export declare function deepExtend(target: unknown, source: unknown): unknown;
   * limitations under the License.
   */
  export declare class Deferred<R> {
@@ -182,7 +187,7 @@ index 755602a..4b033c1 100644
  }
  
  export declare type ErrorFn = (error: Error) => void;
-@@ -353,7 +353,7 @@ export declare type ErrorFn = (error: Error) => void;
+@@ -360,7 +360,7 @@ export declare type ErrorFn = (error: Error) => void;
   *   }
   */
  export declare type ErrorMap<ErrorCode extends string> = {
@@ -191,7 +196,7 @@ index 755602a..4b033c1 100644
  };
  
  /**
-@@ -405,54 +405,54 @@ export declare function extractQuerystring(url: string): string;
+@@ -412,54 +412,54 @@ export declare function extractQuerystring(url: string): string;
   * @public
   */
  export declare interface FirebaseDefaults {
@@ -288,7 +293,7 @@ index 755602a..4b033c1 100644
  }
  
  /**
-@@ -509,7 +509,7 @@ export declare const getDefaults: () => FirebaseDefaults | undefined;
+@@ -516,7 +516,7 @@ export declare const getDefaults: () => FirebaseDefaults | undefined;
   * prefixed by "_")
   * @public
   */
@@ -297,7 +302,7 @@ index 755602a..4b033c1 100644
  
  /**
   * @license
-@@ -677,12 +677,12 @@ export declare const isValidTimestamp: (token: string) => boolean;
+@@ -684,12 +684,12 @@ export declare const isValidTimestamp: (token: string) => boolean;
  export declare function jsonEval(str: string): unknown;
  
  export declare function map<K extends string, V, U>(obj: {
@@ -314,7 +319,7 @@ index 755602a..4b033c1 100644
  
  /**
   * The maximum milliseconds to increase to.
-@@ -710,13 +710,13 @@ export declare const MAX_VALUE_MILLIS: number;
+@@ -717,13 +717,13 @@ export declare const MAX_VALUE_MILLIS: number;
  export declare type NextFn<T> = (value: T) => void;
  
  export declare interface Observable<T> {
@@ -332,7 +337,7 @@ index 755602a..4b033c1 100644
  }
  
  /**
-@@ -766,7 +766,7 @@ export declare type PartialObserver<T> = Partial<Observer<T>>;
+@@ -773,7 +773,7 @@ export declare type PartialObserver<T> = Partial<Observer<T>>;
   * Note: You must prepend it with ? when adding it to a URL.
   */
  export declare function querystring(querystringParams: {
@@ -341,7 +346,7 @@ index 755602a..4b033c1 100644
  }): string;
  
  /**
-@@ -827,49 +827,49 @@ export declare function safeGet<T extends object, K extends keyof T>(obj: T, key
+@@ -834,49 +834,49 @@ export declare function safeGet<T extends object, K extends keyof T>(obj: T, key
   * @struct
   */
  export declare class Sha1 {
@@ -434,7 +439,7 @@ index 755602a..4b033c1 100644
  }
  
  /**
-@@ -887,7 +887,7 @@ export declare function stringify(data: unknown): string;
+@@ -894,7 +894,7 @@ export declare function stringify(data: unknown): string;
  export declare const stringLength: (str: string) => number;
  
  export declare interface StringLike {
@@ -443,7 +448,7 @@ index 755602a..4b033c1 100644
  }
  
  /**
-@@ -901,8 +901,8 @@ export declare const stringToByteArray: (str: string) => number[];
+@@ -908,8 +908,8 @@ export declare const stringToByteArray: (str: string) => number[];
   * callbacks, or a object interface with callback properties.
   */
  export declare interface Subscribe<T> {

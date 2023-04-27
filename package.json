@@ -100,6 +100,7 @@
     "@ngx-translate/http-loader": "~6.0.0",
     "@nrwl/angular": "11.5.1",
     "@tauri-apps/api": "^1.2.0",
+    "@types/lodash": "^4.14.191",
     "@videojs/http-streaming": "2.7.1",
     "@videojs/themes": "^1.0.1",
     "angular-device-information": "^1.0.8",
