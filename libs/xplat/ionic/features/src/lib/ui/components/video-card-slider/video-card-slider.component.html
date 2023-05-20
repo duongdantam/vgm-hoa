@@ -2,7 +2,7 @@
   <ion-row class="ion-justify-content-between ion-align-items-center">
     <ion-col style="text-align: left">
       <h6 style="margin-top: 5px; color: var(--ion-color-secondary-shade)">
-        <ion-text>{{ formatName(topic.name) }}</ion-text>
+        <ion-text>{{ topic.name | formatName }}</ion-text>
       </h6>
     </ion-col>
   </ion-row>

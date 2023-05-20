@@ -27,14 +27,7 @@ export class AudioCardSliderComponent
 	extends BaseComponent
 	implements OnInit, OnChanges {
 	@Input() topic: any = {};
-	public formatName(name: string) {
-		name = name.replace(/^[\d\s-]+/g, '');
-		if (name.match(/^[年|月|日]$/)) {
-			return "天天親近主"
-		} else {
-			return name
-		}
-	}
+
 
 	// @Output() public onSlideTouch: EventEmitter<boolean> = new EventEmitter();
 	// @Input() topicList: any[] = [];

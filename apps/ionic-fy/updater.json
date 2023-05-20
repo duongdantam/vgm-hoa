@@ -1,0 +1,23 @@
+{
+  "version": "v1.0.0",
+  "notes": "FUYIN TV Version v1.0.0",
+  "pub_date": "2023-04-25T12:25:57Z",
+  "platforms": {
+    "darwin-x86_64": {
+      "signature": "",
+      "url": "https://link.storjshare.io/raw/jwdt5hma23wwnzs6o25odgxjs36a/releases/vgm-hoa/FuyinTV_1.0.0_x64.dmg"
+    },
+    "darwin-aarch64": {
+      "signature": "",
+      "url": "https://link.storjshare.io/raw/jwdt5hma23wwnzs6o25odgxjs36a/releases/vgm-hoa/FuyinTV_1.0.0_aarch64.dmg"
+    },
+    "linux-x86_64": {
+      "signature": "",
+      "url": "https://link.storjshare.io/raw/jwdt5hma23wwnzs6o25odgxjs36a/releases/vgm-hoa/FuyinTV_1.0.0_amd64.AppImage"
+    },
+    "windows-x86_64": {
+      "signature": "",
+      "url": "https://link.storjshare.io/raw/jwdt5hma23wwnzs6o25odgxjs36a/releases/vgm-hoa/FuyinTV_1.0.0_x64.msi"
+    }
+  }
+}

@@ -53,7 +53,7 @@ self.addEventListener('fetch', async function (event) {
         )
       ) {
         const ab = await abFromIDB(event.request.url);
-        console.log('getting IMG from IDB::', event.request.url, ab);
+        // console.log('getting IMG from IDB::', event.request.url, ab);
         if (ab) return new Response(ab.data, { status: 200, statusText: 'Ok' });
       }
 
@@ -114,7 +114,7 @@ self.addEventListener('fetch', async function (event) {
 });
 
 const abFromIDB = async function (key) {
-  console.log('abFromIDB called::', key);
+  // console.log('abFromIDB called::', key);
   let request = await indexedDB.open('OfflineDB', 10);
   return new Promise(async (resolve) => {
     // request.onerror = async (e) => {

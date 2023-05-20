@@ -154,15 +154,17 @@ ion-searchbar {
 
 .icon-downloading {
   position: absolute;
-  top: 0;
-  left: 0;
+  top: 7px;
+  right: 25px;
   z-index: 20;
   height: 30px;
+  opacity: 1;
 }
 
 .downloading {
   opacity: 0.8;
-  position: absolute;
+  // position: absolute;
+  // left:0
 }
 
 .downloading::after {

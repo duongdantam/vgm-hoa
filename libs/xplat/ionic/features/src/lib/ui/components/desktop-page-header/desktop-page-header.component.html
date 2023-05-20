@@ -1,11 +1,20 @@
-<!-- <ion-button
-  *ngIf="dataFetchService.downloading"
+<ion-button
+  *ngIf="queueService.downloadingList.length > 0"
+  disabled
   color="primary"
   fill="clear"
-  class="icon-downloading ion-hide-lg-down"
+  class="icon-downloading"
 >
+  <ion-text
+    style="padding: 0 5px"
+    *ngIf="
+      queueService.downloadingList[0] && queueService.downloadingList[0].name
+    "
+  >
+    {{ (queueService.downloadProgress | number: '2.0-0') + '%' }}
+  </ion-text>
   <ion-icon class="downloading" name="fy-downloading"></ion-icon>
-</ion-button> -->
+</ion-button>
 
 <ion-toolbar>
   <ion-buttons slot="start">
@@ -52,8 +61,14 @@
   </div>
 
   <ion-buttons slot="end">
-    <ion-button color="primary">
-      <ion-icon name="notifications-outline"></ion-icon>
+    <ion-button color="primary" (click)="openNotification()">
+      <ion-icon
+        [name]="
+          !dataFetchService.notificationList
+            ? 'notifications-off-outline'
+            : 'notifications'
+        "
+      ></ion-icon>
     </ion-button>
   </ion-buttons>
 </ion-toolbar>

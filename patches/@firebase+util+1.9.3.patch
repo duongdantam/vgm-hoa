@@ -1,0 +1,461 @@
+diff --git a/node_modules/@firebase/util/dist/util-public.d.ts b/node_modules/@firebase/util/dist/util-public.d.ts
+index d7f0f35..67e828b 100644
+--- a/node_modules/@firebase/util/dist/util-public.d.ts
++++ b/node_modules/@firebase/util/dist/util-public.d.ts
+@@ -36,27 +36,27 @@ export declare function async(fn: Function, onError?: ErrorFn): Function;
+  * limitations under the License.
+  */
+ declare interface Base64 {
+-    byteToCharMap_: {
+-        [key: number]: string;
+-    } | null;
+-    charToByteMap_: {
+-        [key: string]: number;
+-    } | null;
+-    byteToCharMapWebSafe_: {
+-        [key: number]: string;
+-    } | null;
+-    charToByteMapWebSafe_: {
+-        [key: string]: number;
+-    } | null;
+-    ENCODED_VALS_BASE: string;
+-    readonly ENCODED_VALS: string;
+-    readonly ENCODED_VALS_WEBSAFE: string;
+-    HAS_NATIVE_SUPPORT: boolean;
+-    encodeByteArray(input: number[] | Uint8Array, webSafe?: boolean): string;
+-    encodeString(input: string, webSafe?: boolean): string;
+-    decodeString(input: string, webSafe: boolean): string;
+-    decodeStringToByteArray(input: string, webSafe: boolean): number[];
+-    init_(): void;
++	byteToCharMap_: {
++		[key: number]: string;
++	} | null;
++	charToByteMap_: {
++		[key: string]: number;
++	} | null;
++	byteToCharMapWebSafe_: {
++		[key: number]: string;
++	} | null;
++	charToByteMapWebSafe_: {
++		[key: string]: number;
++	} | null;
++	ENCODED_VALS_BASE: string;
++	readonly ENCODED_VALS: string;
++	readonly ENCODED_VALS_WEBSAFE: string;
++	HAS_NATIVE_SUPPORT: boolean;
++	encodeByteArray(input: number[] | Uint8Array, webSafe?: boolean): string;
++	encodeString(input: string, webSafe?: boolean): string;
++	decodeString(input: string, webSafe: boolean): string;
++	decodeStringToByteArray(input: string, webSafe: boolean): number[];
++	init_(): void;
+ }
+ 
+ export declare const base64: Base64;
+@@ -107,7 +107,7 @@ export declare function calculateBackoffMillis(backoffCount: number, intervalMil
+  * limitations under the License.
+  */
+ declare interface Claims {
+-    [key: string]: {};
++	[key: string]: {};
+ }
+ 
+ /**
+@@ -127,7 +127,7 @@ declare interface Claims {
+  * limitations under the License.
+  */
+ export declare interface Compat<T> {
+-    _delegate: T;
++	_delegate: T;
+ }
+ 
+ export declare type CompleteFn = () => void;
+@@ -136,18 +136,18 @@ export declare type CompleteFn = () => void;
+  * @fileoverview Firebase constants.  Some of these (@defines) can be overridden at compile-time.
+  */
+ export declare const CONSTANTS: {
+-    /**
+-     * @define {boolean} Whether this is the client Node.js SDK.
+-     */
+-    NODE_CLIENT: boolean;
+-    /**
+-     * @define {boolean} Whether this is the Admin Node.js SDK.
+-     */
+-    NODE_ADMIN: boolean;
+-    /**
+-     * Firebase SDK Version
+-     */
+-    SDK_VERSION: string;
++	/**
++	 * @define {boolean} Whether this is the client Node.js SDK.
++	 */
++	NODE_CLIENT: boolean;
++	/**
++	 * @define {boolean} Whether this is the Admin Node.js SDK.
++	 */
++	NODE_ADMIN: boolean;
++	/**
++	 * Firebase SDK Version
++	 */
++	SDK_VERSION: string;
+ };
+ 
+ /**
+@@ -193,21 +193,21 @@ export declare const decode: (token: string) => DecodedToken;
+  * An error encountered while decoding base64 string.
+  */
+ export declare class DecodeBase64StringError extends Error {
+-    readonly name = "DecodeBase64StringError";
++	readonly name = "DecodeBase64StringError";
+ }
+ 
+ declare interface DecodedToken {
+-    header: object;
+-    claims: Claims;
+-    data: object;
+-    signature: string;
++	header: object;
++	claims: Claims;
++	data: object;
++	signature: string;
+ }
+ 
+ declare interface DecodedToken {
+-    header: object;
+-    claims: Claims;
+-    data: object;
+-    signature: string;
++	header: object;
++	claims: Claims;
++	data: object;
++	signature: string;
+ }
+ 
+ /**
+@@ -269,36 +269,36 @@ export declare function deepExtend(target: unknown, source: unknown): unknown;
+  * limitations under the License.
+  */
+ export declare class Deferred<R> {
+-    promise: Promise<R>;
+-    reject: (value?: unknown) => void;
+-    resolve: (value?: unknown) => void;
+-    constructor();
+-    /**
+-     * Our API internals are not promiseified and cannot because our callback APIs have subtle expectations around
+-     * invoking promises inline, which Promises are forbidden to do. This method accepts an optional node-style callback
+-     * and returns a node-style callback which will resolve or reject the Deferred's promise.
+-     */
+-    wrapCallback(callback?: (error?: unknown, value?: unknown) => void): (error: unknown, value?: unknown) => void;
++	promise: Promise<R>;
++	reject: (value?: unknown) => void;
++	resolve: (value?: unknown) => void;
++	constructor();
++	/**
++	 * Our API internals are not promiseified and cannot because our callback APIs have subtle expectations around
++	 * invoking promises inline, which Promises are forbidden to do. This method accepts an optional node-style callback
++	 * and returns a node-style callback which will resolve or reject the Deferred's promise.
++	 */
++	wrapCallback(callback?: (error?: unknown, value?: unknown) => void): (error: unknown, value?: unknown) => void;
+ }
+ 
+ export declare type EmulatorMockTokenOptions = ({
+-    user_id: string;
++	user_id: string;
+ } | {
+-    sub: string;
++	sub: string;
+ }) & Partial<FirebaseIdToken>;
+ 
+ export declare interface ErrorData {
+-    [key: string]: unknown;
++	[key: string]: unknown;
+ }
+ 
+ export declare class ErrorFactory<ErrorCode extends string, ErrorParams extends {
+-    readonly [K in ErrorCode]?: ErrorData;
++	readonly [K in ErrorCode]?: ErrorData;
+ } = {}> {
+-    private readonly service;
+-    private readonly serviceName;
+-    private readonly errors;
+-    constructor(service: string, serviceName: string, errors: ErrorMap<ErrorCode>);
+-    create<K extends ErrorCode>(code: K, ...data: K extends keyof ErrorParams ? [ErrorParams[K]] : []): FirebaseError;
++	private readonly service;
++	private readonly serviceName;
++	private readonly errors;
++	constructor(service: string, serviceName: string, errors: ErrorMap<ErrorCode>);
++	create<K extends ErrorCode>(code: K, ...data: K extends keyof ErrorParams ? [ErrorParams[K]] : []): FirebaseError;
+ }
+ 
+ export declare type ErrorFn = (error: Error) => void;
+@@ -360,7 +360,7 @@ export declare type ErrorFn = (error: Error) => void;
+  *   }
+  */
+ export declare type ErrorMap<ErrorCode extends string> = {
+-    readonly [K in ErrorCode]: string;
++	readonly [K in ErrorCode]: string;
+ };
+ 
+ /**
+@@ -412,54 +412,54 @@ export declare function extractQuerystring(url: string): string;
+  * @public
+  */
+ export declare interface FirebaseDefaults {
+-    config?: Record<string, string>;
+-    emulatorHosts?: Record<string, string>;
+-    _authTokenSyncURL?: string;
+-    _authIdTokenMaxAge?: number;
+-    /**
+-     * Override Firebase's runtime environment detection and
+-     * force the SDK to act as if it were in the specified environment.
+-     */
+-    forceEnvironment?: 'browser' | 'node';
+-    [key: string]: unknown;
++	config?: Record<string, string>;
++	emulatorHosts?: Record<string, string>;
++	_authTokenSyncURL?: string;
++	_authIdTokenMaxAge?: number;
++	/**
++	 * Override Firebase's runtime environment detection and
++	 * force the SDK to act as if it were in the specified environment.
++	 */
++	forceEnvironment?: 'browser' | 'node';
++	[key: string]: unknown;
+ }
+ 
+ export declare class FirebaseError extends Error {
+-    /** The error code for this error. */
+-    readonly code: string;
+-    /** Custom data for this error. */
+-    customData?: Record<string, unknown> | undefined;
+-    /** The custom name for all FirebaseErrors. */
+-    readonly name: string;
+-    constructor(
+-    /** The error code for this error. */
+-    code: string, message: string, 
+-    /** Custom data for this error. */
+-    customData?: Record<string, unknown> | undefined);
++	/** The error code for this error. */
++	readonly code: string;
++	/** Custom data for this error. */
++	customData?: Record<string, unknown> | undefined;
++	/** The custom name for all FirebaseErrors. */
++	readonly name: string;
++	constructor(
++		/** The error code for this error. */
++		code: string, message: string,
++		/** Custom data for this error. */
++		customData?: Record<string, unknown> | undefined);
+ }
+ 
+ declare interface FirebaseIdToken {
+-    iss: string;
+-    aud: string;
+-    sub: string;
+-    iat: number;
+-    exp: number;
+-    user_id: string;
+-    auth_time: number;
+-    provider_id?: 'anonymous';
+-    email?: string;
+-    email_verified?: boolean;
+-    phone_number?: string;
+-    name?: string;
+-    picture?: string;
+-    firebase: {
+-        sign_in_provider: FirebaseSignInProvider;
+-        identities?: {
+-            [provider in FirebaseSignInProvider]?: string[];
+-        };
+-    };
+-    [claim: string]: unknown;
+-    uid?: never;
++	iss: string;
++	aud: string;
++	sub: string;
++	iat: number;
++	exp: number;
++	user_id: string;
++	auth_time: number;
++	provider_id?: 'anonymous';
++	email?: string;
++	email_verified?: boolean;
++	phone_number?: string;
++	name?: string;
++	picture?: string;
++	firebase: {
++		sign_in_provider: FirebaseSignInProvider;
++		identities?: {
++			[provider in FirebaseSignInProvider]?: string[];
++		};
++	};
++	[claim: string]: unknown;
++	uid?: never;
+ }
+ 
+ /**
+@@ -516,7 +516,7 @@ export declare const getDefaults: () => FirebaseDefaults | undefined;
+  * prefixed by "_")
+  * @public
+  */
+-export declare const getExperimentalSetting: <T extends ExperimentalKey>(name: T) => FirebaseDefaults[`_${T}`];
++export declare const getExperimentalSetting: <T extends ExperimentalKey>(name: T) => FirebaseDefaults[];
+ 
+ /**
+  * @license
+@@ -684,12 +684,12 @@ export declare const isValidTimestamp: (token: string) => boolean;
+ export declare function jsonEval(str: string): unknown;
+ 
+ export declare function map<K extends string, V, U>(obj: {
+-    [key in K]: V;
++	[key in K]: V;
+ }, fn: (value: V, key: K, obj: {
+-    [key in K]: V;
++	[key in K]: V;
+ }) => U, contextObj?: unknown): {
+-    [key in K]: U;
+-};
++		[key in K]: U;
++	};
+ 
+ /**
+  * The maximum milliseconds to increase to.
+@@ -717,13 +717,13 @@ export declare const MAX_VALUE_MILLIS: number;
+ export declare type NextFn<T> = (value: T) => void;
+ 
+ export declare interface Observable<T> {
+-    subscribe: Subscribe<T>;
++	subscribe: Subscribe<T>;
+ }
+ 
+ export declare interface Observer<T> {
+-    next: NextFn<T>;
+-    error: ErrorFn;
+-    complete: CompleteFn;
++	next: NextFn<T>;
++	error: ErrorFn;
++	complete: CompleteFn;
+ }
+ 
+ /**
+@@ -773,7 +773,7 @@ export declare type PartialObserver<T> = Partial<Observer<T>>;
+  * Note: You must prepend it with ? when adding it to a URL.
+  */
+ export declare function querystring(querystringParams: {
+-    [key: string]: string | number;
++	[key: string]: string | number;
+ }): string;
+ 
+ /**
+@@ -834,49 +834,49 @@ export declare function safeGet<T extends object, K extends keyof T>(obj: T, key
+  * @struct
+  */
+ export declare class Sha1 {
+-    /**
+-     * Holds the previous values of accumulated variables a-e in the compress_
+-     * function.
+-     * @private
+-     */
+-    private chain_;
+-    /**
+-     * A buffer holding the partially computed hash result.
+-     * @private
+-     */
+-    private buf_;
+-    /**
+-     * An array of 80 bytes, each a part of the message to be hashed.  Referred to
+-     * as the message schedule in the docs.
+-     * @private
+-     */
+-    private W_;
+-    /**
+-     * Contains data needed to pad messages less than 64 bytes.
+-     * @private
+-     */
+-    private pad_;
+-    /**
+-     * @private {number}
+-     */
+-    private inbuf_;
+-    /**
+-     * @private {number}
+-     */
+-    private total_;
+-    blockSize: number;
+-    constructor();
+-    reset(): void;
+-    /**
+-     * Internal compress helper function.
+-     * @param buf Block to compress.
+-     * @param offset Offset of the block in the buffer.
+-     * @private
+-     */
+-    compress_(buf: number[] | Uint8Array | string, offset?: number): void;
+-    update(bytes?: number[] | Uint8Array | string, length?: number): void;
+-    /** @override */
+-    digest(): number[];
++	/**
++	 * Holds the previous values of accumulated variables a-e in the compress_
++	 * function.
++	 * @private
++	 */
++	private chain_;
++	/**
++	 * A buffer holding the partially computed hash result.
++	 * @private
++	 */
++	private buf_;
++	/**
++	 * An array of 80 bytes, each a part of the message to be hashed.  Referred to
++	 * as the message schedule in the docs.
++	 * @private
++	 */
++	private W_;
++	/**
++	 * Contains data needed to pad messages less than 64 bytes.
++	 * @private
++	 */
++	private pad_;
++	/**
++	 * @private {number}
++	 */
++	private inbuf_;
++	/**
++	 * @private {number}
++	 */
++	private total_;
++	blockSize: number;
++	constructor();
++	reset(): void;
++	/**
++	 * Internal compress helper function.
++	 * @param buf Block to compress.
++	 * @param offset Offset of the block in the buffer.
++	 * @private
++	 */
++	compress_(buf: number[] | Uint8Array | string, offset?: number): void;
++	update(bytes?: number[] | Uint8Array | string, length?: number): void;
++	/** @override */
++	digest(): number[];
+ }
+ 
+ /**
+@@ -894,7 +894,7 @@ export declare function stringify(data: unknown): string;
+ export declare const stringLength: (str: string) => number;
+ 
+ export declare interface StringLike {
+-    toString(): string;
++	toString(): string;
+ }
+ 
+ /**
+@@ -908,8 +908,8 @@ export declare const stringToByteArray: (str: string) => number[];
+  * callbacks, or a object interface with callback properties.
+  */
+ export declare interface Subscribe<T> {
+-    (next?: NextFn<T>, error?: ErrorFn, complete?: CompleteFn): Unsubscribe;
+-    (observer: PartialObserver<T>): Unsubscribe;
++	(next?: NextFn<T>, error?: ErrorFn, complete?: CompleteFn): Unsubscribe;
++	(observer: PartialObserver<T>): Unsubscribe;
+ }
+ 
+ export declare type Unsubscribe = () => void;
