@@ -83,13 +83,8 @@
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
-            "tsConfig": [
-              "apps/ionic-fy-e2e/tsconfig.e2e.json"
-            ],
-            "exclude": [
-              "**/node_modules/**",
-              "!apps/ionic-fy-e2e/**/*"
-            ]
+            "tsConfig": ["apps/ionic-fy-e2e/tsconfig.e2e.json"],
+            "exclude": ["**/node_modules/**", "!apps/ionic-fy-e2e/**/*"]
           }
         }
       }
@@ -102,16 +97,12 @@
       "architect": {
         "build": {
           "builder": "@nrwl/node:build",
-          "outputs": [
-            "{options.outputPath}"
-          ],
+          "outputs": ["{options.outputPath}"],
           "options": {
             "outputPath": "dist/apps/api",
             "main": "apps/api/src/main.ts",
             "tsConfig": "apps/api/tsconfig.app.json",
-            "assets": [
-              "apps/api/src/assets"
-            ]
+            "assets": ["apps/api/src/assets"]
           },
           "configurations": {
             "production": {
@@ -140,17 +131,12 @@
               "apps/api/tsconfig.app.json",
               "apps/api/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**",
-              "!apps/api/**/*"
-            ]
+            "exclude": ["**/node_modules/**", "!apps/api/**/*"]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/apps/api"
-          ],
+          "outputs": ["coverage/apps/api"],
           "options": {
             "jestConfig": "apps/api/jest.config.js",
             "passWithNoTests": true
@@ -166,13 +152,8 @@
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
-            "tsConfig": [
-              "libs/api-interfaces/tsconfig.lib.json"
-            ],
-            "exclude": [
-              "**/node_modules/**",
-              "!libs/api-interfaces/**/*"
-            ]
+            "tsConfig": ["libs/api-interfaces/tsconfig.lib.json"],
+            "exclude": ["**/node_modules/**", "!libs/api-interfaces/**/*"]
           }
         }
       }
@@ -189,17 +170,12 @@
               "libs/xplat/core/tsconfig.lib.json",
               "libs/xplat/core/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**",
-              "!libs/xplat/core/**/*"
-            ]
+            "exclude": ["**/node_modules/**", "!libs/xplat/core/**/*"]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/libs/xplat/core"
-          ],
+          "outputs": ["coverage/libs/xplat/core"],
           "options": {
             "jestConfig": "libs/xplat/core/jest.config.js",
             "passWithNoTests": true
@@ -219,17 +195,12 @@
               "libs/xplat/features/tsconfig.lib.json",
               "libs/xplat/features/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**",
-              "!libs/xplat/features/**/*"
-            ]
+            "exclude": ["**/node_modules/**", "!libs/xplat/features/**/*"]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/libs/xplat/features"
-          ],
+          "outputs": ["coverage/libs/xplat/features"],
           "options": {
             "jestConfig": "libs/xplat/features/jest.config.js",
             "passWithNoTests": true
@@ -249,17 +220,12 @@
               "libs/xplat/scss/tsconfig.lib.json",
               "libs/xplat/scss/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**",
-              "!libs/xplat/scss/**/*"
-            ]
+            "exclude": ["**/node_modules/**", "!libs/xplat/scss/**/*"]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/libs/xplat/scss"
-          ],
+          "outputs": ["coverage/libs/xplat/scss"],
           "options": {
             "jestConfig": "libs/xplat/scss/jest.config.js",
             "passWithNoTests": true
@@ -279,17 +245,12 @@
               "libs/xplat/utils/tsconfig.lib.json",
               "libs/xplat/utils/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**",
-              "!libs/xplat/utils/**/*"
-            ]
+            "exclude": ["**/node_modules/**", "!libs/xplat/utils/**/*"]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/libs/xplat/utils"
-          ],
+          "outputs": ["coverage/libs/xplat/utils"],
           "options": {
             "jestConfig": "libs/xplat/utils/jest.config.js",
             "passWithNoTests": true
@@ -309,17 +270,12 @@
               "libs/xplat/ionic/core/tsconfig.lib.json",
               "libs/xplat/ionic/core/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**",
-              "!libs/xplat/ionic/core/**/*"
-            ]
+            "exclude": ["**/node_modules/**", "!libs/xplat/ionic/core/**/*"]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/libs/xplat/ionic/core"
-          ],
+          "outputs": ["coverage/libs/xplat/ionic/core"],
           "options": {
             "jestConfig": "libs/xplat/ionic/core/jest.config.js",
             "passWithNoTests": true
@@ -339,17 +295,12 @@
               "libs/xplat/ionic/features/tsconfig.lib.json",
               "libs/xplat/ionic/features/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**",
-              "!libs/xplat/ionic/features/**/*"
-            ]
+            "exclude": ["**/node_modules/**", "!libs/xplat/ionic/features/**/*"]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/libs/xplat/ionic/features"
-          ],
+          "outputs": ["coverage/libs/xplat/ionic/features"],
           "options": {
             "jestConfig": "libs/xplat/ionic/features/jest.config.js",
             "passWithNoTests": true
@@ -369,17 +320,12 @@
               "libs/xplat/ionic/scss/tsconfig.lib.json",
               "libs/xplat/ionic/scss/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**",
-              "!libs/xplat/ionic/scss/**/*"
-            ]
+            "exclude": ["**/node_modules/**", "!libs/xplat/ionic/scss/**/*"]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/libs/xplat/ionic/scss"
-          ],
+          "outputs": ["coverage/libs/xplat/ionic/scss"],
           "options": {
             "jestConfig": "libs/xplat/ionic/scss/jest.config.js",
             "passWithNoTests": true
@@ -399,17 +345,12 @@
               "libs/xplat/web/core/tsconfig.lib.json",
               "libs/xplat/web/core/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**",
-              "!libs/xplat/web/core/**/*"
-            ]
+            "exclude": ["**/node_modules/**", "!libs/xplat/web/core/**/*"]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/libs/xplat/web/core"
-          ],
+          "outputs": ["coverage/libs/xplat/web/core"],
           "options": {
             "jestConfig": "libs/xplat/web/core/jest.config.js",
             "passWithNoTests": true
@@ -429,17 +370,12 @@
               "libs/xplat/web/features/tsconfig.lib.json",
               "libs/xplat/web/features/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**",
-              "!libs/xplat/web/features/**/*"
-            ]
+            "exclude": ["**/node_modules/**", "!libs/xplat/web/features/**/*"]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/libs/xplat/web/features"
-          ],
+          "outputs": ["coverage/libs/xplat/web/features"],
           "options": {
             "jestConfig": "libs/xplat/web/features/jest.config.js",
             "passWithNoTests": true
@@ -459,17 +395,12 @@
               "libs/xplat/web/scss/tsconfig.lib.json",
               "libs/xplat/web/scss/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**",
-              "!libs/xplat/web/scss/**/*"
-            ]
+            "exclude": ["**/node_modules/**", "!libs/xplat/web/scss/**/*"]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/libs/xplat/web/scss"
-          ],
+          "outputs": ["coverage/libs/xplat/web/scss"],
           "options": {
             "jestConfig": "libs/xplat/web/scss/jest.config.js",
             "passWithNoTests": true
@@ -489,17 +420,12 @@
               "libs/xplat/electron/core/tsconfig.lib.json",
               "libs/xplat/electron/core/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**",
-              "!libs/xplat/electron/core/**/*"
-            ]
+            "exclude": ["**/node_modules/**", "!libs/xplat/electron/core/**/*"]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/libs/xplat/electron/core"
-          ],
+          "outputs": ["coverage/libs/xplat/electron/core"],
           "options": {
             "jestConfig": "libs/xplat/electron/core/jest.config.js",
             "passWithNoTests": true
@@ -519,8 +445,18 @@
       "prefix": "fy",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:browser",
+          "builder": "@angular-builders/custom-webpack:browser",
           "options": {
+            "customWebpackConfig": {
+              "path": "./apps/ionic-fy/extra-webpack.config.js",
+              "replaceDuplicatePlugins": true,
+              "mergeRules": {
+                "externals": "replace",
+                "module": {
+                  "rules": "prepend"
+                }
+              }
+            },
             "allowedCommonJsDependencies": [
               "axios",
               "p-any",
@@ -540,7 +476,9 @@
               "@babel/runtime/helpers/inheritsLoose",
               "mux.js/lib/tools/ts-inspector.js",
               "mux.js/lib/mp4/probe",
-              "global/document"
+              "global/document",
+              "util",
+              "crypto-js"
             ],
             "outputPath": "apps/ionic-fy/www",
             "index": "apps/ionic-fy/src/index.html",
@@ -559,19 +497,25 @@
                 "output": "./svg"
               },
               {
+                "glob": "**/*",
+                "input": "./node_modules/@ant-design/icons-angular/src/inline-svg/",
+                "output": "/assets/"
+              },
+              {
                 "glob": "**/*.svg",
                 "input": "apps/ionic-fy/src/assets/fy-icons",
                 "output": "./svg"
               },
               {
                 "glob": "**/*",
-                "ignore": [
-                  "**/*.ts"
-                ],
+                "ignore": ["**/*.ts", "service-worker.js"],
                 "input": "apps/ionic-fy/src/service-worker",
                 "output": "/"
               },
-              "apps/ionic-fy/src/manifest.webmanifest"
+              "apps/ionic-fy/src/manifest.webmanifest",
+              "apps/ionic-fy/src/splashscreen.html",
+              "apps/ionic-fy/src/button.js",
+              "apps/ionic-fy/src/lottie.js"
             ],
             "styles": [
               {
@@ -616,7 +560,7 @@
           }
         },
         "serve": {
-          "builder": "@angular-devkit/build-angular:dev-server",
+          "builder": "@angular-builders/custom-webpack:dev-server",
           "options": {
             "browserTarget": "ionic-fy:build"
           },
@@ -630,13 +574,13 @@
           }
         },
         "extract-i18n": {
-          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "builder": "@angular-builders/custom-webpack:extract-i18n",
           "options": {
             "browserTarget": "ionic-fy:build"
           }
         },
         "test": {
-          "builder": "@angular-devkit/build-angular:karma",
+          "builder": "@angular-builders/custom-webpack:karma",
           "options": {
             "main": "apps/ionic-fy/src/test.ts",
             "polyfills": "apps/ionic-fy/src/polyfills.ts",
@@ -657,13 +601,14 @@
               },
               {
                 "glob": "**/*",
-                "ignore": [
-                  "**/*.ts"
-                ],
+                "ignore": ["**/*.ts", "service-worker.js"],
                 "input": "apps/ionic-fy/src/service-worker",
                 "output": "/"
               },
-              "apps/ionic-fy/src/manifest.webmanifest"
+              "apps/ionic-fy/src/manifest.webmanifest",
+              "apps/ionic-fy/src/splashscreen.html",
+              "apps/ionic-fy/src/button.js",
+              "apps/ionic-fy/src/lottie.js"
             ]
           },
           "configurations": {
@@ -681,9 +626,7 @@
               "apps/ionic-fy/tsconfig.spec.json",
               "apps/ionic-fy/e2e/tsconfig.json"
             ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
+            "exclude": ["**/node_modules/**"]
           }
         },
         "ionic-cordova-build": {
@@ -742,7 +685,9 @@
               "@babel/runtime/helpers/inheritsLoose",
               "mux.js/lib/tools/ts-inspector.js",
               "mux.js/lib/mp4/probe",
-              "global/document"
+              "global/document",
+              "util",
+              "crypto-js"
             ],
             "outputPath": "dist/apps/electron-fy",
             "index": "apps/ionic-fy/src/index.html",
@@ -753,9 +698,7 @@
               {
                 "glob": "**/*",
                 "input": "apps/ionic-fy/src/assets",
-                "ignore": [
-                  "fy-icons/*"
-                ],
+                "ignore": ["fy-icons/*"],
                 "output": "assets"
               },
               {
@@ -770,10 +713,13 @@
               },
               {
                 "glob": "**/*",
+                "input": "./node_modules/@ant-design/icons-angular/src/inline-svg/",
+                "output": "/assets/"
+              },
+              {
+                "glob": "**/*",
                 "input": "apps/electron-fy/src/",
-                "ignore": [
-                  "**/*.ts"
-                ],
+                "ignore": ["**/*.ts"],
                 "output": ""
               }
             ],
