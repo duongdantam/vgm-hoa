@@ -8,10 +8,10 @@ import { invoke } from '@tauri-apps/api/tauri';
 import pRetry, { AbortError } from 'p-retry';
 import delay from 'delay';
 import { ToastController, AlertController, Platform } from '@ionic/angular';
-import { initializeApp } from 'firebase/app';
-import { getRemoteConfig } from 'firebase/remote-config';
-import { getValue } from 'firebase/remote-config';
-import { fetchAndActivate } from 'firebase/remote-config';
+// import { initializeApp } from 'firebase/app';
+// import { getRemoteConfig } from 'firebase/remote-config';
+// import { getValue } from 'firebase/remote-config';
+// import { fetchAndActivate } from 'firebase/remote-config';
 import { AngularDeviceInformationService } from 'angular-device-information';
 import { TranslateService } from '@ngx-translate/core';
 import { MeiliSearch } from 'meilisearch';
@@ -41,15 +41,15 @@ export class DataFetchService {
 	public isTauri = false;
 	public notificationList = [];
 	public os: string = '';
-	public streamGateway: string = "";
-	public downloadGateway: string = "";
-	public cloudGateway: string = "";
-	public iosCloudGateway: string = "";
-	public searchGateway: string = "";
+	public streamGateway: string = "https://cdn.hjm.bid";
+	public downloadGateway: string = "https://cdn.hjm.bid";
+	public cloudGateway: string = "https://cdn-hoa.hjm.bid/encrypted";
+	public iosCloudGateway: string = "https://cdn-hoa.hjm.bid/decrypted";
+	public searchGateway: string = "https://search.hjm.bid";
 	public webDomain: string = "";
-	public apiGateway: string = "";
+	public apiGateway: string = "https://cdn.hjm.bid/ipfs/QmVTxse1avUoXJ4X4GyFkZywU6LdotRtMMRcTzv3qwQhcV";
 	public apiVersion: string = "";
-	public searchAPIKey: string = "";
+	public searchAPIKey: string = "a6027a14fcb5eba562458d0832b35f9b863760eaba98d5ffd12e0e44ca00e955";
 	public searchClient;
 	public searchDatabase: string = "VGM-HOA";
 	public apiPort = 13579;
@@ -59,9 +59,9 @@ export class DataFetchService {
 	public apiBase = `http://localhost:${this.apiPort}/api/v0`;
 	public desktopAppExt = "";
 	public desktopAppUrl = "";
-	public audioConstantUrl: string;
-	public videoConstantUrl: string;
-	public defaultImgs: string;
+	public audioConstantUrl = "xin-tu-sheng-huo.02-tian-tian-qin-jin-zhu.2023nian.04-yue";
+	public videoConstantUrl = "07-sheng-jing-jiang-jie.du-sheng-jing-xi-lie";
+	public defaultImgs = "https://cdn.hjm.bid/ipfs/bafybeihjo5b7aolfs5qgr35tctax6ie2f4fjibf6hhar3qodhcunqkcchm";
 	// blockchain config
 	private vgmCore: any;
 	private _isInitialized: boolean = false;
@@ -267,37 +267,37 @@ export class DataFetchService {
 									${this.apiGateway}`);
 				// Post app ipfs address to server
 			} else {
-				//  get firebase remote config
-				await initializeApp(firebaseConfig);
-				const remoteConfig = getRemoteConfig();
-				await fetchAndActivate(remoteConfig)
-					.then(async () => {
-						this.mobileVersion['ios'] = getValue(remoteConfig, "IOS_VERSION").asString() || '';
-						this.mobileVersion['android'] = getValue(remoteConfig, "ANDROID_VERSION").asString() || '';
-						this.streamGateway = getValue(remoteConfig, "IPFS_STREAM_GATEWAY").asString() || '';
-						this.downloadGateway = getValue(remoteConfig, "IPFS_DOWNLOAD_GATEWAY").asString() || '';
-						this.cloudGateway = getValue(remoteConfig, "CLOUD_GATEWAY").asString() || ''; // decrypted: "CLOUD_GATEWAY_IOS" encrypted: "CLOUD_GATEWAY"
-						this.iosCloudGateway = getValue(remoteConfig, "CLOUD_GATEWAY_IOS").asString() || '';
-						this.webDomain = getValue(remoteConfig, "WEB_DOMAIN").asString() || '';
-						this.searchGateway = getValue(remoteConfig, "SEARCH_GATEWAY").asString() || '';
-						this.apiGateway = getValue(remoteConfig, "API_GATEWAY").asString() || '';
-						this.searchAPIKey = getValue(remoteConfig, "SEARCH_API").asString() || '';
-						this.defaultImgs = getValue(remoteConfig, 'DEFAULT_IMGS').asString() || '';
-						this.audioConstantUrl = getValue(remoteConfig, 'AUDIO_CONSTANT_URL').asString() || '';
-						this.videoConstantUrl = getValue(remoteConfig, 'VIDEO_CONSTANT_URL').asString() || '';
-						this.desktopAppUrl = getValue(remoteConfig, "DESKTOP_APP_URL").asString().replace(/platform\.extension$/, this.desktopAppExt) || '';
-						console.log(`got config from firebase:
-												${this.mobileVersion['ios']}, 
-												${this.mobileVersion['android']}, 
-												${this.streamGateway}, 
-												${this.downloadGateway},
-												${this.cloudGateway},
-												${this.searchGateway},
-												${this.webDomain},
-												${this.apiGateway}`);
-					}).catch((err) => {
-						console.log('firebase init error', err);
-					});
+				// //  get firebase remote config
+				// await initializeApp(firebaseConfig);
+				// const remoteConfig = getRemoteConfig();
+				// await fetchAndActivate(remoteConfig)
+				// 	.then(async () => {
+				// 		this.mobileVersion['ios'] = getValue(remoteConfig, "IOS_VERSION").asString() || '';
+				// 		this.mobileVersion['android'] = getValue(remoteConfig, "ANDROID_VERSION").asString() || '';
+				// 		this.streamGateway = getValue(remoteConfig, "IPFS_STREAM_GATEWAY").asString() || '';
+				// 		this.downloadGateway = getValue(remoteConfig, "IPFS_DOWNLOAD_GATEWAY").asString() || '';
+				// 		this.cloudGateway = getValue(remoteConfig, "CLOUD_GATEWAY").asString() || ''; // decrypted: "CLOUD_GATEWAY_IOS" encrypted: "CLOUD_GATEWAY"
+				// 		this.iosCloudGateway = getValue(remoteConfig, "CLOUD_GATEWAY_IOS").asString() || '';
+				// 		this.webDomain = getValue(remoteConfig, "WEB_DOMAIN").asString() || '';
+				// 		this.searchGateway = getValue(remoteConfig, "SEARCH_GATEWAY").asString() || '';
+				// 		this.apiGateway = getValue(remoteConfig, "API_GATEWAY").asString() || '';
+				// 		this.searchAPIKey = getValue(remoteConfig, "SEARCH_API").asString() || '';
+				// 		this.defaultImgs = getValue(remoteConfig, 'DEFAULT_IMGS').asString() || '';
+				// 		this.audioConstantUrl = getValue(remoteConfig, 'AUDIO_CONSTANT_URL').asString() || '';
+				// 		this.videoConstantUrl = getValue(remoteConfig, 'VIDEO_CONSTANT_URL').asString() || '';
+				// 		this.desktopAppUrl = getValue(remoteConfig, "DESKTOP_APP_URL").asString().replace(/platform\.extension$/, this.desktopAppExt) || '';
+				// 		console.log(`got config from firebase:
+				// 								${this.mobileVersion['ios']}, 
+				// 								${this.mobileVersion['android']}, 
+				// 								${this.streamGateway}, 
+				// 								${this.downloadGateway},
+				// 								${this.cloudGateway},
+				// 								${this.searchGateway},
+				// 								${this.webDomain},
+				// 								${this.apiGateway}`);
+				// 	}).catch((err) => {
+				// 		console.log('firebase init error', err);
+				// 	});
 			}
 
 
