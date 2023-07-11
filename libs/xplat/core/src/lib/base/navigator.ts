@@ -25,14 +25,14 @@ export class Navigator {
 
 	constructor(public switcher: Switcher, private options: CoreOptions) {
 		this.api = this.switcher.api || '';
-		this.gateway = this.switcher.availableGateways[0] || '';
+		this.gateway = this.switcher.availableGateways[Math.floor(Math.random() * this.switcher.availableGateways.length)] || '';
 		this.thumbnails = this.switcher.thumbnails || '';
 	}
 
-	async init(gateway: string) {
+	async init() {
 		try {
 			this.api = this.switcher.api;
-			this.gateway = gateway || this.switcher.availableGateways[0];
+			this.gateway = this.switcher.availableGateways[Math.floor(Math.random() * this.switcher.availableGateways.length)];
 			this.thumbnails = this.switcher.thumbnails;
 			this.isInitialized = true;
 			console.log(
@@ -49,9 +49,9 @@ export class Navigator {
 	public async fetchHomeList(listType: string = 'video'): Promise<Topic[]> {
 		const path = `topics/list/home.${listType}`;
 		try {
-			const root = await this.fetchData(path);
-
-			return filterContent(root.children, this.options.exclude!);
+			let root = await this.fetchData(path);
+			root.children = filterContent(root.children, this.options.exclude!)
+			return root;
 		} catch (err) {
 			throw new Error(`Could not fetch root list ${err.code}: ${err.message}`);
 		}
@@ -123,12 +123,27 @@ export class Navigator {
 	private async fetchData(path: string): Promise<any> {
 		const buildFetcher = pipe(
 			map((gateway) => {
-				const url = /^http/.test(this.api) ? `${this.api}/${path}.json` : `${gateway}/ipfs/${this.api}/${path}.json`;
-				return url;
-			}),  // location for fetching api `${gateway}/ipfs/${this.api}/${path}.json` or `https://cdn.vgm.tv/encrypted-hoa/API/${path}.json`;
+				if (/^http/.test(this.api)) {
+					const url = `${this.api}/${path}.json`;
+					// if (url.split('/')[3] === 'ipfs') {
+					// 	const hashPath = url.split('/').splice(4).join('/');
+					// 	fetch(`${this.options.config.api_base}/pin/add?arg=${hashPath}`, { method: "POST" }).catch(err => console.log("ipfs pin failed::"));
+					// 	console.log('Pinning hash:: ', hashPath);
+					// }
+					return url
+				} else {
+					const hashPath = `${this.api}/${path}.json`;
+					const url = `${gateway}/ipfs/${hashPath}`;
+					// fetch(`${this.options.config.api_base}/pin/add?arg=${hashPath}`, { method: "POST" }).catch(err => console.log("ipfs pin failed::"));
+					// console.log('Pinning hash:: ', hashPath);
+					return url;
+				}
+			}),  // location for fetching api `${gateway}/ipfs/${this.api}/${path}.json` or `https://cdn.vgm.tv/encrypted/API/${path}.json`;
 			map((url) => fetchFn(url, 10000, 1))
 		);
 		try {
+
+			console.log("picking from this.switcher.availableGateways::", this.switcher.availableGateways);
 			const result: any = await pAny(
 				buildFetcher(this.switcher.availableGateways)
 			);
@@ -136,8 +151,7 @@ export class Navigator {
 				return result.data;
 			}
 			// else {
-			// 	return null;
-			// 	// throw new Error(`Receive unknown data at ${path}`);
+			// 	throw new Error(`Receive unknown data at ${path}`);
 			// }
 		} catch (err) {
 			throw new Error(

@@ -113,7 +113,7 @@ export class AudioPlayListComponent
 			this.item.thumb =
 				thumbCheck.status === 200
 					? randomThumbUrl
-					: '/assets/imgs/default-image.svg';
+					: '/assets/imgs/fy-default-image.svg';
 		}
 	}
 

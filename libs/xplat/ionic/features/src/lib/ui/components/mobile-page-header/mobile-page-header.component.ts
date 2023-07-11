@@ -78,8 +78,8 @@ export class MobilePageHeaderComponent extends BaseComponent implements OnInit {
 		);
 	}
 	async ngOnInit() {
-		this.videoRootList = await this.dataFetchService.fetchRoot('video');
-		this.audioRootList = await this.dataFetchService.fetchRoot('audio');
+		this.videoRootList = await this.dataFetchService.fetchRoot('video').then((list: any) => list.children);
+		this.audioRootList = await this.dataFetchService.fetchRoot('audio').then((list: any) => list.children);
 	}
 
 	searchModeChange() {

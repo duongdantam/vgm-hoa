@@ -82,7 +82,7 @@ module.exports = {
         ],
       },
       {
-        test: /(chunk\-ATGUPOGX)|(chunk\-SINVUGUJ)|(chunk\-5UWJICAP)\.js$/,
+        test: /\@tauri\-apps\/api\/chunk\-[A-Z0-9]{8}\.js$/,
         use: [
           {
             loader: 'babel-loader',
