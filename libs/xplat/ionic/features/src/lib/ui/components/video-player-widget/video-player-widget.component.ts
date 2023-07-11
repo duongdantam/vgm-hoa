@@ -952,7 +952,7 @@ export class VideoPlayerWidgetComponent
 			? this.videoPlayingItem
 			: this.audioPlayingItem;
 		this.playingThumbUrl =
-			this.playingItem.thumb || 'assets/imgs/default-image.svg';
+			this.playingItem.thumb || 'assets/imgs/fy-default-image.svg';
 		this.playingItemDuration = this.playingItem.duration || '';
 		this.playingItemName = this.playingItem.name || '';
 		this.playingItemId = this.playingItem.id || '';

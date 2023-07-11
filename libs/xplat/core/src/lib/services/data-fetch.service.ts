@@ -15,7 +15,7 @@ import { fetchAndActivate } from 'firebase/remote-config';
 import { AngularDeviceInformationService } from 'angular-device-information';
 import { TranslateService } from '@ngx-translate/core';
 import { MeiliSearch } from 'meilisearch';
-
+import _ from 'lodash-es';
 export type DataFetchRootType = 'video' | 'audio';
 
 const firebaseConfig = {
@@ -41,27 +41,28 @@ export class DataFetchService {
 	public isTauri = false;
 	public notificationList = [];
 	public os: string = '';
-	public streamGateway: string = "";
-	public downloadGateway: string = "";
-	public cloudGateway: string = "";
-	public iosCloudGateway: string = "";
-	public searchGateway: string = "";
+	public streamGateway: string = "https://cdn.vgm.tv";
+	public cdnGateway = [];
+	public downloadGateway: string = "https://cdn.vgm.tv";
+	public cloudGateway: string = "https://cdn-hoa.hjm.bid/encrypted";
+	public iosCloudGateway: string = "https://cdn-hoa.hjm.bid/decrypted";
+	public searchGateway: string = "https://search.hjm.bid";
 	public webDomain: string = "";
-	public apiGateway: string = "";
+	public apiGateway: string = "https://cdn.hjm.bid/ipfs/QmVTxse1avUoXJ4X4GyFkZywU6LdotRtMMRcTzv3qwQhcV";
 	public apiVersion: string = "";
-	public searchAPIKey: string = "";
+	public searchAPIKey: string = "a6027a14fcb5eba562458d0832b35f9b863760eaba98d5ffd12e0e44ca00e955";
 	public searchClient;
 	public searchDatabase: string = "VGM-HOA";
 	public apiPort = 13579;
-	public apiString = 'vn.api.hjm.bid';
+	public apiString = 'cn.api.hjm.bid';
 	public livePeersGW: string = "";
 	public proxyPort = 24680;
 	public apiBase = `http://localhost:${this.apiPort}/api/v0`;
 	public desktopAppExt = "";
 	public desktopAppUrl = "";
-	public audioConstantUrl: string;
-	public videoConstantUrl: string;
-	public defaultImgs: string;
+	public audioConstantUrl = "xin-tu-sheng-huo.02-tian-tian-qin-jin-zhu.2023nian.07-yue";
+	public videoConstantUrl = "07-sheng-jing-jiang-jie.du-sheng-jing-xi-lie";
+	public defaultImgs = "https://cdn.vgm.tv/ipfs/bafybeihjo5b7aolfs5qgr35tctax6ie2f4fjibf6hhar3qodhcunqkcchm";
 	// blockchain config
 	private vgmCore: any;
 	private _isInitialized: boolean = false;
@@ -116,9 +117,9 @@ export class DataFetchService {
 	}
 	async initHome() {
 		const fetchVideo = this.fetchRoot('video')
-			.then(async (list) => {
-				if (list) {
-					list.forEach(async (category) => {
+			.then(async (list: any) => {
+				if (list && list.children && list.children.length > 0) {
+					list.children.forEach(async (category) => {
 						const topicList = await this.fetchTopicList(
 							category.url
 						);
@@ -128,17 +129,17 @@ export class DataFetchService {
 							});
 						}
 					});
-					return list;
+					return list.children;
 				}
 			});
 
 		const fetchAudio = this.fetchRoot('audio')
-			.then(async (list) => {
-				if (list) {
-					list.forEach(async (category) => {
+			.then(async (list: any) => {
+				if (list && list.children && list.children.length > 0) {
+					list.children.forEach(async (category) => {
 						await this.fetchTopicList(category.url);
 					});
-					return list;
+					return list.children;
 				}
 			});
 
@@ -169,68 +170,39 @@ export class DataFetchService {
 
 			if (this.isTauri) {
 
-				// // Get config from local
-				// Method 1: Get config from ipfs tauri
-				// const get_config = async () => {
-				// 	const response: any = await invoke('get_config');
-				// 	// Abort retrying if the resource doesn't exist
-				// 	if (response.api === undefined) {
-				// 		await delay(1000);
-				// 		throw new AbortError(response);
-				// 	}
-				// 	return response;
-				// };
-
-				// // Method 2: Get config from fetching ipfs api local
-				const get_api = async () => {
-					const nameArr = [
-						`${this.apiBase}/name/resolve?dht-timeout=3s`,
-						`${this.apiBase}/name/resolve?arg=${this.apiString}&dht-timeout=5s`
-					]
-					return new Promise(async (resolve, reject) => {
-						for (let i = 0; i < nameArr.length; i++) {
-							const res = await fetch(nameArr[i], { method: "POST" }).catch(err => console.log("Err fetching:: ", nameArr[i]));
-							if (res && res.status === 200) {
-								console.log("got API:: ", nameArr[i]);
-								resolve(res);
-								break
-							}
-							if (i === nameArr.length - 1) {
-								resolve(false);
-							}
-						}
-					})
-				}
-
 				const get_config = async () => {
 					try {
-						const api = await get_api().then(async (res: any) => {
-							if (!res || !res.status || res.status !== 200) {
-								await delay(1000);
-								throw new AbortError(res);
-							} else {
-								return await res.json();
-							}
-						})
+						const configDB = await invoke('get_config_from_db').catch(err => "") as string;
 
-						console.log("IPFS name resolve:: ", api.Path);
-						const response = await fetch(`${this.apiBase}/cat?arg=${api.Path.split("/").pop()}`, { method: "POST" }).catch(err => err);
+						// const api = await get_api().then(async (res: any) => {
+						// 	if (!res || !res.status || res.status !== 200) {
+						// 		await delay(1000);
+						// 		throw new AbortError(res);
+						// 	} else {
+						// 		return await res.json();
+						// 	}
+						// })
+
+						// console.log("IPFS name resolve:: ", api.Path);
+						// const response = await fetch(`${this.apiBase}/cat?arg=${api.Path.split("/").pop()}`, { method: "POST" }).catch(err => err);
 						// Abort retrying if the resource doesn't exist
-						if (response && response.status === 200) {
-							console.log("Got API response::", response);
-							let config: any = await response.json();
+						if (configDB) {
+							console.log("Got API response::", JSON.parse(configDB));
+							let config = JSON.parse(configDB);
 							const configKey = `api.config`;
-							await this.localforageService.set(configKey, config);
+							if (!_.isEmpty(config)) {
+								await this.localforageService.set(configKey, config);
+							}
 							return config
 						} else {
 							await delay(1000);
-							throw new AbortError(response.statusText);
+							throw new AbortError("Error getting config");
 						}
 					} catch (error) {
 						throw new AbortError("Error getting config");
 					}
 				};
-
+				const localReady = await this.localforageService.get("localReady");
 				const fetchConfig = await pRetry(get_config, {
 					onFailedAttempt: error => {
 						console.log(`Getting config attempt ${error.attemptNumber} failed. There are ${error.retriesLeft} retries left.`);
@@ -245,10 +217,11 @@ export class DataFetchService {
 				this.mobileVersion['ios'] = result.ios_version || ""; // getValue(remoteConfig, "IOS_VERSION").asString() || '';
 				this.mobileVersion['android'] = result.android_version || ""; //getValue(remoteConfig, "ANDROID_VERSION").asString() || '';
 				this.streamGateway = result.stream_gateway.replace("http://localhost", `http://localhost:${this.proxyPort}`) || ""; // getValue(remoteConfig, "IPFS_STREAM_GATEWAY").asString() || '';
+				this.cdnGateway = localReady === true ? [this.streamGateway] : result.gateways || [];
 				this.downloadGateway = result.stream_gateway.replace("http://localhost", `http://localhost:${this.proxyPort}`) || "";  // getValue(remoteConfig, "IPFS_DOWNLOAD_GATEWAY").asString() || '';
 				this.cloudGateway = result.gatewaysweak[0] || ""; // getValue(remoteConfig, "CLOUD_GATEWAY").asString() || ''; // decrypted: "CLOUD_GATEWAY_IOS" encrypted: "CLOUD_GATEWAY"
 				this.iosCloudGateway = `${this.cloudGateway.replace("encrypted", "decrypted")}` || ""; //getValue(remoteConfig, "CLOUD_GATEWAY_IOS").asString() || '';
-				this.webDomain = `${result.web_domain}` || "https://vgm.tv"; //getValue(remoteConfig, "WEB_DOMAIN").asString() || '';
+				this.webDomain = `${result.web_domain}` || "https://fuyin.tv"; //getValue(remoteConfig, "WEB_DOMAIN").asString() || '';
 				this.defaultImgs = `${result.default_imgs}` || ""; //getValue(remoteConfig, "WEB_DOMAIN").asString() || '';
 				this.audioConstantUrl = `${result.audio_constant}` || "";
 				this.videoConstantUrl = `${result.video_constant}` || "";
@@ -275,12 +248,13 @@ export class DataFetchService {
 						this.mobileVersion['ios'] = getValue(remoteConfig, "IOS_VERSION").asString() || '';
 						this.mobileVersion['android'] = getValue(remoteConfig, "ANDROID_VERSION").asString() || '';
 						this.streamGateway = getValue(remoteConfig, "IPFS_STREAM_GATEWAY").asString() || '';
+						this.cdnGateway = JSON.parse(getValue(remoteConfig, "CDN_GATEWAY").asString());
 						this.downloadGateway = getValue(remoteConfig, "IPFS_DOWNLOAD_GATEWAY").asString() || '';
 						this.cloudGateway = getValue(remoteConfig, "CLOUD_GATEWAY").asString() || ''; // decrypted: "CLOUD_GATEWAY_IOS" encrypted: "CLOUD_GATEWAY"
 						this.iosCloudGateway = getValue(remoteConfig, "CLOUD_GATEWAY_IOS").asString() || '';
 						this.webDomain = getValue(remoteConfig, "WEB_DOMAIN").asString() || '';
 						this.searchGateway = getValue(remoteConfig, "SEARCH_GATEWAY").asString() || '';
-						this.apiGateway = getValue(remoteConfig, "API_GATEWAY").asString() || '';
+						this.apiGateway = getValue(remoteConfig, "API_GATEWAY").asString().replace(/https?\:\/\/([a-z\.\d\:]+)\/ipfs\//, '') || '';
 						this.searchAPIKey = getValue(remoteConfig, "SEARCH_API").asString() || '';
 						this.defaultImgs = getValue(remoteConfig, 'DEFAULT_IMGS').asString() || '';
 						this.audioConstantUrl = getValue(remoteConfig, 'AUDIO_CONSTANT_URL').asString() || '';
@@ -290,6 +264,7 @@ export class DataFetchService {
 												${this.mobileVersion['ios']}, 
 												${this.mobileVersion['android']}, 
 												${this.streamGateway}, 
+												${this.cdnGateway}, 
 												${this.downloadGateway},
 												${this.cloudGateway},
 												${this.searchGateway},
@@ -349,8 +324,10 @@ export class DataFetchService {
 							api: this.apiGateway, // instructor.api,
 							api_base: this.apiBase,
 							gateway: this.streamGateway, //instructor.gateway
+							gateways: this.cdnGateway, //instructor.gateway
 							api_version: parseInt(this.apiVersion), //instructor.api_version,
 							thumbnails: '',
+							os: this.os
 						},
 					},
 					async () => {
@@ -406,26 +383,22 @@ export class DataFetchService {
 			const storageKey = `apiVersion`;
 			const cacheVersion: any = await this.localforageService.get(storageKey);
 			console.log('cache Version:', cacheVersion);
-			const apiVersion = await this.vgmCore.navigator.fetchAPIVersion(
-				storageKey
-			);
+			const apiVersion = await this.vgmCore.navigator.fetchAPIVersion(storageKey);
 			console.log('api Version:', apiVersion);
 
 			if (apiVersion && !cacheVersion) {
 				await this.localforageService.set(storageKey, apiVersion);
 			}
 
-			if (
-				cacheVersion &&
-				apiVersion &&
-				cacheVersion.version !== apiVersion.version
-			) {
+			if (cacheVersion && apiVersion && cacheVersion.version !== apiVersion.version) {
 				await this.localforageService.clearKeys();
 				await this.localforageService.set(storageKey, apiVersion);
 			}
 			return apiVersion;
+
 		} catch (error) {
 			console.log(error);
+
 		}
 	}
 
@@ -621,11 +594,11 @@ export class DataFetchService {
 	}
 
 	async getThumbnailUrl(item: any, res: number = 480) {
-		return await this.vgmCore.getThumbnailUrl(this.streamGateway, this.cloudGateway, item, res, 0);
+		return await this.vgmCore.getThumbnailUrl(this.vgmCore.switcher.availableGateways, this.cloudGateway, item, res, 0);
 	}
 
 	async getPlayUrl(item: any, isVideo: boolean = true) {
-		return await this.vgmCore.getPlayUrl(this.streamGateway, this.cloudGateway, item, isVideo);// change this.iosCloudGateway to this.cloudGateway
+		return await this.vgmCore.getPlayUrl(this.vgmCore.switcher.availableGateways, this.cloudGateway, item, isVideo);// change this.iosCloudGateway to this.cloudGateway
 	}
 
 	async getChildren(url: string) {

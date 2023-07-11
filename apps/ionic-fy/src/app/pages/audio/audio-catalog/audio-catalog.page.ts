@@ -108,7 +108,7 @@ export class AudioCatalogPage implements OnInit {
 		return new Promise(async (resolve) => {
 			const tabs = [];
 			const tabData = [];
-			const audioList = await this.dataFetchService.fetchRoot('audio');
+			const audioList = await this.dataFetchService.fetchRoot('audio').then((list: any) => list.children);;
 			this.menuList = await audioList.map((item) => ({
 				...item,
 				value: item.name.replace(/[0-9]+\-/g, ''),

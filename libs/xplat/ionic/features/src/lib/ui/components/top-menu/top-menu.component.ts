@@ -84,16 +84,17 @@ export class TopMenuComponent extends BaseComponent implements OnInit, OnChanges
 	}
 
 	async dataInit() {
-		const fetchVideo = this.dataFetchService.fetchRoot('video').then(async list => {
-			return list.map((item) => ({
+		const fetchVideo = this.dataFetchService.fetchRoot('video').then(async (list: any) => {
+
+			return list.children.map((item) => ({
 				key: item.id,
 				value: item.name.replace(/[0-9]+\-/g, ''),
 				href: item.url,
 			}));
 		});
 
-		const fetchAudio = this.dataFetchService.fetchRoot('audio').then(list => {
-			return list.map((item) => ({
+		const fetchAudio = this.dataFetchService.fetchRoot('audio').then(async (list: any) => {
+			return list.children.map((item) => ({
 				key: item.id,
 				value: item.name.replace(/[0-9]+\-/g, ''),
 				href: item.url,

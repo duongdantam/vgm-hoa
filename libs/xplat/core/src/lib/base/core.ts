@@ -27,18 +27,22 @@ export class Core {
 	}
 
 	async init() {
-		// // temporary disable cache for blockchain config
-		// const { finder, api, gateway, thumbnails } = await this.loadCache();
-		// if (!finder) {
-		await this.reload();
-		// }
-		// if (finder && finder.api) {
-		//   console.log(`Using cache value`, { finder, api, gateway, thumbnails });
-		//   this.switcher = createSwitcher(gateway, api, thumbnails);
-		//   this.navigator = createNavigator(this.switcher, this.options);
-		//   await this.switcher.load(finder);
-		//   await this.navigator.init(gateway as string);
-		// }
+		// temporary disable cache for blockchain config
+		const { finder, gateway, gateways, api, thumbnails } = await this.loadCache();
+		if (!finder) {
+			await this.reload();
+		}
+		if (finder && finder.api) {
+			const localReady = await this.options.storage.get("localReady");
+			const os = this.options.config.os;
+			const initGateway = (os === 'Linux' || os === 'Windows' || os === 'Mac OS X') && localReady && typeof window !== 'undefined' && window !== undefined && window.__TAURI_IPC__ !== undefined ? [gateway] : gateways
+
+			console.log(`Using cache value`, { finder, api, gateway, thumbnails });
+			this.switcher = createSwitcher(gateway, initGateway, api, thumbnails);
+			this.navigator = createNavigator(this.switcher, this.options);
+			await this.switcher.load(finder);
+			await this.navigator.init();
+		}
 		this.onInitialized && this.onInitialized();
 	}
 
@@ -47,23 +51,24 @@ export class Core {
 		// const response = await this.switcher.load(finder); // deprecated due to blockchain data
 		const finder = this.options.config as unknown as FindObject;
 		if (this.options.config) {
-			const { gateway, api, thumbnails } = this.options.config;
-			await this.options.storage.set('finder', finder, 86400); // Store cache of finder for 1 days
-			// console.log(`Save cache`, { finder, gateway, api, thumbnails });
-			await this.options.storage.set('gateway', gateway);
-			await this.options.storage.set('api', api);
-			await this.options.storage.set('thumbnails', thumbnails);
+			const { gateway, gateways, api, thumbnails } = this.options.config;
+			await this.options.storage.set('finder', finder, 300); // Store cache of finder for 1 days
+			console.log(`Save cache`, { finder, gateway, api, thumbnails });
+			await this.options.storage.set('gateway', gateway, 300);
+			await this.options.storage.set('gateways', gateways, 300);
+			await this.options.storage.set('api', api, 300);
+			await this.options.storage.set('thumbnails', thumbnails, 300);
 
-			this.switcher = createSwitcher(gateway, api, thumbnails);
+			this.switcher = createSwitcher(gateway, gateways, api, thumbnails);
 			this.navigator = createNavigator(this.switcher, this.options);
 
 			await this.switcher.load(finder);
-			await this.navigator.init(gateway);
+			await this.navigator.init();
 		}
 	}
 
 	public getThumbnailUrl = async (
-		ipfsGateway: string = this.navigator.gateway,
+		ipfsGateway = this.switcher.availableGateways,
 		cloudGateway,
 		item: Item,
 		size: number = 480,
@@ -73,7 +78,7 @@ export class Core {
 	};
 
 	public getPlayUrl = async (
-		ipfsGateway: string = this.navigator.gateway,
+		ipfsGateway = this.switcher.availableGateways,
 		cloudGateway,
 		item: Item,
 		isVideo: boolean = true
@@ -84,9 +89,10 @@ export class Core {
 	private async loadCache() {
 		const finder = (await this.options.storage.get('finder')) as FindObject;
 		const gateway = await this.options.storage.get('gateway');
+		const gateways = await this.options.storage.get('gateways');
 		const api = await this.options.storage.get('api');
 		const thumbnails = await this.options.storage.get('thumbnails');
-		return { finder, gateway, api, thumbnails };
+		return { finder, gateway, gateways, api, thumbnails };
 	}
 }
 

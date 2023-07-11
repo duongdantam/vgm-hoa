@@ -58,4 +58,4 @@ const registerServiceWorker = async (swName: string) => {
 platformBrowserDynamic()
 	.bootstrapModule(AppModule)
 	.catch((err) => console.log(err));
-registerServiceWorker('service-worker');
+registerServiceWorker('sw');

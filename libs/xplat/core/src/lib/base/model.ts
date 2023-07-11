@@ -65,8 +65,10 @@ export interface CoreConfig {
 	api: string;
 	api_base: string;
 	gateway: string;
+	gateways: string[];
 	thumbnails: string;
 	api_version: number;
+	os: string;
 }
 
 export interface CoreOptions {
