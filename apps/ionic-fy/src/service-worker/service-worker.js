@@ -11,13 +11,13 @@ self.addEventListener('install', (event) => {
 });
 
 self.addEventListener('activate', async (event) => {
-  console.log('Service Worker activated:', event);
+  // console.log('Service Worker activated:', event);
   event.waitUntil(event.target.clients.claim());
 });
 
 self.addEventListener('notificationclick', (event) => {
   event.notification.close();
-  console.log('notification details from SW: ', event.notification);
+  // console.log('notification details from SW: ', event.notification);
 });
 
 // self.addEventListener('message', (event) => {
@@ -85,7 +85,7 @@ self.addEventListener('fetch', async function (event) {
       }
 
       if (/(\.jpg)$|(\.jpeg)$|(\.webp)$/.test(event.request.url)) {
-        console.log('Fetching IMG::', fetchResponse);
+        // console.log('Fetching IMG::', fetchResponse);
         let imgBuff;
         if (fetchResponse.status === 200) {
           imgBuff = await fetchResponse.clone().arrayBuffer();
@@ -137,7 +137,7 @@ const abFromIDB = async function (key) {
 };
 // Function to store image data to IDB
 const abToIDB = async function (key, data) {
-  console.log('abToIDB called::', key);
+  // console.log('abToIDB called::', key);
   let request = await indexedDB.open('OfflineDB', 10);
   return new Promise(async (resolve) => {
     // request.onerror = async (e) => {
