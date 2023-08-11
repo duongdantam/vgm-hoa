@@ -701,9 +701,6 @@ export class VideoPlayerWidgetComponent
 			console.log('prefetching:', url);
 		}, 150);
 		this.player.on('seeking', async () => {
-			const preFetchUrl = `${path.dirname(this.options.sources[0].src)}/${this.player.qualityLevels().levels_[this.player.qualityLevels().selectedIndex_].height || '128'
-				}p/${this.playerService.isVideoPlaying ? 'content' : ''}${Math.floor(this.player.currentTime() / 3)}.vgmx`;
-			await preFetchDebounce(preFetchUrl);
 			this._seeking = true;
 			console.log('seeking');
 			if (this.player.controlBar.progressControl.seekBar.currentWidth() !== 0) {
@@ -715,6 +712,9 @@ export class VideoPlayerWidgetComponent
 					seekPos
 				);
 			}
+			const preFetchUrl = `${path.dirname(this.options.sources[0].src)}/${this.player.qualityLevels().levels_[this.player.qualityLevels().selectedIndex_].height || '128'
+				}p/${this.playerService.isVideoPlaying ? 'content' : ''}${Math.floor(this.player.currentTime() / 3)}.vgmx`;
+			preFetchDebounce(preFetchUrl);
 		});
 		this.player.on('seeked', () => {
 			console.log('seek end');
