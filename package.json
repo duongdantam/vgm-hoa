@@ -6,7 +6,7 @@
   "description": "Fuyin Gospel Media",
   "scripts": {
     "ng": "nx",
-    "postinstall": "node patch.js && node ./decorate-angular-cli.js && ngcc --properties es2017 browser module main && electron-builder install-app-deps && patch-package",
+    "postinstall": "npm install @types/lodash@ts2.0 && node patch.js && node ./decorate-angular-cli.js && ngcc --properties es2017 browser module main && electron-builder install-app-deps && patch-package",
     "patch-package": "patch-package",
     "nx": "nx",
     "start": "ng serve",

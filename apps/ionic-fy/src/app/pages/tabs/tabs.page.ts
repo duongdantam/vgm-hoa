@@ -22,8 +22,9 @@ export class TabsPage implements OnInit, OnDestroy {
 	public audioIsHidden = true;
 	public videoIsHidden = true;
 
-	private audioSub: any;
-	private videoSub: any;
+	// private audioSub: any;
+	// private videoSub: any;
+	private mediaSub: any;
 
 	private audioRootList = [];
 	private videoRootList = [];
@@ -44,31 +45,45 @@ export class TabsPage implements OnInit, OnDestroy {
 		private router: Router,
 		private platform: Platform // private offlineService: OfflineService,
 	) {
-		// video
-		this.videoSub = this.playerService.videoPlayState$.subscribe(
-			async (state) => {
-				if (state.isPlaying) {
-					this.playUrl = await this.dataFetchService.getPlayUrl(
-						state.item,
-						true
-					);
-					console.log('playing video URL:', this.playUrl);
-				}
+
+
+		this.mediaSub = this.playerService.isVideoPlaying$.subscribe(
+			async (isVideo) => {
+				const item = isVideo ? this.playerService.videoPlayState.item : this.playerService.audioPlayState.item;
+				this.playUrl = await this.dataFetchService.getPlayUrl(
+					item,
+					isVideo
+				);
+				console.log(`playing ${isVideo ? 'Video' : 'Audio'} URL:`, this.playUrl);
 			}
 		);
 
-		// audio
-		this.audioSub = this.playerService.audioPlayState$.subscribe(
-			async (state) => {
-				if (state.isPlaying) {
-					this.playUrl = await this.dataFetchService.getPlayUrl(
-						state.item,
-						false
-					);
-					console.log('playing audio URL:', this.playUrl);
-				}
-			}
-		);
+
+		// // video
+		// this.videoSub = this.playerService.videoPlayState$.subscribe(
+		// 	async (state) => {
+		// 		if (state.isPlaying && this.playerService.isVideoPlaying) {
+		// 			this.playUrl = await this.dataFetchService.getPlayUrl(
+		// 				state.item,
+		// 				true
+		// 			);
+		// 			console.log('playing video URL:', this.playUrl);
+		// 		}
+		// 	}
+		// );
+
+		// // audio
+		// this.audioSub = this.playerService.audioPlayState$.subscribe(
+		// 	async (state) => {
+		// 		if (state.isPlaying ) {
+		// 			this.playUrl = await this.dataFetchService.getPlayUrl(
+		// 				state.item,
+		// 				false
+		// 			);
+		// 			console.log('playing audio URL:', this.playUrl);
+		// 		}
+		// 	}
+		// );
 	}
 
 	async ngOnInit() {
@@ -214,6 +229,6 @@ export class TabsPage implements OnInit, OnDestroy {
 	}
 
 	ngOnDestroy(): void {
-		(this.audioSub, this.videoSub as Subscription).unsubscribe();
+		(this.mediaSub as Subscription).unsubscribe();
 	}
 }
