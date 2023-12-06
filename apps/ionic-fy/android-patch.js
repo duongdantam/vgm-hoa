@@ -103,8 +103,8 @@ fs.readFile(sdk, 'utf8', function (err, data) {
     return console.log(err);
   }
   var sdkResult = data
-    .replace(/(compileSdkVersion).*/, 'compileSdkVersion = 30')
-    .replace(/(targetSdkVersion).*/, 'targetSdkVersion = 30');
+    .replace(/(compileSdkVersion).*/, 'compileSdkVersion = 33')
+    .replace(/(targetSdkVersion).*/, 'targetSdkVersion = 33');
 
   fs.writeFile(sdk, sdkResult, 'utf8', function (err) {
     if (err) return console.log(err);

@@ -48,7 +48,7 @@ export class DataFetchService {
 	public iosCloudGateway: string = "https://cdn-hoa.hjm.bid/decrypted";
 	public searchGateway: string = "https://search.hjm.bid";
 	public webDomain: string = "";
-	public apiGateway: string = "https://cdn.hjm.bid/ipfs/QmVTxse1avUoXJ4X4GyFkZywU6LdotRtMMRcTzv3qwQhcV";
+	public apiGateway: string = "https://cdn.vgm.tv/ipfs/QmVTxse1avUoXJ4X4GyFkZywU6LdotRtMMRcTzv3qwQhcV";
 	public apiVersion: string = "";
 	public searchAPIKey: string = "a6027a14fcb5eba562458d0832b35f9b863760eaba98d5ffd12e0e44ca00e955";
 	public searchClient;
@@ -241,38 +241,87 @@ export class DataFetchService {
 				// Post app ipfs address to server
 			} else {
 				//  get firebase remote config
-				await initializeApp(firebaseConfig);
+				initializeApp(firebaseConfig);
 				const remoteConfig = getRemoteConfig();
-				await fetchAndActivate(remoteConfig)
-					.then(async () => {
-						this.mobileVersion['ios'] = getValue(remoteConfig, "IOS_VERSION").asString() || '';
-						this.mobileVersion['android'] = getValue(remoteConfig, "ANDROID_VERSION").asString() || '';
-						this.streamGateway = getValue(remoteConfig, "IPFS_STREAM_GATEWAY").asString() || '';
-						this.cdnGateway = JSON.parse(getValue(remoteConfig, "CDN_GATEWAY").asString());
-						this.downloadGateway = getValue(remoteConfig, "IPFS_DOWNLOAD_GATEWAY").asString() || '';
-						this.cloudGateway = getValue(remoteConfig, "CLOUD_GATEWAY").asString() || ''; // decrypted: "CLOUD_GATEWAY_IOS" encrypted: "CLOUD_GATEWAY"
-						this.iosCloudGateway = getValue(remoteConfig, "CLOUD_GATEWAY_IOS").asString() || '';
-						this.webDomain = getValue(remoteConfig, "WEB_DOMAIN").asString() || '';
-						this.searchGateway = getValue(remoteConfig, "SEARCH_GATEWAY").asString() || '';
-						this.apiGateway = getValue(remoteConfig, "API_GATEWAY").asString().replace(/https?\:\/\/([a-z\.\d\:]+)\/ipfs\//, '') || '';
-						this.searchAPIKey = getValue(remoteConfig, "SEARCH_API").asString() || '';
-						this.defaultImgs = getValue(remoteConfig, 'DEFAULT_IMGS').asString() || '';
-						this.audioConstantUrl = getValue(remoteConfig, 'AUDIO_CONSTANT_URL').asString() || '';
-						this.videoConstantUrl = getValue(remoteConfig, 'VIDEO_CONSTANT_URL').asString() || '';
-						this.desktopAppUrl = getValue(remoteConfig, "DESKTOP_APP_URL").asString().replace(/platform\.extension$/, this.desktopAppExt) || '';
-						console.log(`got config from firebase:
-												${this.mobileVersion['ios']}, 
-												${this.mobileVersion['android']}, 
-												${this.streamGateway}, 
-												${this.cdnGateway}, 
-												${this.downloadGateway},
-												${this.cloudGateway},
-												${this.searchGateway},
-												${this.webDomain},
-												${this.apiGateway}`);
-					}).catch((err) => {
-						console.log('firebase init error', err);
-					});
+
+				const configKey = `api.config`;
+				const cachedConfig: any = await this.localforageService.get(configKey);
+
+				if (cachedConfig) {
+					this.mobileVersion['ios'] = cachedConfig.ios_version;
+					this.mobileVersion['android'] = cachedConfig.android_version;
+					this.streamGateway = cachedConfig.ipfs_stream_gateway;
+					this.cdnGateway = cachedConfig.cdn_gateway;
+					this.downloadGateway = cachedConfig.ipfs_download_gateway;
+					this.cloudGateway = cachedConfig.cloud_gateway; // decrypted: "CLOUD_GATEWAY_IOS" encrypted: "CLOUD_GATEWAY"
+					this.iosCloudGateway = cachedConfig.cloud_gateway_ios;
+					this.webDomain = cachedConfig.web_domain;
+					this.searchGateway = cachedConfig.search_gateway;
+					this.apiGateway = cachedConfig.api_gateway;
+					this.searchAPIKey = cachedConfig.search_api;
+					this.desktopAppUrl = cachedConfig.desktop_app_url;
+					console.log("cached config loaded::", cachedConfig);
+
+					fetchAndActivate(remoteConfig)
+						.then(() => {
+							const config = {
+								"ios_version": getValue(remoteConfig, "IOS_VERSION").asString() || '',
+								"android_version": getValue(remoteConfig, "ANDROID_VERSION").asString() || '',
+								"ipfs_stream_gateway": getValue(remoteConfig, "IPFS_STREAM_GATEWAY").asString() || '',
+								"cdn_gateway": JSON.parse(getValue(remoteConfig, "CDN_GATEWAY").asString()) || [],
+								"ipfs_download_gateway": getValue(remoteConfig, "IPFS_DOWNLOAD_GATEWAY").asString() || '',
+								"cloud_gateway": getValue(remoteConfig, "CLOUD_GATEWAY").asString() || '',
+								"cloud_gateway_ios": getValue(remoteConfig, "CLOUD_GATEWAY_IOS").asString() || '',
+								"web_domain": getValue(remoteConfig, "WEB_DOMAIN").asString() || '',
+								"search_gateway": getValue(remoteConfig, "SEARCH_GATEWAY").asString() || '',
+								"api_gateway": getValue(remoteConfig, "API_GATEWAY").asString().replace(/https?\:\/\/([a-z\.\d\:]+)\/ipfs\//, '') || '',
+								"search_api": getValue(remoteConfig, "SEARCH_API").asString() || '',
+								"desktop_app_url": getValue(remoteConfig, "DESKTOP_APP_URL").asString() || '',
+							}
+							if (!_.isEmpty(config)) {
+								this.localforageService.set(configKey, config);
+								console.log("saving config::", config);
+							}
+						}).catch((err) => {
+							console.log('firebase init error', err);
+						});
+				} else {
+					await fetchAndActivate(remoteConfig)
+						.then(() => {
+							const config = {
+								"ios_version": getValue(remoteConfig, "IOS_VERSION").asString() || '',
+								"android_version": getValue(remoteConfig, "ANDROID_VERSION").asString() || '',
+								"ipfs_stream_gateway": getValue(remoteConfig, "IPFS_STREAM_GATEWAY").asString() || '',
+								"cdn_gateway": JSON.parse(getValue(remoteConfig, "CDN_GATEWAY").asString()) || [],
+								"ipfs_download_gateway": getValue(remoteConfig, "IPFS_DOWNLOAD_GATEWAY").asString() || '',
+								"cloud_gateway": getValue(remoteConfig, "CLOUD_GATEWAY").asString() || '',
+								"cloud_gateway_ios": getValue(remoteConfig, "CLOUD_GATEWAY_IOS").asString() || '',
+								"web_domain": getValue(remoteConfig, "WEB_DOMAIN").asString() || '',
+								"search_gateway": getValue(remoteConfig, "SEARCH_GATEWAY").asString() || '',
+								"api_gateway": getValue(remoteConfig, "API_GATEWAY").asString().replace(/https?\:\/\/([a-z\.\d\:]+)\/ipfs\//, '') || '',
+								"search_api": getValue(remoteConfig, "SEARCH_API").asString() || '',
+								"desktop_app_url": getValue(remoteConfig, "DESKTOP_APP_URL").asString() || '',
+							}
+							if (!_.isEmpty(config)) {
+								this.localforageService.set(configKey, config);
+								console.log("saving config::", config);
+							}
+							this.mobileVersion['ios'] = config.ios_version;
+							this.mobileVersion['android'] = config.android_version;
+							this.streamGateway = config.ipfs_stream_gateway;
+							this.cdnGateway = config.cdn_gateway;
+							this.downloadGateway = config.ipfs_download_gateway;
+							this.cloudGateway = config.cloud_gateway; // decrypted: "CLOUD_GATEWAY_IOS" encrypted: "CLOUD_GATEWAY"
+							this.iosCloudGateway = config.cloud_gateway_ios;
+							this.webDomain = config.web_domain;
+							this.searchGateway = config.search_gateway;
+							this.apiGateway = config.api_gateway;
+							this.searchAPIKey = config.search_api;
+							this.desktopAppUrl = config.desktop_app_url;
+						}).catch((err) => {
+							console.log('firebase init error', err);
+						});
+				}
 			}
 
 
