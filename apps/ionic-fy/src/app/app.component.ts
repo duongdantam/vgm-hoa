@@ -18,7 +18,7 @@ import { NavigationEnd, Router } from '@angular/router';
 })
 export class AppComponent {
 	windowMode;
-	googleTrackerID = '';
+	googleTrackerID = 'G-80KNLP8Q9R';
 	constructor(
 		private platform: Platform,
 		private statusBar: NgxStatusBar,
@@ -107,7 +107,7 @@ export class AppComponent {
 	async initializeApp() {
 		await this.dataFetchService.initPlatform();
 		// add google analytics
-		this.ga.startTrackerWithId(this.googleTrackerID); // G-FG1Z70K8SM G-T6WF46T2D9
+		this.ga.startTrackerWithId(this.googleTrackerID);
 		this.platform.ready().then(async () => {
 			const platform = `${this.windowMode}: ${this.dataFetchService.isTauri ? 'Desktop App' : this.platform.is('capacitor') ? 'Mobile App' : 'Browser'} - ${this.dataFetchService.os} - ${this.platform.platforms().toString()}`
 			await SplashScreen.hide();

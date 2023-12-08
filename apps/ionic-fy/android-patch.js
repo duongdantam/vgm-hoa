@@ -1,7 +1,7 @@
 const fs = require('fs');
 
-const versionCode = '100000';
-const versionName = '1.0.0';
+const versionCode = '100002';
+const versionName = '1.0.2';
 const icBGColor = '#ee6c61';
 
 const styleXML = 'android/app/src/main/res/values/styles.xml';
